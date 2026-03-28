@@ -1,0 +1,5 @@
+{
+  "name": "Design System Token Builder",
+  "description": "An interactive tool to build and visualize a design system inspired by Google's Material Design. Define and customize color palettes, typography scales, spacing, and elevation tokens with smart suggestions powered by AI.",
+  "requestFramePermissions": []
+}

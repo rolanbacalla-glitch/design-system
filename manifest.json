@@ -1,0 +1,10 @@
+{
+  "name": "Design System Token Builder",
+  "id": "1345982802442431057",
+  "api": "1.0.0",
+  "main": "plugin/code.js",
+  "ui": "dist/index.html",
+  "editorType": [
+    "figma"
+  ]
+}
