@@ -82,21 +82,21 @@ const TailwindPalette: React.FC = () => {
                     <Zap className="text-amber-400" size={14} />
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-400">Spectral Array v3.0</span>
                 </div>
-                <h2 className="text-7xl md:text-9xl font-black text-white tracking-tightest leading-none uppercase italic">
-                    Chroma <span className="text-white/30">Forge.</span>
+                <h2 className="text-7xl md:text-9xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+                    Chroma <span className="opacity-30">Forge.</span>
                 </h2>
-                <p className="text-xl font-medium text-white/30 max-w-2xl leading-relaxed uppercase tracking-widest px-1">
+                <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">
                     Engineered precision for high-fidelity interface design. Synthesizing light and logic through atomic spectral scales.
                 </p>
             </div>
             
-            <div className="flex bg-white/5 p-1.5 rounded-[32px] border border-white/10 backdrop-blur-3xl shadow-2xl overflow-hidden">
+            <div className="flex bg-[var(--ui-bg-muted)] p-1.5 rounded-[32px] border border-[var(--ui-border)] backdrop-blur-3xl shadow-2xl overflow-hidden">
                  {Object.keys(PALETTES).map((name) => (
                      <button 
                         key={name}
                         onClick={() => setActiveKey(name as keyof typeof PALETTES)}
                         className={`px-8 py-4 rounded-[24px] text-[10px] font-black uppercase tracking-widest transition-all duration-500
-                            ${activeKey === name ? 'bg-white text-black shadow-4xl' : 'text-white/20 hover:text-white/60 hover:bg-white/5'}`}
+                            ${activeKey === name ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-4xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-text)]/5'}`}
                      >
                         {name}
                      </button>
@@ -107,7 +107,7 @@ const TailwindPalette: React.FC = () => {
         {/* Global Toolbar */}
         <section className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-3 relative group">
-                <div className="absolute left-8 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-amber-400 transition-colors">
+                <div className="absolute left-8 top-1/2 -translate-y-1/2 text-[var(--ui-text-muted)] group-hover:text-amber-400 transition-colors">
                     <Search size={20} />
                 </div>
                 <input 
@@ -115,19 +115,19 @@ const TailwindPalette: React.FC = () => {
                     placeholder="SCAN SPECTRAL SIGNATURE (EX: #00E5FF / STEP 500)"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-black/40 rounded-[40px] border border-white/10 p-8 pl-20 text-sm font-black text-white focus:outline-none focus:border-amber-400/50 transition-all shadow-inner uppercase tracking-widest"
+                    className="w-full bg-[var(--ui-bg-muted)] rounded-[40px] border border-[var(--ui-border)] p-8 pl-20 text-sm font-black text-[var(--ui-text)] focus:outline-none focus:border-amber-400/50 transition-all shadow-inner uppercase tracking-widest"
                 />
             </div>
-            <button className="h-full bg-white/5 border border-white/10 rounded-[40px] flex items-center justify-center gap-4 text-white/20 hover:text-white hover:bg-white/10 transition-all duration-500 group">
+            <button className="h-full bg-[var(--ui-bg-muted)] border border-[var(--ui-border)] rounded-[40px] flex items-center justify-center gap-4 text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-text)]/10 transition-all duration-500 group">
                 <Settings size={20} className="group-hover:rotate-180 transition-transform duration-700" />
                 <span className="text-[10px] font-black uppercase tracking-widest">Filters</span>
             </button>
         </section>
 
         {/* Spectral Matrix */}
-        <section className="glass-premium rounded-[64px] border border-white/10 shadow-5xl p-16 relative overflow-hidden group">
+        <section className="glass-premium rounded-[64px] border border-[var(--ui-border)] shadow-5xl p-16 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-12 flex items-center gap-6 opacity-20 group-hover:opacity-100 transition-opacity">
-                <span className="text-[10px] font-black text-white uppercase tracking-[0.4em]">Active Core: {activeKey}</span>
+                <span className="text-[10px] font-black text-[var(--ui-text)] uppercase tracking-[0.4em]">Active Core: {activeKey}</span>
                 <div className="w-3 h-3 rounded-full animate-pulse bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]" />
             </div>
 
@@ -136,25 +136,25 @@ const TailwindPalette: React.FC = () => {
                     <div key={swatch.step} className="flex flex-col group/swatch relative h-full">
                         <div 
                             className={`h-52 w-full rounded-[32px] shadow-4xl mb-8 transition-all duration-700 group-hover/swatch:scale-105 group-hover/swatch:rounded-[60px] relative overflow-hidden flex items-center justify-center
-                                ${swatch.step === 500 ? 'border-4 border-amber-400/40 ring-4 ring-amber-400/10 shadow-amber-500/20' : 'border-2 border-white/10'}`}
+                                ${swatch.step === 500 ? 'border-4 border-amber-400/40 ring-4 ring-amber-400/10 shadow-amber-500/20' : 'border-2 border-[var(--ui-border)]'}`}
                             style={{ backgroundColor: swatch.hex }}
                         >
                             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/swatch:opacity-100 transition-opacity duration-500" />
                             <button 
                                 onClick={() => handleCopy(swatch.hex)}
-                                className="relative z-10 opacity-0 group-hover/swatch:opacity-100 transition-all duration-700 transform translate-y-8 group-hover/swatch:translate-y-0 w-12 h-12 bg-white text-black rounded-[20px] flex items-center justify-center hover:scale-110 shadow-2xl active:scale-95"
+                                className="relative z-10 opacity-0 group-hover/swatch:opacity-100 transition-all duration-700 transform translate-y-8 group-hover/swatch:translate-y-0 w-12 h-12 bg-[var(--ui-text)] text-[var(--ui-bg)] rounded-[20px] flex items-center justify-center hover:scale-110 shadow-2xl active:scale-95"
                             >
                                 {copyState === swatch.hex ? <Check size={18} strokeWidth={3} /> : <Copy size={18} strokeWidth={3} />}
                             </button>
                         </div>
                         <div className="flex flex-col px-2 space-y-2">
                              <div className="flex justify-between items-center">
-                                <span className={`text-[10px] font-black uppercase tracking-widest ${swatch.step === 500 ? 'text-amber-400' : 'text-white/40'}`}>
+                                <span className={`text-[10px] font-black uppercase tracking-widest ${swatch.step === 500 ? 'text-amber-400' : 'text-[var(--ui-text-muted)]'}`}>
                                     S-{swatch.step}
                                 </span>
                                 {swatch.step === 500 && <Zap size={10} className="text-amber-400" />}
                              </div>
-                            <span className="text-[10px] text-white/10 font-mono tracking-widest uppercase truncate">{swatch.hex}</span>
+                            <span className="text-[10px] text-[var(--ui-text-muted)] opacity-30 font-mono tracking-widest uppercase truncate">{swatch.hex}</span>
                         </div>
                     </div>
                 ))}
@@ -166,22 +166,22 @@ const TailwindPalette: React.FC = () => {
         </section>
 
         {/* Prototype Simulation Area */}
-        <section className="space-y-16 py-24 border-t border-white/5">
+        <section className="space-y-16 py-24 border-t border-[var(--ui-border)]">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 px-6">
                 <div className="space-y-8">
                     <div className="flex items-center gap-4">
-                        <div className="h-0.5 w-16 bg-white rounded-full opacity-20" />
-                        <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.5em]">Simulation Deck.01</span>
+                        <div className="h-0.5 w-16 bg-[var(--ui-text)] rounded-full opacity-20" />
+                        <span className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.5em]">Simulation Deck.01</span>
                     </div>
-                    <h3 className="text-5xl font-black text-white uppercase tracking-tightest italic leading-none">Atomic <span className="text-white/20">Forge Preview.</span></h3>
-                    <p className="text-white/20 text-sm font-medium uppercase tracking-[0.2em] max-w-lg leading-relaxed">
+                    <h3 className="text-5xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic leading-none">Atomic <span className="text-[var(--ui-text-muted)]">Forge Preview.</span></h3>
+                    <p className="text-[var(--ui-text-muted)] text-sm font-medium uppercase tracking-[0.2em] max-w-lg leading-relaxed">
                         Validating spectral integrity across high-contrast volumetric layouts and tactical component mapping.
                     </p>
                 </div>
-                <div className="flex gap-4 p-2 bg-white/5 rounded-[32px] border border-white/10 backdrop-blur-3xl shadow-2xl">
-                    <button className="p-4 rounded-[24px] bg-white text-black shadow-4xl hover:scale-105 transition-all"><Monitor size={20} /></button>
-                    <button className="p-4 rounded-[24px] text-white/20 hover:text-white hover:bg-white/5 transition-all"><Smartphone size={20} /></button>
-                    <button className="p-4 rounded-[24px] text-white/20 hover:text-white hover:bg-white/5 transition-all"><Layout size={20} /></button>
+                <div className="flex gap-4 p-2 bg-[var(--ui-bg-muted)] rounded-[32px] border border-[var(--ui-border)] backdrop-blur-3xl shadow-2xl">
+                    <button className="p-4 rounded-[24px] bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-4xl hover:scale-105 transition-all"><Monitor size={20} /></button>
+                    <button className="p-4 rounded-[24px] text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-text)]/5 transition-all"><Smartphone size={20} /></button>
+                    <button className="p-4 rounded-[24px] text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-text)]/5 transition-all"><Layout size={20} /></button>
                 </div>
             </div>
 
@@ -192,13 +192,13 @@ const TailwindPalette: React.FC = () => {
                     
                     {/* Left Deck: Control Console */}
                     <div className="xl:col-span-4 space-y-16">
-                        <div className="bg-black/60 backdrop-blur-3xl p-16 rounded-[72px] border border-white/10 shadow-5xl space-y-12 hover:border-amber-400/40 transition-all duration-700 group/panel">
+                        <div className="bg-[var(--ui-bg)] backdrop-blur-3xl p-16 rounded-[72px] border border-[var(--ui-border)] shadow-5xl space-y-12 hover:border-amber-400/40 transition-all duration-700 group/panel">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
                                     <div className="w-4 h-4 rounded-full bg-amber-400 animate-pulse shadow-[0_0_15px_rgba(251,191,36,0.6)]" />
-                                    <h4 className="text-[11px] font-black text-white uppercase tracking-[0.6em]">System Matrix</h4>
+                                    <h4 className="text-[11px] font-black text-[var(--ui-text)] uppercase tracking-[0.6em]">System Matrix</h4>
                                 </div>
-                                <Terminal className="text-white/10 group-hover/panel:text-amber-400 transition-colors" size={24} />
+                                <Terminal className="text-[var(--ui-text-muted)]/20 group-hover/panel:text-amber-400 transition-colors" size={24} />
                             </div>
                             
                             <nav className="space-y-4">
@@ -208,7 +208,7 @@ const TailwindPalette: React.FC = () => {
                                     { label: 'Neural Protocols', icon: Component, active: false }
                                 ].map((item, i) => (
                                     <div key={i} className={`flex items-center justify-between p-8 rounded-[36px] transition-all duration-700 cursor-pointer group/link border
-                                        ${item.active ? 'bg-white text-black shadow-4xl border-white' : 'bg-white/5 text-white/20 border-transparent hover:bg-white/10 hover:text-white hover:border-white/10'}`}>
+                                        ${item.active ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-4xl border-[var(--ui-text)]' : 'bg-[var(--ui-bg-muted)] text-[var(--ui-text-muted)] border-transparent hover:bg-[var(--ui-text)]/10 hover:text-[var(--ui-text)] hover:border-[var(--ui-border)]'}`}>
                                         <div className="flex items-center gap-6">
                                             <item.icon size={24} strokeWidth={item.active ? 3 : 2} className="transition-transform group-hover/link:rotate-12" />
                                             <span className="text-[11px] font-black uppercase tracking-widest">{item.label}</span>
@@ -219,24 +219,24 @@ const TailwindPalette: React.FC = () => {
                             </nav>
                         </div>
 
-                        <div className="bg-white/5 p-16 rounded-[72px] border border-white/10 space-y-16 backdrop-blur-md relative overflow-hidden group/stats">
-                             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:scale-110 transition-transform duration-1000">
+                        <div className="bg-[var(--ui-bg-muted)] p-16 rounded-[72px] border border-[var(--ui-border)] space-y-16 backdrop-blur-md relative overflow-hidden group/stats">
+                             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:scale-110 transition-transform duration-1000 text-[var(--ui-text)]">
                                 <Activity size={120} />
                              </div>
-                            <h4 className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em]">Spectral Flux Audit</h4>
+                            <h4 className="text-[11px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.5em]">Spectral Flux Audit</h4>
                             <div className="grid grid-cols-1 gap-12">
                                 <div className="space-y-5">
                                     <div className="flex justify-between items-end">
-                                        <span className="text-[10px] font-black text-white/30 uppercase tracking-widest leading-none">Node Response</span>
-                                        <span className="text-4xl font-black text-white italic tracking-tighter leading-none">99.98%</span>
+                                        <span className="text-[10px] font-black text-[var(--ui-text-muted)] opacity-60 uppercase tracking-widest leading-none">Node Response</span>
+                                        <span className="text-4xl font-black text-[var(--ui-text)] italic tracking-tighter leading-none">99.98%</span>
                                     </div>
-                                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden shadow-inner">
-                                        <div className="h-full w-[99%] bg-white rounded-full shadow-[0_0_15px_white]" />
+                                    <div className="h-2 w-full bg-[var(--ui-text)]/5 rounded-full overflow-hidden shadow-inner">
+                                        <div className="h-full w-[99%] bg-[var(--ui-text)] rounded-full shadow-[0_0_15px_var(--ui-text)]" />
                                     </div>
                                 </div>
                                 <div className="text-center space-y-2">
-                                     <span className="text-[10px] font-black text-white/10 uppercase tracking-[1em] block mb-4">Atomic Precision</span>
-                                     <div className="text-6xl font-black text-white tracking-widest leading-none">+0.002MS</div>
+                                     <span className="text-[10px] font-black text-[var(--ui-text-muted)] opacity-30 uppercase tracking-[1em] block mb-4">Atomic Precision</span>
+                                     <div className="text-6xl font-black text-[var(--ui-text)] tracking-widest leading-none">+0.002MS</div>
                                 </div>
                             </div>
                         </div>
@@ -244,37 +244,37 @@ const TailwindPalette: React.FC = () => {
 
                     {/* Right Deck: Prime Viewport */}
                     <div className="xl:col-span-8 space-y-16">
-                        <section className="bg-white rounded-[90px] p-24 shadow-5xl relative overflow-hidden group/hero transition-all duration-1000 hover:scale-[1.01]">
-                            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-black/5 rounded-full translate-x-1/2 -translate-y-1/2 blur-[150px] pointer-events-none group-hover:scale-110 transition-transform duration-[2000ms]" />
+                        <section className="bg-[var(--ui-surface)] rounded-[90px] p-24 shadow-5xl relative overflow-hidden group/hero transition-all duration-1000 hover:scale-[1.01] border border-[var(--ui-border)]">
+                            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--ui-text)]/5 rounded-full translate-x-1/2 -translate-y-1/2 blur-[150px] pointer-events-none group-hover:scale-110 transition-transform duration-[2000ms]" />
                             <div className="relative z-10 space-y-16">
                                 <div className="flex items-center gap-6">
-                                    <span className="px-6 py-3 rounded-[24px] bg-black text-white text-[10px] font-black uppercase tracking-[0.6em] shadow-2xl">PHASE: OMNI.GEN</span>
+                                    <span className="px-6 py-3 rounded-[24px] bg-[var(--ui-text)] text-[var(--ui-bg)] text-[10px] font-black uppercase tracking-[0.6em] shadow-2xl">PHASE: OMNI.GEN</span>
                                     <div className="flex -space-x-5">
                                         {[1,2,3,4,5].map(i => (
-                                            <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-gray-100 shadow-xl relative overflow-hidden group/avatar">
-                                                <div className="absolute inset-0 bg-gradient-to-tr from-gray-300 to-white opacity-40"></div>
+                                            <div key={i} className="w-12 h-12 rounded-full border-4 border-[var(--ui-surface)] bg-[var(--ui-bg-muted)] shadow-xl relative overflow-hidden group/avatar">
+                                                <div className="absolute inset-0 bg-gradient-to-tr from-[var(--ui-text)]/10 to-transparent opacity-40"></div>
                                             </div>
                                         ))}
                                     </div>
-                                    <span className="text-[10px] font-black text-black/30 uppercase tracking-[0.3em] ml-2">Mapping 24 Global Hubs</span>
+                                    <span className="text-[10px] font-black text-[var(--ui-text-muted)] opacity-60 uppercase tracking-[0.3em] ml-2">Mapping 24 Global Hubs</span>
                                 </div>
                                 
-                                <h2 className="text-8xl md:text-[160px] font-black text-black uppercase tracking-tightest leading-[0.7] max-w-4xl italic group-hover:translate-x-2 transition-transform duration-1000">
+                                <h2 className="text-8xl md:text-[160px] font-black text-[var(--ui-text)] uppercase tracking-tightest leading-[0.7] max-w-4xl italic group-hover:translate-x-2 transition-transform duration-1000">
                                     Forge <br/> <span className="text-amber-500">Atomic.</span>
                                 </h2>
                                 
-                                <p className="text-xl font-bold text-black/40 uppercase tracking-[0.3em] leading-relaxed max-w-2xl px-2">
+                                <p className="text-xl font-bold text-[var(--ui-text-muted)] uppercase tracking-[0.3em] leading-relaxed max-w-2xl px-2">
                                     Architecting the next evolution of structural interfaces for sentient computing environments.
                                 </p>
                                 
                                 <div className="flex flex-col sm:flex-row gap-8 pt-12">
-                                    <button className="bg-black text-white h-28 px-20 rounded-[44px] font-black uppercase tracking-[0.6em] text-[12px] hover:scale-105 active:scale-95 transition-all shadow-4xl flex items-center gap-8 group/prime">
+                                    <button className="bg-[var(--ui-text)] text-[var(--ui-bg)] h-28 px-20 rounded-[44px] font-black uppercase tracking-[0.6em] text-[12px] hover:scale-105 active:scale-95 transition-all shadow-4xl flex items-center gap-8 group/prime">
                                         Initialize Protocol
-                                        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center transition-all group-hover/prime:rotate-90 group-hover/prime:bg-amber-400 group-hover/prime:text-black">
+                                        <div className="w-12 h-12 rounded-full bg-[var(--ui-bg)]/20 flex items-center justify-center transition-all group-hover/prime:rotate-90 group-hover/prime:bg-amber-400 group-hover/prime:text-black">
                                             <ArrowRight size={20} strokeWidth={3} />
                                         </div>
                                     </button>
-                                    <button className="h-28 px-12 text-black/40 hover:text-black font-black uppercase tracking-[0.5em] text-[12px] transition-all flex items-center gap-4 group/sec">
+                                    <button className="h-28 px-12 text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] font-black uppercase tracking-[0.5em] text-[12px] transition-all flex items-center gap-4 group/sec">
                                         Read Technical Whitepaper
                                         <ExternalLink size={18} className="opacity-40 group-hover/sec:translate-x-1 group-hover/sec:-translate-y-1 transition-transform" />
                                     </button>
@@ -284,20 +284,20 @@ const TailwindPalette: React.FC = () => {
 
                          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                             {[
-                                { title: 'Essential Core', price: 'FREE', icon: Sparkles, color: 'text-white/20' },
+                                { title: 'Essential Core', price: 'FREE', icon: Sparkles, color: 'text-[var(--ui-text-muted)]/20' },
                                 { title: 'Titan Access', price: '49', icon: Crown, color: 'text-amber-400', featured: true },
-                                { title: 'Enterprise Void', price: 'POA', icon: Diamond, color: 'text-white/20' }
+                                { title: 'Enterprise Void', price: 'POA', icon: Diamond, color: 'text-[var(--ui-text-muted)]/20' }
                             ].map((plan, i) => (
                                 <div key={i} className={`p-16 rounded-[72px] transition-all duration-700 hover:-translate-y-6 group/tier border-2
-                                    ${plan.featured ? 'bg-black border-amber-400/20 shadow-5xl' : 'bg-white/5 border-transparent hover:border-white/10'}`}>
+                                    ${plan.featured ? 'bg-[var(--ui-surface)] border-amber-400/20 shadow-5xl' : 'bg-[var(--ui-bg-muted)] border-transparent hover:border-[var(--ui-border)]'}`}>
                                     <plan.icon size={48} className={`mb-12 ${plan.color}`} strokeWidth={plan.featured ? 2.5 : 1.5} />
-                                    <h5 className={`text-[11px] font-black mb-10 uppercase tracking-[0.5em] ${plan.featured ? 'text-amber-400' : 'text-white/30'}`}>{plan.title}</h5>
-                                    <div className={`text-7xl font-black mb-16 tracking-tightest italic uppercase ${plan.featured ? 'text-white' : 'text-white/10'}`}>
+                                    <h5 className={`text-[11px] font-black mb-10 uppercase tracking-[0.5em] ${plan.featured ? 'text-amber-400' : 'text-[var(--ui-text-muted)] opacity-60'}`}>{plan.title}</h5>
+                                    <div className={`text-7xl font-black mb-16 tracking-tightest italic uppercase ${plan.featured ? 'text-[var(--ui-text)]' : 'text-[var(--ui-text)]/10'}`}>
                                         {plan.price !== 'FREE' && plan.price !== 'POA' && <span className="text-3xl align-top mr-1 font-bold italic">$</span>}
                                         {plan.price}
                                     </div>
-                                    <button className={`w-full h-20 rounded-[30px] text-[11px] font-black uppercase tracking-[0.4em] transition-all duration-500
-                                        ${plan.featured ? 'bg-amber-400 text-amber-950 shadow-4xl hover:scale-105 active:scale-95' : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'}`}>
+                                    <button className={`w-full h-20 rounded-[30px] text-[11px] font-black uppercase tracking-widest transition-all duration-500
+                                        ${plan.featured ? 'bg-amber-400 text-amber-950 shadow-4xl hover:scale-105 active:scale-95' : 'bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:bg-[var(--ui-text)]/10 hover:text-[var(--ui-text)]'}`}>
                                         Initialize
                                     </button>
                                 </div>
