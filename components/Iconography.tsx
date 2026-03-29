@@ -110,6 +110,19 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
     });
   };
 
+  const exportSvg = () => {
+    const svgData = getProcessedSvg();
+    const blob = new Blob([svgData], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${icon}_${size}px.svg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-[var(--ui-bg)]/80 backdrop-blur-4xl animate-in fade-in duration-300" onClick={onClose}>
       <div 
@@ -314,22 +327,31 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                   </div>
                </div>
                
-               <div className="flex gap-4">
+               <div className="grid grid-cols-3 gap-4">
                   <button 
                     type="button"
                     title="Export asset as PNG"
-                    className="flex-1 py-5 bg-[var(--ui-text)] text-[var(--ui-bg)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-3xl flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                    className="py-5 bg-[var(--ui-text)] text-[var(--ui-bg)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-3xl flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
                   >
                       <Download size={14} />
-                      Export PNG
+                      PNG
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={exportSvg}
+                    title="Export asset as SVG"
+                    className="py-5 bg-[var(--ui-text)] text-[var(--ui-bg)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-3xl flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                  >
+                      <Download size={14} />
+                      SVG
                   </button>
                   <button 
                     type="button"
                     title="View component API documentation"
-                    className="flex-1 py-5 bg-[var(--ui-text)]/5 border border-[var(--ui-border)] text-[var(--ui-text)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:bg-[var(--ui-text)]/10 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                    className="py-5 bg-[var(--ui-text)]/5 border border-[var(--ui-border)] text-[var(--ui-text)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:bg-[var(--ui-text)]/10 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
                   >
                       <CopyIcon size={14} />
-                      Component API
+                      API
                   </button>
                </div>
             </div>
