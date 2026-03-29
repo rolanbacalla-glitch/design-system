@@ -1,5 +1,4 @@
-
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { GradientToken, GradientStop } from '../types';
 import { 
   Copy, 
@@ -10,8 +9,13 @@ import {
   MoreHorizontal, 
   GripVertical, 
   Maximize2, 
-  ChevronDown,
-  Sparkles
+  Sparkles,
+  Palette,
+  Zap,
+  Code,
+  Layout,
+  Layers,
+  MousePointer2
 } from 'lucide-react';
 
 interface GradientGeneratorProps {
@@ -19,134 +23,141 @@ interface GradientGeneratorProps {
   onSave: (gradient: GradientToken) => void;
 }
 
-// Modern Preset Gradients inspired by uiGradients
+// Ultra-Premium Preset Gradients
 const PRESET_GRADIENTS: GradientToken[] = [
     {
-      name: 'Vivid Sky',
-      type: 'linear',
-      rotation: 90,
-      stops: [ { id: 's1', colour: '#00d2ff', position: 0 }, { id: 's2', colour: '#3a7bd5', position: 100 } ]
-    },
-    {
-      name: 'Cherry Blossom',
+      name: 'Cyber Neon',
       type: 'linear',
       rotation: 135,
-      stops: [ { id: 's1', colour: '#FBD3E9', position: 0 }, { id: 's2', colour: '#BB377D', position: 100 } ]
+      stops: [ { id: 's1', colour: '#00F260', position: 0 }, { id: 's2', colour: '#0575E6', position: 100 } ]
     },
     {
-      name: 'Ocean Deep',
+      name: 'Ethereal Mist',
+      type: 'linear',
+      rotation: 45,
+      stops: [ { id: 's1', colour: '#E0EAFC', position: 0 }, { id: 's2', colour: '#CFDEF3', position: 100 } ]
+    },
+    {
+      name: 'Infrared Pulse',
       type: 'linear',
       rotation: 90,
+      stops: [ { id: 's1', colour: '#8E2DE2', position: 0 }, { id: 's2', colour: '#4A00E0', position: 100 } ]
+    },
+    {
+      name: 'Solar Flare',
+      type: 'linear',
+      rotation: 180,
+      stops: [ { id: 's1', colour: '#FDC830', position: 0 }, { id: 's2', colour: '#F37335', position: 100 } ]
+    },
+    {
+      name: 'Deep Oceanic',
+      type: 'linear',
+      rotation: 225,
       stops: [ { id: 's1', colour: '#2b5876', position: 0 }, { id: 's2', colour: '#4e4376', position: 100 } ]
     },
     {
-        name: 'Misty Forest',
-        type: 'linear',
-        rotation: 180,
-        stops: [ { id: 's1', colour: '#11998e', position: 0 }, { id: 's2', colour: '#38ef7d', position: 100 } ]
-    },
-    {
-        name: 'Velvet Sun',
-        type: 'linear',
-        rotation: 45,
-        stops: [ { id: 's1', colour: '#e1eec3', position: 0 }, { id: 's2', colour: '#f05053', position: 100 } ]
-    },
-    {
-        name: 'Midnight Bloom',
-        type: 'linear',
-        rotation: 90,
-        stops: [ { id: 's1', colour: '#a8c0ff', position: 0 }, { id: 's2', colour: '#3f2b96', position: 100 } ]
-    },
-    {
-        name: 'Golden Hour',
-        type: 'linear',
-        rotation: 0,
-        stops: [ { id: 's1', colour: '#FDC830', position: 0 }, { id: 's2', colour: '#F37335', position: 100 } ]
-    },
-    {
-        name: 'Electric Dream',
-        type: 'linear',
-        rotation: 120,
-        stops: [ { id: 's1', colour: '#4776E6', position: 0 }, { id: 's2', colour: '#8E54E9', position: 100 } ]
-    },
-    {
-        name: 'Frosty Morning',
-        type: 'linear',
-        rotation: 180,
-        stops: [ { id: 's1', colour: '#E0EAFC', position: 0 }, { id: 's2', colour: '#CFDEF3', position: 100 } ]
-    },
-    {
-        name: 'Rose Water',
-        type: 'linear',
-        rotation: 60,
-        stops: [ { id: 's1', colour: '#E55D87', position: 0 }, { id: 's2', colour: '#5FC3E4', position: 100 } ]
-    },
-    {
-        name: 'Citrus Blast',
-        type: 'linear',
-        rotation: 90,
-        stops: [ { id: 's1', colour: '#83a4d4', position: 0 }, { id: 's2', colour: '#b6fbff', position: 100 } ]
-    },
-    {
-        name: 'Neon Night',
-        type: 'linear',
-        rotation: 0,
-        stops: [ { id: 's1', colour: '#00F260', position: 0 }, { id: 's2', colour: '#0575E6', position: 100 } ]
+      name: 'Lush Mint',
+      type: 'linear',
+      rotation: 0,
+      stops: [ { id: 's1', colour: '#11998e', position: 0 }, { id: 's2', colour: '#38ef7d', position: 100 } ]
     }
 ];
+
+// Circular Angle Picker Component
+const AnglePicker: React.FC<{ angle: number, onChange: (angle: number) => void }> = ({ angle, onChange }) => {
+    const dialRef = useRef<HTMLDivElement>(null);
+
+    const handleInteraction = (clientX: number, clientY: number) => {
+        if (!dialRef.current) return;
+        const rect = dialRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const x = clientX - centerX;
+        const y = clientY - centerY;
+        let deg = Math.atan2(y, x) * (180 / Math.PI) + 90;
+        if (deg < 0) deg += 360;
+        onChange(Math.round(deg / 15) * 15); // Snap to 15 degrees
+    };
+
+    const onMouseDown = (e: React.MouseEvent) => {
+        handleInteraction(e.clientX, e.clientY);
+        const handleMouseMove = (mm: MouseEvent) => handleInteraction(mm.clientX, mm.clientY);
+        const handleMouseUp = () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+    };
+
+    return (
+        <div 
+            ref={dialRef}
+            onMouseDown={onMouseDown}
+            className="w-32 h-32 rounded-full bg-black/40 border border-white/5 relative flex items-center justify-center cursor-crosshair group shadow-inner"
+        >
+            {/* Degree Marks */}
+            {Array.from({ length: 8 }).map((_, i) => (
+                <div 
+                    key={i} 
+                    className="absolute w-0.5 h-2 bg-white/10 rounded-full" 
+                    style={{ transform: `rotate(${i * 45}deg) translateY(-54px)` }}
+                />
+            ))}
+            
+            {/* Center Pointer */}
+            <div 
+                className="absolute w-1 h-14 bg-gradient-to-t from-[var(--ui-accent)] to-transparent rounded-full origin-bottom bottom-1/2 transition-transform duration-200 ease-out"
+                style={{ transform: `rotate(${angle}deg)` }}
+            />
+            
+            {/* Handle */}
+            <div 
+                className="absolute w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] border-2 border-[var(--ui-accent)] transition-all duration-200"
+                style={{ transform: `rotate(${angle - 90}deg) translateX(48px)` }}
+            />
+
+            <div className="absolute inset-0 rounded-full border border-white/0 group-hover:border-white/10 transition-colors" />
+            
+            <div className="absolute bottom-6 text-[10px] font-black text-white/40 uppercase tracking-widest">
+                {angle}°
+            </div>
+        </div>
+    );
+};
 
 const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, onSave }) => {
   // --- State ---
   const [stops, setStops] = useState<GradientStop[]>([
-    { id: '1', colour: '#F292ED', position: 0 },
-    { id: '2', colour: '#F36364', position: 100 }
+    { id: '1', colour: '#D4145A', position: 0 },
+    { id: '2', colour: '#FBB03B', position: 100 }
   ]);
-  const [rotation, setRotation] = useState(90);
+  const [rotation, setRotation] = useState(135);
   const [type, setType] = useState<'linear' | 'radial'>('linear');
   const [selectedStopId, setSelectedStopId] = useState<string>('1');
-  const [copyFeedback, setCopyFeedback] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [showMoreMenu, setShowMoreMenu] = useState<string | null>(null);
-  
-  // Gallery State for Reordering
   const [gallery, setGallery] = useState<GradientToken[]>(PRESET_GRADIENTS);
-  const dragItem = useRef<number | null>(null);
-  const dragOverItem = useRef<number | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Ensure selectedStopId always points to a valid stop
-  useEffect(() => {
-    if (!stops.find(s => s.id === selectedStopId)) {
-        setSelectedStopId(stops[0].id);
-    }
-  }, [stops, selectedStopId]);
+  const selectedStop = useMemo(() => 
+    stops.find(s => s.id === selectedStopId) || stops[0]
+  , [stops, selectedStopId]);
 
-  const selectedStop = stops.find(s => s.id === selectedStopId) || stops[0];
-
-  // --- Helpers ---
-  
-  const generateCss = (currentStops: GradientStop[], currentRotation: number, currentType: 'linear' | 'radial') => {
-    const sortedStops = [...currentStops].sort((a, b) => a.position - b.position);
-    const stopsString = sortedStops.map(s => `${s.colour} ${s.position}%`).join(', ');
-    
-    if (currentType === 'radial') {
-        return `radial-gradient(circle, ${stopsString})`;
-    }
-    return `linear-gradient(${currentRotation}deg, ${stopsString})`;
+  // --- Logic ---
+  const generateCss = (currentStops: GradientStop[], angle: number, gradType: 'linear' | 'radial') => {
+    const sorted = [...currentStops].sort((a, b) => a.position - b.position);
+    const stopStr = sorted.map(s => `${s.colour} ${s.position}%`).join(', ');
+    return gradType === 'linear' ? `linear-gradient(${angle}deg, ${stopStr})` : `radial-gradient(circle, ${stopStr})`;
   };
 
-  const handleSliderClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleSliderClick = (e: React.MouseEvent) => {
     if (!sliderRef.current) return;
     const rect = sliderRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const percent = Math.min(100, Math.max(0, Math.round((clickX / rect.width) * 100)));
-
+    const pos = Math.round(((e.clientX - rect.left) / rect.width) * 100);
     const newId = Date.now().toString();
-    const newStop: GradientStop = { id: newId, colour: '#ffffff', position: percent };
-    
-    setStops([...stops, newStop]);
+    setStops([...stops, { id: newId, colour: '#ffffff', position: pos }]);
     setSelectedStopId(newId);
   };
 
@@ -154,357 +165,300 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
     setStops(stops.map(s => s.id === id ? { ...s, ...updates } : s));
   };
 
-  const deleteStop = (id: string) => {
-      if (stops.length <= 2) return; // Min 2 stops
-      setStops(stops.filter(s => s.id !== id));
-  };
-
-  const handleCopyCss = () => {
-      const css = `background: ${generateCss(stops, rotation, type)};`;
-      navigator.clipboard.writeText(css);
-      setCopyFeedback(true);
-      setTimeout(() => setCopyFeedback(false), 2000);
+  const handleCopy = (mode: 'css' | 'tailwind') => {
+    const css = generateCss(stops, rotation, type);
+    const text = mode === 'css' ? `background: ${css};` : `bg-[${css}]`;
+    navigator.clipboard.writeText(text);
+    setCopyFeedback(mode);
+    setTimeout(() => setCopyFeedback(null), 2000);
   };
 
   const randomize = () => {
-    const randomColour = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-    const newStops = [
-        { id: Date.now() + '1', colour: randomColour(), position: 0 },
-        { id: Date.now() + '2', colour: randomColour(), position: 100 }
-    ];
-    setStops(newStops);
+    const rand = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+    setStops([
+        { id: Date.now() + 'a', colour: rand(), position: 0 },
+        { id: Date.now() + 'b', colour: rand(), position: 100 }
+    ]);
     setRotation(Math.floor(Math.random() * 360));
-    setSelectedStopId(newStops[0].id);
-  };
-
-  const toggleFavorite = (name: string) => {
-    setFavorites(prev => 
-      prev.includes(name) ? prev.filter(f => f !== name) : [...prev, name]
-    );
-  };
-
-  const duplicateGradient = (grad: GradientToken) => {
-    const newGrad = { ...grad, name: `${grad.name} (Copy)` };
-    setGallery(prev => [...prev, newGrad]);
-    setShowMoreMenu(null);
-  };
-
-  const deleteGradient = (name: string) => {
-    setGallery(prev => prev.filter(g => g.name !== name));
-    setShowMoreMenu(null);
-  };
-
-  const loadGradient = (g: GradientToken) => {
-      // Prevent loading if we just finished a drag
-      if (isDragging) return;
-      
-      setStops(g.stops.map(s => ({...s}))); // Deep copy
-      setRotation(g.rotation);
-      setType(g.type);
-      setSelectedStopId(g.stops[0].id);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // --- Slider Drag Logic ---
-  const handleMouseDown = (e: React.MouseEvent, id: string) => {
-      e.stopPropagation();
-      setSelectedStopId(id);
-      
-      const startX = e.clientX;
-      const startPos = stops.find(s => s.id === id)?.position || 0;
-      const rect = sliderRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const handleMouseMove = (moveEvent: MouseEvent) => {
-          const deltaX = moveEvent.clientX - startX;
-          const deltaPercent = (deltaX / rect.width) * 100;
-          let newPos = Math.round(startPos + deltaPercent);
-          newPos = Math.max(0, Math.min(100, newPos));
-          updateStop(id, { position: newPos });
-      };
-
-      const handleMouseUp = () => {
-          window.removeEventListener('mousemove', handleMouseMove);
-          window.removeEventListener('mouseup', handleMouseUp);
-      };
-
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-  };
-
-  // --- Gallery Sort Logic ---
-  const onSortStart = (e: React.DragEvent, index: number) => {
-      dragItem.current = index;
-      setIsDragging(true);
-      e.dataTransfer.effectAllowed = "move";
-  };
-
-  const onSortEnter = (e: React.DragEvent, index: number) => {
-      e.preventDefault();
-      if (dragItem.current === null) return;
-      
-      if (dragItem.current !== index) {
-          const newGallery = [...gallery];
-          const draggedItemContent = newGallery[dragItem.current];
-          newGallery.splice(dragItem.current, 1);
-          newGallery.splice(index, 0, draggedItemContent);
-          
-          // Use View Transition API for smooth reordering if supported
-          if ('startViewTransition' in document) {
-              (document as any).startViewTransition(() => {
-                  setGallery(newGallery);
-                  dragItem.current = index;
-              });
-          } else {
-              setGallery(newGallery);
-              dragItem.current = index;
-          }
-      }
-  };
-
-  const onSortEnd = () => {
-      dragItem.current = null;
-      dragOverItem.current = null;
-      setTimeout(() => setIsDragging(false), 100);
   };
 
   const currentCss = generateCss(stops, rotation, type);
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div>
-        <h2 className="text-4xl font-bold text-[var(--ui-text)] tracking-tighter">Gradient Generator</h2>
-        <p className="text-[var(--ui-text-muted)] mt-1 font-medium">Create beautiful gradients and export the CSS.</p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        {/* LEFT COLUMN: Controls */}
-        <div className="bg-[var(--ui-surface)] p-8 rounded-3xl border border-[var(--ui-border)] shadow-sm">
-            {/* Slider */}
-            <div className="mb-10">
-                <div 
-                    ref={sliderRef}
-                    className="h-8 rounded-2xl relative cursor-pointer shadow-inner ring-1 ring-black/5"
-                    style={{ background: `linear-gradient(to right, ${[...stops].sort((a,b) => a.position - b.position).map(s => `${s.colour} ${s.position}%`).join(', ')})` }}
-                    onClick={handleSliderClick}
-                >
-                    {stops.map(stop => (
-                        <div
-                            key={stop.id}
-                            className={`absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-2 cursor-grab active:cursor-grabbing shadow-lg transition-transform hover:scale-110
-                                ${selectedStopId === stop.id ? 'border-white ring-4 ring-[var(--ui-accent)] scale-110 z-10' : 'border-white'}`}
-                            style={{ left: `calc(${stop.position}% - 12px)`, backgroundColor: stop.colour }}
-                            onMouseDown={(e) => handleMouseDown(e, stop.id)}
-                            onClick={(e) => { e.stopPropagation(); setSelectedStopId(stop.id); }}
-                        />
-                    ))}
-                </div>
-                <p className="text-[10px] font-semibold text-center text-[var(--ui-text-muted)] mt-4 uppercase tracking-widest">Click bar to add stop. Drag handles to adjust.</p>
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+      
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--ui-accent-faint)] border border-[var(--ui-accent)]/20">
+                <Layers className="text-[var(--ui-accent)]" size={12} />
+                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--ui-accent)]">Dynamic Assets</span>
             </div>
-
-            {/* Selected Stop Controls */}
-            <div className="grid grid-cols-2 gap-6 mb-8">
-                <div>
-                    <label className="block text-xs font-semibold uppercase tracking-widest text-[var(--ui-text-muted)] mb-2">Colour</label>
-                    <div className="flex items-center gap-3 border border-[var(--ui-border)] rounded-xl p-2 bg-[var(--ui-bg)] focus-within:ring-2 focus-within:ring-[var(--ui-accent)] transition-all">
-                        <div className="relative w-8 h-8 flex-shrink-0 rounded-lg overflow-hidden border border-[var(--ui-border)]">
-                            <input 
-                                type="color" 
-                                value={selectedStop.colour} 
-                                onChange={(e) => updateStop(selectedStop.id, { colour: e.target.value })}
-                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer scale-150"
-                            />
-                            <div className="w-full h-full" style={{ backgroundColor: selectedStop.colour }} />
-                        </div>
-                        <input 
-                            type="text" 
-                            value={selectedStop.colour.toUpperCase()} 
-                            onChange={(e) => updateStop(selectedStop.id, { colour: e.target.value })}
-                            className="w-full text-sm font-mono font-semibold text-[var(--ui-text)] focus:outline-none bg-transparent"
-                        />
-                    </div>
-                </div>
-                
-                <div className="flex flex-col">
-                    <label className="block text-xs font-semibold uppercase tracking-widest text-[var(--ui-text-muted)] mb-2">Position</label>
-                    <div className="flex items-center gap-3 border border-[var(--ui-border)] rounded-xl p-2 bg-[var(--ui-bg)] focus-within:ring-2 focus-within:ring-[var(--ui-accent)] transition-all h-[46px]">
-                        <input 
-                            type="number" 
-                            min="0" 
-                            max="100"
-                            value={selectedStop.position}
-                            onChange={(e) => updateStop(selectedStop.id, { position: Number(e.target.value) })}
-                            className="w-full text-sm font-semibold text-[var(--ui-text)] focus:outline-none bg-transparent"
-                        />
-                        <span className="text-xs font-semibold text-[var(--ui-text-muted)] pr-1">%</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Global Settings */}
-            <div className="grid grid-cols-2 gap-6 mb-10">
-                <div>
-                    <label className="block text-xs font-semibold uppercase tracking-widest text-[var(--ui-text-muted)] mb-2">Rotation</label>
-                    <div className="relative border border-[var(--ui-border)] rounded-xl bg-[var(--ui-bg)] overflow-hidden focus-within:ring-2 focus-within:ring-[var(--ui-accent)] transition-all">
-                         <select 
-                            value={rotation} 
-                            onChange={(e) => setRotation(Number(e.target.value))}
-                            className="w-full p-2.5 text-sm font-semibold text-[var(--ui-text)] bg-transparent focus:outline-none appearance-none cursor-pointer"
-                        >
-                            {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => (
-                                <option key={deg} value={deg}>{deg}°</option>
-                            ))}
-                        </select>
-                        <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--ui-text-muted)]" />
-                    </div>
-                </div>
-                <div>
-                    <label className="block text-xs font-semibold uppercase tracking-widest text-[var(--ui-text-muted)] mb-2">Type</label>
-                     <div className="relative border border-[var(--ui-border)] rounded-xl bg-[var(--ui-bg)] overflow-hidden focus-within:ring-2 focus-within:ring-[var(--ui-accent)] transition-all">
-                        <select 
-                            value={type} 
-                            onChange={(e) => setType(e.target.value as any)}
-                            className="w-full p-2.5 text-sm font-semibold text-[var(--ui-text)] bg-transparent focus:outline-none appearance-none cursor-pointer"
-                        >
-                            <option value="linear">Linear</option>
-                            <option value="radial">Radial</option>
-                        </select>
-                         <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--ui-text-muted)]" />
-                    </div>
-                </div>
-            </div>
-
-             {/* Actions */}
-             <div className="flex gap-4">
-                 <button 
-                    onClick={randomize}
-                    className="flex-1 py-3 bg-[var(--ui-bg)] text-[var(--ui-text)] font-semibold rounded-xl border border-[var(--ui-border)] hover:bg-[var(--ui-surface-hover)] transition-all active:scale-95 flex items-center justify-center gap-2"
-                 >
-                     <RefreshCw size={18} />
-                     Random
-                 </button>
-                 <div className="flex-1 relative">
-                    <button 
-                        onClick={handleCopyCss}
-                        className="w-full py-3 bg-[var(--ui-accent)] text-[var(--ui-accent-on)] font-semibold rounded-xl hover:bg-[var(--ui-accent-hover)] transition-all flex items-center justify-center gap-2 active:scale-95 shadow-lg shadow-[var(--ui-accent)]/20"
-                    >
-                        {copyFeedback ? 'Copied!' : 'Copy CSS'}
-                        {!copyFeedback && <Copy size={18} />}
-                    </button>
-                 </div>
-             </div>
-             
-             {stops.length > 2 && (
-                 <button 
-                    onClick={() => deleteStop(selectedStopId)}
-                    className="mt-6 w-full text-red-500 text-xs font-semibold uppercase tracking-widest hover:text-red-600 flex items-center justify-center gap-2 transition-colors"
-                 >
-                     <Trash2 size={18} />
-                     Remove stop
-                 </button>
-             )}
+            <h2 className="text-6xl font-black text-white tracking-tightest uppercase italic leading-none">Hyper-Gradient <span className="text-[var(--ui-accent)]">Lab</span></h2>
+            <p className="text-sm font-medium text-white/30 uppercase tracking-widest max-w-xl">Architect multi-dimensional atmospheric tokens with industrial precision.</p>
         </div>
-
-        {/* RIGHT COLUMN: Preview */}
-        <div 
-            className="rounded-[2.5rem] shadow-2xl border-8 border-[var(--ui-surface)] min-h-[400px] lg:min-h-full relative overflow-hidden group transition-all duration-700 hover:rotate-1"
-            style={{ background: currentCss }}
-        >
-             <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-             <button className="absolute top-6 right-6 p-3 bg-white/20 hover:bg-white/40 backdrop-blur-xl rounded-2xl text-white transition-all opacity-0 group-hover:opacity-100 active:scale-90 shadow-xl">
-                <Maximize2 size={20} />
+        
+        <div className="flex bg-black/40 p-2 rounded-[24px] border border-white/5 backdrop-blur-xl">
+             <button 
+                onClick={() => setType('linear')}
+                className={`px-8 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all ${type === 'linear' ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+             >
+                 Linear
+             </button>
+             <button 
+                onClick={() => setType('radial')}
+                className={`px-8 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all ${type === 'radial' ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+             >
+                 Radial
              </button>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        {/* Configuration Panel */}
+        <div className="lg:col-span-12 xl:col-span-5 space-y-8">
+            <div className="glass-premium p-10 rounded-[50px] border-white/10 shadow-3xl space-y-12 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-8 opacity-5">
+                    <Zap size={120} />
+                </div>
+
+                {/* Gradient Track */}
+                <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                        <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Atmosphere Track</label>
+                        <span className="text-[9px] font-bold text-[var(--ui-accent)] uppercase tracking-widest bg-[var(--ui-accent-faint)] px-2 py-0.5 rounded-md">
+                            {stops.length} STOPS
+                        </span>
+                    </div>
+                    
+                    <div className="relative pt-10 pb-4">
+                        <div 
+                            ref={sliderRef}
+                            onClick={handleSliderClick}
+                            className="h-16 rounded-[28px] relative cursor-pointer shadow-inner border border-white/10 overflow-visible transition-transform hover:scale-[1.01]"
+                            style={{ background: currentCss }}
+                        >
+                            {stops.map(stop => (
+                                <button
+                                    key={stop.id}
+                                    onClick={(e) => { e.stopPropagation(); setSelectedStopId(stop.id); }}
+                                    className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border-4 shadow-3xl transition-all duration-300 group
+                                        ${selectedStopId === stop.id ? 'border-white scale-125 z-20 ring-4 ring-[var(--ui-accent)]/30' : 'border-white/20 hover:scale-110 hover:border-white/50'}`}
+                                    style={{ left: `calc(${stop.position}% - 20px)`, backgroundColor: stop.colour }}
+                                >
+                                    <div className="absolute top-full mt-4 left-1/2 -translate-x-1/2 text-[8px] font-black text-white opacity-0 group-hover:opacity-60 transition-opacity">
+                                        {stop.position}%
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <p className="text-[9px] text-center font-bold text-white/20 uppercase tracking-widest italic pt-2">Click track to inject a new color stop</p>
+                </div>
+
+                {/* Config Controls */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-8">
+                        <div className="space-y-4">
+                             <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Vector Projection</label>
+                             <div className="flex justify-center py-4">
+                                <AnglePicker angle={rotation} onChange={setRotation} />
+                             </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-8">
+                         <div className="space-y-4">
+                            <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Stop refinement</label>
+                            <div className="bg-black/40 p-6 rounded-[32px] border border-white/5 space-y-6">
+                                <div className="space-y-3">
+                                    <div className="flex justify-between text-[9px] font-black text-white/30 uppercase tracking-widest">
+                                        <span>Value</span>
+                                        <span>{selectedStop.colour.toUpperCase()}</span>
+                                    </div>
+                                    <div className="flex items-center gap-4 bg-white/5 p-3 rounded-2xl border border-white/5">
+                                        <div className="w-8 h-8 rounded-xl relative overflow-hidden border border-white/10 shadow-inner group">
+                                            <input 
+                                                type="color" 
+                                                value={selectedStop.colour}
+                                                title="Pick color"
+                                                onChange={(e) => updateStop(selectedStop.id, { colour: e.target.value })}
+                                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer scale-150"
+                                            />
+                                            <div className="w-full h-full" style={{ backgroundColor: selectedStop.colour }} />
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            title="Hex value"
+                                            value={selectedStop.colour.toUpperCase()}
+                                            onChange={(e) => updateStop(selectedStop.id, { colour: e.target.value })}
+                                            className="bg-transparent border-none text-white font-black text-lg focus:ring-0 outline-none w-full"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <div className="flex justify-between text-[9px] font-black text-white/30 uppercase tracking-widest">
+                                        <span>Position</span>
+                                        <span>{selectedStop.position}%</span>
+                                    </div>
+                                    <input 
+                                        type="range" min="0" max="100"
+                                        value={selectedStop.position}
+                                        title="Position percentage"
+                                        onChange={(e) => updateStop(selectedStop.id, { position: Number(e.target.value) })}
+                                        className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-[var(--ui-accent)]"
+                                    />
+                                </div>
+                                
+                                <button
+                                    onClick={() => {
+                                        if (stops.length > 2) setStops(stops.filter(s => s.id !== selectedStopId));
+                                    }}
+                                    title="Remove stop"
+                                    className="w-full py-3 bg-red-500/5 hover:bg-red-500/10 text-red-500/40 hover:text-red-500 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                                >
+                                    Purge Stop
+                                </button>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+
+                {/* Output Actions */}
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button 
+                        onClick={randomize}
+                        title="Randomize gradient"
+                        className="flex-1 py-5 bg-white/5 hover:bg-white/10 text-white/60 hover:text-white font-black rounded-[24px] border border-white/5 transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px]"
+                    >
+                        <RefreshCw size={14} />
+                        Entropy Sync
+                    </button>
+                    <button 
+                         onClick={() => handleCopy('css')}
+                         title="Copy CSS snippet"
+                         className="flex-1 py-5 bg-white text-black font-black rounded-[24px] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] shadow-2xl hover:shadow-white/20"
+                    >
+                        {copyFeedback === 'css' ? 'Copied Static' : 'Generate CSS'}
+                        {!copyFeedback && <Code size={14} />}
+                    </button>
+                    <button 
+                         onClick={() => handleCopy('tailwind')}
+                         title="Copy Tailwind class"
+                         className="flex-1 py-5 bg-[var(--ui-accent)] text-[var(--ui-accent-on)] font-black rounded-[24px] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] shadow-2xl hover:bg-[var(--ui-accent-hover)]"
+                    >
+                        {copyFeedback === 'tailwind' ? 'Copied Component' : 'Generate Utility'}
+                        {!copyFeedback && <Zap size={14} />}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {/* Live Preview / High-Fidelity Rendering */}
+        <div className="lg:col-span-12 xl:col-span-7 space-y-8">
+            <div 
+                className="w-full h-full min-h-[600px] rounded-[60px] shadow-4xl border-[16px] border-black/40 relative overflow-hidden group transition-all duration-1000 hover:scale-[1.01] flex items-center justify-center"
+                 style={{ background: currentCss }}
+            >
+                {/* Background Atmosphere */}
+                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute top-10 right-10 flex gap-4 opacity-0 group-hover:opacity-100 transition-all translate-x-10 group-hover:translate-x-0 duration-500">
+                    <button title="Fullscreen" className="p-4 glass-premium rounded-3xl text-white/40 hover:text-white border-white/10 hover:scale-110 active:scale-90 transition-all">
+                        <Maximize2 size={24} />
+                    </button>
+                    <button title="Layout" className="p-4 glass-premium rounded-3xl text-white/40 hover:text-white border-white/10 hover:scale-110 active:scale-90 transition-all">
+                        <Layout size={24} />
+                    </button>
+                </div>
+
+                {/* Premium Mockup Hero overlay */}
+                <div className="glass-premium p-16 rounded-[48px] border-white/20 backdrop-blur-4xl shadow-5xl max-w-[85%] relative overflow-hidden group/hero group-hover:-translate-y-4 transition-all duration-700">
+                    <div className="absolute -top-24 -left-24 w-64 h-64 bg-white/10 blur-[100px] rounded-full group-hover/hero:scale-150 transition-transform duration-1000"></div>
+                    <div className="relative text-center space-y-8">
+                        <div className="w-20 h-20 rounded-[28px] bg-white text-black flex items-center justify-center mx-auto shadow-2xl rotate-3 group-hover/hero:rotate-0 transition-transform duration-500">
+                            <Sparkles size={36} />
+                        </div>
+                        <div className="space-y-4">
+                            <h3 className="text-4xl md:text-5xl font-black text-white tracking-tightest leading-none uppercase italic">Chroma Zenith</h3>
+                            <p className="text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Premium Atmosphere Protocol</p>
+                        </div>
+                        <div className="flex justify-center gap-6 pt-6">
+                            <div className="px-8 py-4 bg-white/10 rounded-2xl border border-white/10 text-[10px] font-black text-white uppercase tracking-widest">Dynamic</div>
+                            <div className="px-8 py-4 bg-white/10 rounded-2xl border border-white/10 text-[10px] font-black text-white uppercase tracking-widest">Weightless</div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Mouse Interaction Indicator */}
+                <div className="absolute bottom-10 left-10 flex items-center gap-4 text-white/20">
+                     <MousePointer2 size={16} />
+                     <span className="text-[10px] font-black uppercase tracking-[0.3em]">Holographic Engine Active</span>
+                </div>
+            </div>
+        </div>
 
       </div>
 
-      {/* Gallery Section */}
-      <div className="mt-16">
-          <div className="flex justify-between items-end mb-8">
-              <div>
-                <h3 className="text-3xl font-bold text-[var(--ui-text)] tracking-tighter">Presets</h3>
-                <p className="text-[var(--ui-text-muted)] font-medium">Curated collection of modern gradients inspired by uiGradients.</p>
-              </div>
-              <p className="text-[10px] font-semibold text-[var(--ui-text-muted)] uppercase tracking-widest bg-[var(--ui-surface)] px-3 py-1 rounded-full border border-[var(--ui-border)]">Drag to reorder</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {gallery.map((grad, i) => (
-                  <div 
-                    key={grad.name} 
-                    className={`bg-[var(--ui-surface)] rounded-3xl border border-[var(--ui-border)] shadow-sm transition-all overflow-hidden group 
-                        ${dragItem.current === i ? 'opacity-50 scale-95 ring-4 ring-[var(--ui-accent)] ring-offset-4 dark:ring-offset-gray-900' : 'hover:shadow-xl hover:-translate-y-1 hover:border-[var(--ui-text-muted)]'}`}
-                    draggable
-                    onDragStart={(e) => onSortStart(e, i)}
-                    onDragEnter={(e) => onSortEnter(e, i)}
-                    onDragEnd={onSortEnd}
-                    onDragOver={(e) => e.preventDefault()}
-                    style={{ 
-                        cursor: 'grab', 
-                        viewTransitionName: `grad-${grad.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}` 
-                    } as any}
-                  >
-                      <div 
-                        className="h-40 w-full relative active:cursor-grabbing"
-                        style={{ background: generateCss(grad.stops, grad.rotation, grad.type) }}
-                        onClick={() => loadGradient(grad)}
-                      >
-                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 backdrop-blur-sm">
-                               <span className="bg-white text-gray-950 px-6 py-2 rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl pointer-events-none scale-90 group-hover:scale-100 transition-transform">
-                                   Load
-                               </span>
-                           </div>
-                      </div>
-                      <div className="p-5 flex items-center justify-between bg-[var(--ui-surface)]">
-                          <div className="flex items-center gap-3">
-                              <GripVertical size={20} className="text-[var(--ui-text-muted)] cursor-grab active:cursor-grabbing opacity-50" />
-                              <span className="font-semibold text-[var(--ui-text)] tracking-tight">{grad.name}</span>
-                          </div>
-                          <div className="flex gap-1 relative">
+      {/* Preset Repository */}
+      <section className="pt-20 space-y-12">
+           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
+               <div className="space-y-2">
+                    <h3 className="text-4xl font-black text-white tracking-tightest uppercase italic leading-none">The Foundry</h3>
+                    <p className="text-xs font-bold text-white/30 uppercase tracking-widest">Reference standard for architectural atmospheres</p>
+               </div>
+               <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-full border border-white/10">
+                   <div className="w-1.5 h-1.5 rounded-full bg-[var(--ui-accent)] animate-pulse" />
+                   <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Cloud Sync Active</span>
+               </div>
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-2">
+                {gallery.map((grad, i) => (
+                    <div 
+                        key={grad.name}
+                        className="glass-premium rounded-[50px] border-white/5 shadow-3xl hover:border-white/20 hover:-translate-y-4 transition-all duration-500 overflow-hidden group relative"
+                    >
+                         <div 
+                            className="h-64 w-full relative cursor-pointer active:scale-95 transition-transform"
+                            style={{ background: generateCss(grad.stops, grad.rotation, grad.type) }}
+                            onClick={() => {
+                                setStops(grad.stops.map(s => ({...s})));
+                                setRotation(grad.rotation);
+                                setType(grad.type);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                         >
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md flex items-center justify-center">
+                                 <div className="px-10 py-4 bg-white text-black rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl scale-90 group-hover:scale-100 transition-all duration-500">
+                                     Inject Token
+                                 </div>
+                            </div>
+                         </div>
+                         <div className="p-8 flex items-center justify-between bg-black/20 backdrop-blur-xl border-t border-white/5">
+                             <div className="space-y-1">
+                                 <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">preset-0{i+1}</span>
+                                 <h4 className="text-lg font-black text-white uppercase tracking-tightest">{grad.name}</h4>
+                             </div>
                              <button 
-                                onClick={(e) => { e.stopPropagation(); toggleFavorite(grad.name); }}
-                                className={`p-2 transition-colors rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 ${favorites.includes(grad.name) ? 'text-red-500' : 'text-[var(--ui-text-muted)] hover:text-red-500'}`}
+                                onClick={(e) => { e.stopPropagation(); setFavorites(prev => prev.includes(grad.name) ? prev.filter(f => f !== grad.name) : [...prev, grad.name]); }}
+                                className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${favorites.includes(grad.name) ? 'bg-red-500/10 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]' : 'bg-white/5 text-white/20 hover:bg-white/10 hover:text-white border border-white/5'}`}
                              >
                                  <Heart size={20} fill={favorites.includes(grad.name) ? "currentColor" : "none"} />
                              </button>
-                             <button 
-                                onClick={(e) => { e.stopPropagation(); setShowMoreMenu(showMoreMenu === grad.name ? null : grad.name); }}
-                                className="p-2 text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] transition-colors rounded-xl hover:bg-[var(--ui-bg)]"
-                             >
-                                 <MoreHorizontal size={20} />
-                             </button>
-
-                             {showMoreMenu === grad.name && (
-                                <div className="absolute right-0 bottom-full mb-2 w-40 bg-[var(--ui-surface)] border border-[var(--ui-border)] rounded-xl shadow-2xl z-20 py-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
-                                    <button 
-                                        onClick={() => duplicateGradient(grad)}
-                                        className="w-full text-left px-4 py-2 text-sm font-semibold text-[var(--ui-text)] hover:bg-[var(--ui-bg)] flex items-center gap-2"
-                                    >
-                                        <Copy size={16} />
-                                        Duplicate
-                                    </button>
-                                    <button 
-                                        onClick={() => deleteGradient(grad.name)}
-                                        className="w-full text-left px-4 py-2 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2"
-                                    >
-                                        <Trash2 size={16} />
-                                        Delete
-                                    </button>
-                                </div>
-                             )}
-                          </div>
-                      </div>
-                  </div>
-              ))}
-          </div>
-          <div className="flex justify-center mt-12">
-              <button className="px-8 py-3 bg-[var(--ui-surface)] hover:bg-[var(--ui-surface-hover)] text-[var(--ui-text)] font-semibold rounded-2xl border border-[var(--ui-border)] transition-all active:scale-95 shadow-sm uppercase tracking-widest text-xs flex items-center gap-2">
-                  <Sparkles size={16} />
-                  Browse all gradients
-              </button>
-          </div>
-      </div>
+                         </div>
+                    </div>
+                ))}
+           </div>
+           
+           <div className="flex justify-center pt-16 pb-24">
+                <button className="px-16 py-6 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-white/40 uppercase tracking-[0.4em] hover:bg-white/10 hover:text-white transition-all active:scale-95 group shadow-4xl relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    Browse Eternal Depository
+                </button>
+           </div>
+      </section>
     </div>
   );
 };

@@ -1,77 +1,48 @@
-
 import React, { useState } from 'react';
 import { TypographyToken } from '../types';
-import { X, Check, Copy, Share2 } from 'lucide-react';
+import { 
+  Type, 
+  Settings2, 
+  Terminal, 
+  Code, 
+  Download, 
+  Check, 
+  Monitor, 
+  Smartphone, 
+  Maximize2,
+  ChevronRight,
+  Sparkles,
+  Layers,
+  Search,
+  Zap
+} from 'lucide-react';
 
 interface TypographyScaleProps {
   typography: TypographyToken[];
   setTypography: (typography: TypographyToken[]) => void;
 }
 
-const fontFamilies = ['SF Pro', 'Inter', 'Roboto', 'Noto Sans', 'Montserrat', 'Space Grotesk', 'Outfit'];
+const fontFamilies = ['SF Pro', 'Inter', 'Roboto', 'Montserrat', 'Space Grotesk', 'Outfit', 'Playfair Display'];
 const fontWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 
-const TypographyExportModal: React.FC<{ typography: TypographyToken[], onClose: () => void }> = ({ typography, onClose }) => {
-    const [copied, setCopied] = useState(false);
-    
-    const jsonOutput = JSON.stringify(typography, null, 2);
-
-    const handleCopy = () => {
-        navigator.clipboard.writeText(jsonOutput);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
-            <div className="bg-[var(--app-surface)] rounded-xl shadow-2xl max-w-2xl w-full flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
-                <div className="flex items-center justify-between p-6 border-b border-[var(--app-border)]">
-                    <h3 className="text-xl font-semibold text-[var(--app-text)]">Export Typography Tokens</h3>
-                    <button onClick={onClose} className="p-2 hover:bg-[var(--app-background)] rounded-full text-[var(--app-text)] transition-colors">
-                        <X size={20} strokeWidth={1.5} />
-                    </button>
-                </div>
-                <div className="p-6 overflow-y-auto">
-                    <p className="text-sm text-[var(--app-text-muted)] mb-4">
-                        Copy this JSON structure to use with Figma plugins or your own build tools.
-                    </p>
-                    <div className="relative group">
-                        <pre className="bg-gray-900 text-gray-300 p-4 rounded-lg text-xs font-mono overflow-x-auto max-h-[400px]">
-                            {jsonOutput}
-                        </pre>
-                        <button 
-                            onClick={handleCopy}
-                            className="absolute top-4 right-4 px-3 py-1.5 bg-white text-gray-900 rounded text-xs font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2 shadow-sm"
-                        >
-                            {copied ? <Check size={14} strokeWidth={1.5} /> : <Copy size={14} strokeWidth={1.5} />}
-                            {copied ? 'Copied' : 'Copy JSON'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 const TypographyScale: React.FC<TypographyScaleProps> = ({ typography, setTypography }) => {
-  const [globalFont, setGlobalFont] = useState(typography[0]?.fontFamily || 'Inter');
-  const [isGlobalFont, setIsGlobalFont] = useState(false);
-  const [showExport, setShowExport] = useState(false);
+  const [globalFont, setGlobalFont] = useState(typography[0]?.fontFamily || 'Outfit');
+  const [isGlobalSync, setIsGlobalSync] = useState(false);
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [previewText, setPreviewText] = useState('Foundry Precision Logic v3.0');
 
   const handleGlobalFontChange = (font: string) => {
     setGlobalFont(font);
-    if (isGlobalFont) {
-        const newTypography = typography.map(t => ({ ...t, fontFamily: font }));
-        setTypography(newTypography);
+    if (isGlobalSync) {
+        setTypography(typography.map(t => ({ ...t, fontFamily: font })));
     }
   };
 
-  const toggleGlobalFont = (checked: boolean) => {
-    setIsGlobalFont(checked);
+  const toggleGlobalSync = (checked: boolean) => {
+    setIsGlobalSync(checked);
     if (checked) {
-        const newTypography = typography.map(t => ({ ...t, fontFamily: globalFont }));
-        setTypography(newTypography);
+        setTypography(typography.map(t => ({ ...t, fontFamily: globalFont })));
     }
   };
 
@@ -80,155 +51,248 @@ const TypographyScale: React.FC<TypographyScaleProps> = ({ typography, setTypogr
     field: K,
     value: TypographyToken[K]
   ) => {
-    const newTypography = typography.map(typo =>
+    setTypography(typography.map(typo =>
       typo.name === name ? { ...typo, [field]: value } : typo
-    );
-    setTypography(newTypography);
+    ));
   };
 
   const copyCSS = (token: TypographyToken) => {
-      const css = `
-font-family: "${token.fontFamily}";
-font-weight: ${token.fontWeight};
-font-size: ${token.fontSize}px;
-line-height: ${token.lineHeight}px;
-letter-spacing: ${token.letterSpacing}px;
-      `.trim();
+      const css = `/* ${token.label} */\nfont-family: "${token.fontFamily}";\nfont-weight: ${token.fontWeight};\nfont-size: ${token.fontSize}px;\nline-height: ${token.lineHeight}px;\nletter-spacing: ${token.letterSpacing}px;`;
       navigator.clipboard.writeText(css);
       setCopiedToken(token.name);
       setTimeout(() => setCopiedToken(null), 2000);
   };
-  
+
   return (
-    <div className="space-y-8 relative">
-        {showExport && <TypographyExportModal typography={typography} onClose={() => setShowExport(false)} />}
-
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-                <h2 className="text-4xl font-bold text-[var(--ui-text)] tracking-tighter">Typography Scale</h2>
-                <p className="text-[var(--ui-text-muted)] mt-1 font-medium">Establish a clear hierarchy for text elements.</p>
+    <div className="space-y-24 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+        
+        {/* Hero Header */}
+        <section className="space-y-8 max-w-5xl">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 shadow-lg shadow-blue-500/5">
+                <Zap className="text-blue-400 animate-pulse" size={14} />
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Foundry Engine v3.0</span>
             </div>
-            <button 
-                onClick={() => setShowExport(true)}
-                className="flex items-center gap-2 bg-[var(--ui-surface)] border border-[var(--ui-border)] hover:bg-[var(--ui-surface-hover)] text-[var(--ui-text)] px-4 py-2 rounded-xl font-semibold transition-all shadow-sm active:scale-95"
-            >
-                <Share2 size={20} strokeWidth={1.5} />
-                Export
-            </button>
-        </div>
-
-        {/* Global Settings Panel */}
-        <div className="bg-[var(--ui-surface)] p-6 rounded-2xl border border-[var(--ui-border)] shadow-sm">
-            <h3 className="text-lg font-semibold text-[var(--ui-text)] mb-4 tracking-tight">Global Settings</h3>
-            <div className="flex flex-col md:flex-row gap-6 items-start md:items-end">
-                <div className="w-full md:w-64">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-[var(--ui-text-muted)] block mb-1">Global Font Family</label>
-                    <select 
-                        value={globalFont} 
-                        onChange={(e) => handleGlobalFontChange(e.target.value)} 
-                        className="w-full bg-[var(--ui-bg)] rounded-xl border border-[var(--ui-border)] p-2 text-[var(--ui-text)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-accent)] transition-all text-sm"
+            <h2 className="text-7xl md:text-9xl font-black text-white tracking-tightest leading-none uppercase italic">
+                Type <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600">Arch.</span>
+            </h2>
+            <div className="flex flex-col md:flex-row gap-12 items-start">
+                <p className="text-xl font-medium text-white/30 max-w-2xl leading-relaxed uppercase tracking-widest px-1">
+                    Defining the mathematical harmony of structural communication through variable axis modulation and spatial weight protocols.
+                </p>
+                <div className="flex bg-black/40 rounded-[28px] p-2 border border-white/10 shadow-inner">
+                    <button 
+                        onClick={() => setViewMode('desktop')}
+                        className={`p-4 rounded-[22px] transition-all ${viewMode === 'desktop' ? 'bg-white text-black shadow-2xl' : 'text-white/20 hover:text-white'}`}
                     >
-                        {fontFamilies.map(ff => <option key={ff} value={ff}>{ff}</option>)}
-                    </select>
+                        <Monitor size={20} />
+                    </button>
+                    <button 
+                        onClick={() => setViewMode('mobile')}
+                        className={`p-4 rounded-[22px] transition-all ${viewMode === 'mobile' ? 'bg-white text-black shadow-2xl' : 'text-white/20 hover:text-white'}`}
+                    >
+                        <Smartphone size={20} />
+                    </button>
                 </div>
-                
-                <label className="flex items-center gap-2 cursor-pointer select-none group pb-2">
-                    <div className="relative flex items-center">
-                        <input 
-                            type="checkbox" 
-                            checked={isGlobalFont} 
-                            onChange={(e) => toggleGlobalFont(e.target.checked)}
-                            className="peer sr-only"
-                        />
-                        <div className="w-5 h-5 rounded border-2 border-[var(--ui-text-muted)] peer-checked:bg-[var(--ui-accent)] peer-checked:border-[var(--ui-accent)] bg-transparent transition-all flex items-center justify-center">
-                             {isGlobalFont && <Check size={14} strokeWidth={2} className="text-[var(--ui-accent-on)] font-bold" />}
+            </div>
+        </section>
+
+        {/* Console Config */}
+        <section className="glass-premium p-12 rounded-[60px] border border-white/10 shadow-4xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+                <Settings2 size={160} />
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
+                <div className="lg:col-span-4 space-y-8">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                            <Type className="text-blue-400" size={24} />
+                        </div>
+                        <h3 className="text-2xl font-black text-white tracking-tightest italic uppercase">Master Foundry</h3>
+                    </div>
+                    <div className="space-y-4">
+                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 px-1">Global Typeface Protocol</label>
+                        <div className="relative group/select">
+                            <select 
+                                value={globalFont} 
+                                onChange={(e) => handleGlobalFontChange(e.target.value)}
+                                title="Global font"
+                                className="w-full bg-black/40 rounded-[24px] border border-white/10 p-6 text-white text-lg font-black tracking-tightest appearance-none cursor-pointer focus:border-blue-400/50 transition-all shadow-inner uppercase font-mono"
+                            >
+                                {fontFamilies.map(ff => <option key={ff} value={ff} className="bg-slate-950 text-white">{ff}</option>)}
+                            </select>
+                            <ChevronRight size={20} className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover/select:text-white rotate-90 transition-all" />
                         </div>
                     </div>
-                    <span className="text-sm font-semibold text-[var(--ui-text)]">Apply to all styles</span>
-                </label>
-            </div>
-        </div>
+                </div>
 
-        <div className="space-y-4">
-            {typography.map(token => (
-                <div key={token.name} className="p-6 bg-[var(--ui-surface)] rounded-2xl border border-[var(--ui-border)] shadow-sm relative group hover:border-[var(--ui-text-muted)] transition-all">
-                    <div className="flex justify-between items-start mb-4">
-                         <div className="flex items-center gap-3">
-                             <p className="text-[var(--ui-text-muted)] font-semibold text-xs uppercase tracking-widest">{token.label}</p>
-                             <span className="text-[10px] font-semibold bg-[var(--ui-bg)] text-[var(--ui-text-muted)] px-2 py-0.5 rounded-full border border-[var(--ui-border)] uppercase">
-                                {token.fontSize}px / {token.lineHeight}px
-                             </span>
-                         </div>
-                         <button 
-                            onClick={() => copyCSS(token)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-xs font-semibold text-[var(--ui-accent)] hover:bg-[var(--ui-accent-faint)] px-3 py-1 rounded-lg flex items-center gap-1"
-                            title="Copy CSS"
-                         >
-                            {copiedToken === token.name ? <Check size={14} strokeWidth={1.5} /> : <Copy size={14} strokeWidth={1.5} />}
-                            {copiedToken === token.name ? 'Copied' : 'CSS'}
-                         </button>
+                <div className="lg:col-span-4 space-y-8 self-end pb-1">
+                     <label className="flex items-center gap-6 cursor-pointer group bg-white/5 p-6 rounded-[32px] border border-white/5 hover:border-blue-400/30 transition-all shadow-inner">
+                        <div className="relative flex items-center">
+                            <input 
+                                type="checkbox" 
+                                checked={isGlobalSync} 
+                                title="Global sync"
+                                onChange={(e) => toggleGlobalSync(e.target.checked)}
+                                className="peer sr-only"
+                            />
+                            <div className="w-10 h-10 rounded-[14px] border-2 border-white/10 peer-checked:bg-blue-400 peer-checked:border-blue-400 bg-black/40 transition-all flex items-center justify-center shadow-lg group-hover:border-white/30">
+                                 {isGlobalSync && <Check size={20} className="text-black font-black" />}
+                            </div>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-lg font-black text-white tracking-tightest uppercase italic leading-none block">Nuclear Sync</span>
+                          <span className="text-[9px] font-bold text-white/20 uppercase tracking-widest block">Lock master typeface across manifest</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div className="lg:col-span-4 space-y-8">
+                     <div className="space-y-4">
+                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 px-1">Specimen Preview Logic</label>
+                        <div className="relative group/input">
+                            <input 
+                                type="text"
+                                value={previewText}
+                                title="Preview text"
+                                onChange={(e) => setPreviewText(e.target.value)}
+                                className="w-full bg-black/40 rounded-[24px] border border-white/10 p-6 text-white text-lg font-black tracking-tightest focus:outline-none focus:border-blue-400/50 transition-all shadow-inner placeholder:text-white/5"
+                                placeholder="..."
+                            />
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20">
+                                <Code size={18} />
+                            </div>
+                        </div>
                     </div>
-                    
-                    <p 
-                        style={{
-                            fontFamily: token.fontFamily === 'SF Pro' ? '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' : token.fontFamily,
-                            fontWeight: token.fontWeight,
-                            fontSize: `${token.fontSize}px`,
-                            lineHeight: `${token.lineHeight}px`,
-                            letterSpacing: `${token.letterSpacing}px`
-                        }}
-                        className="text-[var(--ui-text)] truncate mb-6"
-                    >
-                        The quick brown fox jumps over the lazy dog.
-                    </p>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-[var(--ui-border)] pt-4">
-                       <SelectInput 
-                            label="Font Family" 
-                            value={token.fontFamily} 
-                            onChange={e => handleTypographyChange(token.name, 'fontFamily', e.target.value)}
-                            disabled={isGlobalFont}
-                        >
-                            {fontFamilies.map(ff => <option key={ff} value={ff}>{ff}</option>)}
-                       </SelectInput>
-                       <SelectInput label="Font Weight" value={token.fontWeight} onChange={e => handleTypographyChange(token.name, 'fontWeight', Number(e.target.value))}>
-                            {fontWeights.map(fw => <option key={fw} value={fw}>{fw}</option>)}
-                       </SelectInput>
-                       <NumberInput label="Font Size (px)" value={token.fontSize} onChange={e => handleTypographyChange(token.name, 'fontSize', Number(e.target.value))} />
-                       <NumberInput label="Line Height (px)" value={token.lineHeight} onChange={e => handleTypographyChange(token.name, 'lineHeight', Number(e.target.value))} />
+                </div>
+            </div>
+        </section>
+
+        {/* Specimen Matrix */}
+        <div className="grid grid-cols-1 gap-10">
+            {typography.map((token, idx) => (
+                <div 
+                    key={token.name} 
+                    className="p-12 glass-premium rounded-[60px] border border-white/10 shadow-5xl relative group hover:border-blue-400/40 transition-all duration-700 overflow-hidden flex flex-col lg:flex-row gap-16 item-center"
+                >
+                    {/* Token Info & Controls */}
+                    <div className="lg:w-96 space-y-10 border-b lg:border-b-0 lg:border-r border-white/10 pb-10 lg:pb-0 lg:pr-16 shrink-0">
+                         <div className="flex justify-between items-start">
+                             <div className="space-y-2">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)]" />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">Ref: 0x0{idx + 1}</span>
+                                </div>
+                                <h4 className="text-3xl font-black text-white uppercase italic tracking-tightest leading-none">{token.label}</h4>
+                             </div>
+                             <button 
+                                onClick={() => copyCSS(token)}
+                                className={`p-4 rounded-2xl transition-all border ${copiedToken === token.name ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-lg' : 'bg-white/5 border-white/5 text-white/20 hover:text-white hover:bg-white/10 shadow-inner'}`}
+                             >
+                                {copiedToken === token.name ? <Check size={18} /> : <Terminal size={18} />}
+                             </button>
+                         </div>
+
+                         <div className="grid grid-cols-2 gap-8">
+                             <div className="space-y-3">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-white/10 px-1">Optical Scale</label>
+                                <div className="relative">
+                                    <input 
+                                        type="number" 
+                                        value={token.fontSize} 
+                                        title="Size"
+                                        onChange={e => handleTypographyChange(token.name, 'fontSize', Number(e.target.value))}
+                                        className="w-full bg-black/40 rounded-xl border border-white/5 p-4 text-white text-base font-black tracking-tightest focus:outline-none focus:border-blue-400/50 shadow-inner"
+                                    />
+                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[9px] font-black text-white/10 uppercase tracking-widest pointer-events-none">PX</span>
+                                </div>
+                             </div>
+                             <div className="space-y-3">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-white/10 px-1">Leading Protocol</label>
+                                <div className="relative">
+                                    <input 
+                                        type="number" 
+                                        value={token.lineHeight} 
+                                        title="Line height"
+                                        onChange={e => handleTypographyChange(token.name, 'lineHeight', Number(e.target.value))}
+                                        className="w-full bg-black/40 rounded-xl border border-white/5 p-4 text-white text-base font-black tracking-tightest focus:outline-none focus:border-blue-400/50 shadow-inner"
+                                    />
+                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[9px] font-black text-white/10 uppercase tracking-widest pointer-events-none">PX</span>
+                                </div>
+                             </div>
+                             <div className="space-y-3 col-span-2">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-white/10 px-1">Chroma Signature (Weight)</label>
+                                <select 
+                                    value={token.fontWeight}
+                                    title="Weight"
+                                    onChange={e => handleTypographyChange(token.name, 'fontWeight', Number(e.target.value))}
+                                    className="w-full bg-black/40 rounded-xl border border-white/5 p-4 text-white text-base font-black tracking-tightest appearance-none cursor-pointer focus:border-blue-400/50 shadow-inner uppercase font-mono"
+                                >
+                                    {fontWeights.map(fw => <option key={fw} value={fw} className="bg-slate-950 text-white">{fw}</option>)}
+                                </select>
+                             </div>
+                         </div>
+                    </div>
+
+                    {/* Specimen View */}
+                    <div className={`flex-1 flex items-center relative overflow-hidden transition-all duration-700 ${viewMode === 'mobile' ? 'max-w-md mx-auto' : ''}`}>
+                         {/* Axis Guides */}
+                         <div className="absolute inset-0 opacity-5 pointer-events-none mix-blend-overlay [background-image:linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                         
+                         <div className="relative w-full">
+                            <p 
+                                style={{
+                                    fontFamily: token.fontFamily === 'SF Pro' ? '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' : token.fontFamily,
+                                    fontWeight: token.fontWeight,
+                                    fontSize: `${viewMode === 'mobile' ? Math.max(12, token.fontSize * 0.8) : token.fontSize}px`,
+                                    lineHeight: `${viewMode === 'mobile' ? token.lineHeight * 0.8 : token.lineHeight}px`,
+                                    letterSpacing: `${token.letterSpacing}px`
+                                }}
+                                className="text-white leading-tight w-full transition-all duration-700 cursor-text selection:bg-blue-500/30 break-words"
+                            >
+                                {previewText || 'Foundry Precision Logic v3.0'}
+                            </p>
+                            
+                            {/* Metadata Overlays */}
+                            <div className="mt-12 flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                <span className="text-[9px] font-black text-white/10 uppercase tracking-[0.3em] bg-white/5 px-4 py-1.5 rounded-full border border-white/5">
+                                    Axis: Z-100
+                                </span>
+                                <span className="text-[9px] font-black text-white/10 uppercase tracking-[0.3em] bg-white/5 px-4 py-1.5 rounded-full border border-white/5">
+                                    Vector: {token.fontWeight}
+                                </span>
+                            </div>
+                         </div>
+                    </div>
+
+                    {/* Industrial Badge */}
+                    <div className="absolute top-0 right-0 py-10 px-6 opacity-5 pointer-events-none group-hover:opacity-10 transition-opacity rotate-90 origin-top-right">
+                         <span className="text-4xl font-black uppercase tracking-widest whitespace-nowrap">FOUNDRY SYSTEM CORE</span>
                     </div>
                 </div>
             ))}
         </div>
+
+        {/* Action Footer */}
+        <div className="pt-12 pb-24 flex justify-between items-center border-t border-white/5">
+             <div className="flex gap-4">
+                 <button className="px-10 py-5 bg-white text-black rounded-3xl font-black text-[10px] uppercase tracking-widest transition-all hover:scale-[1.05] active:scale-95 shadow-3xl flex items-center gap-4">
+                     <Download size={14} />
+                     Commit Manifest
+                 </button>
+                 <button className="px-10 py-5 bg-white/5 border border-white/10 text-white rounded-3xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-white/10 hover:scale-[1.05] active:scale-95 flex items-center gap-4 shadow-xl">
+                     <Maximize2 size={14} />
+                     Full Specimen View
+                 </button>
+             </div>
+             
+             <div className="hidden md:flex items-center gap-8 opacity-20">
+                 <div className="h-px w-32 bg-white"></div>
+                 <span className="text-[10px] font-black uppercase tracking-[1em]">TERMINAL STATE</span>
+             </div>
+        </div>
     </div>
   );
 };
-
-// Helper components for inputs
-const NumberInput: React.FC<{ label: string, value: number, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }> = ({ label, value, onChange }) => (
-    <div>
-        <label className="text-xs font-semibold uppercase tracking-wider text-[var(--ui-text-muted)] block mb-1">{label}</label>
-        <input 
-            type="number" 
-            value={value} 
-            onChange={onChange} 
-            className="w-full min-w-0 bg-[var(--ui-bg)] rounded-xl border border-[var(--ui-border)] p-2 text-[var(--ui-text)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-accent)] transition-all text-sm font-mono"
-        />
-    </div>
-);
-
-const SelectInput: React.FC<{ label: string, value: string | number, onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void, disabled?: boolean, children: React.ReactNode }> = ({ label, value, onChange, disabled, children }) => (
-    <div>
-        <label className={`text-xs font-semibold uppercase tracking-wider block mb-1 ${disabled ? 'opacity-30' : 'text-[var(--ui-text-muted)]'}`}>{label}</label>
-        <select 
-            value={value} 
-            onChange={onChange} 
-            disabled={disabled}
-            className={`w-full min-w-0 bg-[var(--ui-bg)] rounded-xl border border-[var(--ui-border)] p-2 text-[var(--ui-text)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-accent)] transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm`}
-        >
-            {children}
-        </select>
-    </div>
-);
 
 export default TypographyScale;

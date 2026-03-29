@@ -13,6 +13,10 @@ dist-ssr
 *.local
 .env
 .env.local
+plugin/*.js
+plugin/*.map
+manifest.json
+metadata.json
 
 # Editor directories and files
 .vscode/*

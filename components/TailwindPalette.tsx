@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Users, 
   Bell, 
@@ -7,308 +6,315 @@ import {
   Twitter, 
   Instagram, 
   ArrowRight, 
-  ExternalLink 
+  ExternalLink,
+  Copy,
+  Check,
+  Smartphone,
+  Monitor,
+  Layout,
+  Search,
+  Settings,
+  Terminal,
+  Cpu,
+  Zap,
+  Layers,
+  Component,
+  Command,
+  Maximize2,
+  Wind,
+  Activity,
+  Sparkles,
+  Crown,
+  Diamond
 } from 'lucide-react';
 
-const BLUE_SCALE = [
-    { step: 50, hex: '#F0F7FF' },
-    { step: 100, hex: '#E0F0FF' },
-    { step: 200, hex: '#B8DBFF' },
-    { step: 300, hex: '#85C2FF' },
-    { step: 400, hex: '#4D9DFF' },
-    { step: 500, hex: '#0066FF' }, // Primary
-    { step: 600, hex: '#0052CC' },
-    { step: 700, hex: '#003D99' },
-    { step: 800, hex: '#002966' },
-    { step: 900, hex: '#001433' },
-    { step: 950, hex: '#000A1A' },
-];
+const PALETTES = {
+  Azure: [
+    { step: 50, hex: '#F0F9FF' }, { step: 100, hex: '#E0F2FE' }, { step: 200, hex: '#BAE6FD' },
+    { step: 300, hex: '#7DD3FC' }, { step: 400, hex: '#38BDF8' }, { step: 500, hex: '#0EA5E9' },
+    { step: 600, hex: '#0284C7' }, { step: 700, hex: '#0369A1' }, { step: 800, hex: '#075985' },
+    { step: 900, hex: '#0C4A6E' }, { step: 950, hex: '#082F49' },
+  ],
+  Emerald: [
+    { step: 50, hex: '#ECFDF5' }, { step: 100, hex: '#D1FAE5' }, { step: 200, hex: '#A7F3D0' },
+    { step: 300, hex: '#6EE7B7' }, { step: 400, hex: '#34D399' }, { step: 500, hex: '#10B981' },
+    { step: 600, hex: '#059669' }, { step: 700, hex: '#047857' }, { step: 800, hex: '#065F46' },
+    { step: 900, hex: '#064E3B' }, { step: 950, hex: '#022C22' },
+  ],
+  Rose: [
+    { step: 50, hex: '#FFF1F2' }, { step: 100, hex: '#FFE4E6' }, { step: 200, hex: '#FECDD3' },
+    { step: 300, hex: '#FDA4AF' }, { step: 400, hex: '#FB7185' }, { step: 500, hex: '#F43F5E' },
+    { step: 600, hex: '#E11D48' }, { step: 700, hex: '#BE123C' }, { step: 800, hex: '#9F1239' },
+    { step: 900, hex: '#881337' }, { step: 950, hex: '#4C0519' },
+  ],
+  Amber: [
+    { step: 50, hex: '#FFFBEB' }, { step: 100, hex: '#FEF3C7' }, { step: 200, hex: '#FDE68A' },
+    { step: 300, hex: '#FCD34D' }, { step: 400, hex: '#FBBF24' }, { step: 500, hex: '#F59E0B' },
+    { step: 600, hex: '#D97706' }, { step: 700, hex: '#B45309' }, { step: 800, hex: '#92400E' },
+    { step: 900, hex: '#78350F' }, { step: 950, hex: '#451A03' },
+  ],
+  Slate: [
+    { step: 50, hex: '#F8FAFC' }, { step: 100, hex: '#F1F5F9' }, { step: 200, hex: '#E2E8F0' },
+    { step: 300, hex: '#CBD5E1' }, { step: 400, hex: '#94A3B8' }, { step: 500, hex: '#64748B' },
+    { step: 600, hex: '#475569' }, { step: 700, hex: '#334155' }, { step: 800, hex: '#1E293B' },
+    { step: 900, hex: '#0F172A' }, { step: 950, hex: '#020617' },
+  ]
+};
 
 const TailwindPalette: React.FC = () => {
+    const [activeKey, setActiveKey] = useState<keyof typeof PALETTES>('Azure');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [copyState, setCopyState] = useState<string | null>(null);
+
+    const handleCopy = (text: string) => {
+        navigator.clipboard.writeText(text);
+        setCopyState(text);
+        setTimeout(() => setCopyState(null), 2000);
+    };
+
     return (
-        <div className="font-sans text-[var(--ui-text)] min-h-screen bg-[var(--ui-bg)] -m-4 md:-m-8 p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-24 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+        
+        {/* Header Area */}
+        <section className="flex flex-col xl:flex-row xl:items-end justify-between gap-12 relative max-w-7xl">
+            <div className="space-y-8">
+                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 shadow-lg shadow-amber-500/5">
+                    <Zap className="text-amber-400" size={14} />
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-400">Spectral Array v3.0</span>
+                </div>
+                <h2 className="text-7xl md:text-9xl font-black text-white tracking-tightest leading-none uppercase italic">
+                    Chroma <span className="text-white/30">Forge.</span>
+                </h2>
+                <p className="text-xl font-medium text-white/30 max-w-2xl leading-relaxed uppercase tracking-widest px-1">
+                    Engineered precision for high-fidelity interface design. Synthesizing light and logic through atomic spectral scales.
+                </p>
+            </div>
             
-            {/* 1. Header Area */}
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-                <div>
-                    <h1 className="text-4xl font-black tracking-tighter text-[var(--ui-text)] mb-1">Tailwind Colours</h1>
-                    <p className="text-[var(--ui-text-muted)] font-medium">Create, preview and export your Tailwind CSS palette</p>
-                </div>
-                
-                <nav className="flex items-center gap-6 text-sm font-medium text-[var(--ui-text-muted)] overflow-x-auto pb-2 md:pb-0">
-                    <a href="#" className="hover:text-[var(--ui-accent)] transition-colors whitespace-nowrap">Generate</a>
-                    <a href="#" className="hover:text-[var(--ui-accent)] transition-colors whitespace-nowrap">Palettes</a>
-                    <a href="#" className="hover:text-[var(--ui-accent)] transition-colors whitespace-nowrap">Contrast checker</a>
-                    <a href="#" className="hover:text-[var(--ui-accent)] transition-colors whitespace-nowrap">Visualiser</a>
-                    <a href="#" className="hover:text-[var(--ui-accent)] transition-colors whitespace-nowrap">Colour picker</a>
-                    <a href="#" className="text-[var(--ui-accent)] bg-[var(--ui-accent-faint)] px-3 py-1.5 rounded-full whitespace-nowrap">Tailwind Colours</a>
-                </nav>
-            </header>
+            <div className="flex bg-white/5 p-1.5 rounded-[32px] border border-white/10 backdrop-blur-3xl shadow-2xl overflow-hidden">
+                 {Object.keys(PALETTES).map((name) => (
+                     <button 
+                        key={name}
+                        onClick={() => setActiveKey(name as keyof typeof PALETTES)}
+                        className={`px-8 py-4 rounded-[24px] text-[10px] font-black uppercase tracking-widest transition-all duration-500
+                            ${activeKey === name ? 'bg-white text-black shadow-4xl' : 'text-white/20 hover:text-white/60 hover:bg-white/5'}`}
+                     >
+                        {name}
+                     </button>
+                 ))}
+            </div>
+        </section>
 
-            {/* 2. Main Palette Section */}
-            <section className="bg-[var(--ui-surface)] rounded-2xl shadow-sm border border-[var(--ui-border)] p-8 mb-12 relative overflow-hidden">
-                <div className="flex justify-between items-start mb-8">
-                    <div>
-                        <h2 className="text-2xl font-bold text-[var(--ui-text)]">Palette 1 – Digital Blue</h2>
-                        <p className="text-[var(--ui-text-muted)] mt-1">Primary Brand Scale</p>
-                    </div>
-                    
-                    {/* Visual Toggle */}
-                    <div className="flex bg-[var(--ui-bg)] p-1 rounded-lg border border-[var(--ui-border)]">
-                        <div className="bg-[var(--ui-surface)] shadow-sm px-3 py-1.5 rounded-md text-xs font-semibold text-[var(--ui-text)] cursor-default">Light</div>
-                        <div className="px-3 py-1.5 rounded-md text-xs font-semibold text-[var(--ui-text-muted)] cursor-default">Dark</div>
-                    </div>
+        {/* Global Toolbar */}
+        <section className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-3 relative group">
+                <div className="absolute left-8 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-amber-400 transition-colors">
+                    <Search size={20} />
                 </div>
+                <input 
+                    type="text" 
+                    placeholder="SCAN SPECTRAL SIGNATURE (EX: #00E5FF / STEP 500)"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-black/40 rounded-[40px] border border-white/10 p-8 pl-20 text-sm font-black text-white focus:outline-none focus:border-amber-400/50 transition-all shadow-inner uppercase tracking-widest"
+                />
+            </div>
+            <button className="h-full bg-white/5 border border-white/10 rounded-[40px] flex items-center justify-center gap-4 text-white/20 hover:text-white hover:bg-white/10 transition-all duration-500 group">
+                <Settings size={20} className="group-hover:rotate-180 transition-transform duration-700" />
+                <span className="text-[10px] font-black uppercase tracking-widest">Filters</span>
+            </button>
+        </section>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11 gap-4">
-                    {BLUE_SCALE.map((swatch) => (
-                        <div key={swatch.step} className="flex flex-col group cursor-pointer">
-                            <div 
-                                className={`h-16 w-full rounded-lg shadow-inner mb-3 transition-transform group-hover:scale-105 ${swatch.step === 500 ? 'ring-2 ring-offset-2 ring-[var(--ui-accent)]' : ''}`}
-                                style={{ backgroundColor: swatch.hex }}
-                            ></div>
-                            <div className="flex flex-col px-1">
-                                <span className={`text-sm font-bold ${swatch.step === 500 ? 'text-[var(--ui-accent)]' : 'text-[var(--ui-text)]'}`}>
-                                    {swatch.step}
+        {/* Spectral Matrix */}
+        <section className="glass-premium rounded-[64px] border border-white/10 shadow-5xl p-16 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-12 flex items-center gap-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.4em]">Active Core: {activeKey}</span>
+                <div className="w-3 h-3 rounded-full animate-pulse bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]" />
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-10">
+                {PALETTES[activeKey].map((swatch) => (
+                    <div key={swatch.step} className="flex flex-col group/swatch relative h-full">
+                        <div 
+                            className={`h-52 w-full rounded-[32px] shadow-4xl mb-8 transition-all duration-700 group-hover/swatch:scale-105 group-hover/swatch:rounded-[60px] relative overflow-hidden flex items-center justify-center
+                                ${swatch.step === 500 ? 'border-4 border-amber-400/40 ring-4 ring-amber-400/10 shadow-amber-500/20' : 'border-2 border-white/10'}`}
+                            style={{ backgroundColor: swatch.hex }}
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/swatch:opacity-100 transition-opacity duration-500" />
+                            <button 
+                                onClick={() => handleCopy(swatch.hex)}
+                                className="relative z-10 opacity-0 group-hover/swatch:opacity-100 transition-all duration-700 transform translate-y-8 group-hover/swatch:translate-y-0 w-12 h-12 bg-white text-black rounded-[20px] flex items-center justify-center hover:scale-110 shadow-2xl active:scale-95"
+                            >
+                                {copyState === swatch.hex ? <Check size={18} strokeWidth={3} /> : <Copy size={18} strokeWidth={3} />}
+                            </button>
+                        </div>
+                        <div className="flex flex-col px-2 space-y-2">
+                             <div className="flex justify-between items-center">
+                                <span className={`text-[10px] font-black uppercase tracking-widest ${swatch.step === 500 ? 'text-amber-400' : 'text-white/40'}`}>
+                                    S-{swatch.step}
                                 </span>
-                                <span className="text-xs text-[var(--ui-text-muted)] uppercase font-mono mt-0.5">{swatch.hex.replace('#', '')}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* 3. Example UI Preview Area */}
-            <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-[var(--ui-text)]">Interface Preview</h3>
-                    <span className="text-sm text-[var(--ui-text-muted)]">Mockup generated using Palette 1</span>
-                </div>
-
-                <div className="bg-[var(--ui-bg)] border border-[var(--ui-border)] rounded-3xl p-8 lg:p-12 shadow-inner">
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        
-                        {/* Column 1: Dashboard & Nav */}
-                        <div className="space-y-6">
-                            {/* Nav Card */}
-                            <div className="bg-[var(--ui-surface)] p-6 rounded-2xl shadow-sm border border-[var(--ui-border)]">
-                                <h4 className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-wider mb-4">Settings</h4>
-                                <ul className="space-y-1">
-                                    <li className="flex items-center gap-3 p-2 rounded-lg bg-[var(--ui-accent-faint)] text-[var(--ui-accent)] font-medium text-sm cursor-pointer">
-                                        <Users size={18} strokeWidth={1.5} />
-                                        Manage team access
-                                    </li>
-                                    <li className="flex items-center gap-3 p-2 rounded-lg text-[var(--ui-text-muted)] hover:bg-[var(--ui-surface-hover)] hover:text-[var(--ui-text)] font-medium text-sm transition-colors cursor-pointer">
-                                        <Bell size={18} strokeWidth={1.5} />
-                                        Notification settings
-                                    </li>
-                                    <li className="flex items-center gap-3 p-2 rounded-lg text-[var(--ui-text-muted)] hover:bg-[var(--ui-surface-hover)] hover:text-[var(--ui-text)] font-medium text-sm transition-colors cursor-pointer">
-                                        <Download size={18} strokeWidth={1.5} />
-                                        Download reports
-                                    </li>
-                                </ul>
-                            </div>
-
-                            {/* Stats Card */}
-                            <div className="bg-[var(--ui-surface)] p-6 rounded-2xl shadow-sm border border-[var(--ui-border)]">
-                                <h4 className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-wider mb-4">Performance</h4>
-                                <div className="space-y-4">
-                                    <div>
-                                        <div className="text-sm text-[var(--ui-text-muted)] mb-1">Total Subscribers</div>
-                                        <div className="flex items-end gap-2">
-                                            <span className="text-2xl font-bold text-[var(--ui-text)]">24.8k</span>
-                                            <span className="text-xs font-bold text-[var(--ui-accent)] bg-[var(--ui-accent-faint)] px-1.5 py-0.5 rounded mb-1">+12%</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="text-sm text-[var(--ui-text-muted)] mb-1">Avg. Open Rate</div>
-                                        <div className="flex items-end gap-2">
-                                            <span className="text-2xl font-bold text-[var(--ui-text)]">58.3%</span>
-                                            <span className="text-xs font-bold text-[var(--ui-accent)] bg-[var(--ui-accent-faint)] px-1.5 py-0.5 rounded mb-1">+2.4%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Column 2: Hero & Pills */}
-                        <div className="lg:col-span-2 space-y-6">
-                            {/* Hero Card */}
-                            <div className="bg-[var(--ui-surface)] rounded-2xl shadow-sm border border-[var(--ui-border)] overflow-hidden relative">
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--ui-accent)] opacity-5 rounded-bl-full -mr-16 -mt-16 pointer-events-none"></div>
-                                <div className="p-8 relative z-10">
-                                    <span className="inline-block px-3 py-1 rounded-full bg-[var(--ui-accent)] text-[var(--ui-accent-on)] text-xs font-bold mb-4">NEW FEATURE</span>
-                                    <h2 className="text-3xl font-extrabold text-[var(--ui-text)] mb-4 leading-tight tracking-tight">Increase your revenue <br/> by <span className="text-[var(--ui-accent)]">3x</span> using Analytics.</h2>
-                                    <p className="text-[var(--ui-text-muted)] mb-8 max-w-md leading-relaxed">Unlock powerful insights with our new dashboard tools designed for modern SaaS companies.</p>
-                                    <div className="flex gap-4">
-                                        <button className="bg-[var(--ui-accent)] text-[var(--ui-accent-on)] px-6 py-3 rounded-lg font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-[var(--ui-accent)]/20 active:scale-95 flex items-center gap-2">
-                                            Start growing
-                                            <ArrowRight size={16} strokeWidth={1.5} />
-                                        </button>
-                                        <button className="text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] px-6 py-3 rounded-lg font-bold text-sm hover:bg-[var(--ui-surface-hover)] transition-all active:scale-95">
-                                            Learn more
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Categories Grid */}
-                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                {['Grocery Stores', 'Restaurants', 'Utilities', 'Sport'].map((cat, i) => (
-                                    <div key={i} className={`text-center py-3 px-2 rounded-xl border text-sm font-bold transition-all cursor-pointer active:scale-95
-                                        ${i === 0 ? 'bg-[var(--ui-accent)] border-[var(--ui-accent)] text-[var(--ui-accent-on)] shadow-lg shadow-[var(--ui-accent)]/20' : 'bg-[var(--ui-surface)] border-[var(--ui-border)] text-[var(--ui-text-muted)] hover:border-[var(--ui-accent)] hover:text-[var(--ui-accent)]'}`}>
-                                        {cat}
-                                    </div>
-                                ))}
-                            </div>
-
-                             {/* Pricing Cards */}
-                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {[
-                                    { title: 'Individual', price: '£0', desc: 'Forever free', btn: 'Get started', primary: false },
-                                    { title: 'Team', price: '£49', desc: 'Per month', btn: 'Start trial', primary: true },
-                                    { title: 'Enterprise', price: 'Custom', desc: 'Contact sales', btn: 'Contact us', primary: false }
-                                ].map((plan, i) => (
-                                    <div key={i} className={`p-5 rounded-2xl border flex flex-col items-start transition-all hover:shadow-md ${plan.primary ? 'bg-[var(--ui-text)] border-[var(--ui-text)] text-[var(--ui-bg)]' : 'bg-[var(--ui-surface)] border-[var(--ui-border)] text-[var(--ui-text)]'}`}>
-                                        <h5 className={`text-sm font-bold mb-2 ${plan.primary ? 'opacity-70' : 'text-[var(--ui-text-muted)]'}`}>{plan.title}</h5>
-                                        <div className="text-2xl font-black mb-1 tracking-tight">{plan.price}</div>
-                                        <div className={`text-xs mb-6 ${plan.primary ? 'opacity-60' : 'text-[var(--ui-text-muted)]'}`}>{plan.desc}</div>
-                                        <button className={`w-full py-2 rounded-lg text-xs font-bold transition-all mt-auto active:scale-95
-                                            ${plan.primary ? 'bg-[var(--ui-accent)] text-[var(--ui-accent-on)] hover:opacity-90' : 'bg-[var(--ui-bg)] text-[var(--ui-text)] border border-[var(--ui-border)] hover:bg-[var(--ui-surface-hover)]'}`}>
-                                            {plan.btn}
-                                        </button>
-                                    </div>
-                                ))}
+                                {swatch.step === 500 && <Zap size={10} className="text-amber-400" />}
                              </div>
+                            <span className="text-[10px] text-white/10 font-mono tracking-widest uppercase truncate">{swatch.hex}</span>
                         </div>
-
                     </div>
-                    
-                    {/* Bottom Row: Tickets & Calendar */}
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                         {/* Tickets List */}
-                         <div className="bg-[var(--ui-surface)] p-6 rounded-2xl shadow-sm border border-[var(--ui-border)]">
-                            <div className="flex justify-between items-center mb-6">
-                                <h4 className="font-bold text-[var(--ui-text)]">Recent Tickets</h4>
-                                <span className="text-xs text-[var(--ui-accent)] font-bold cursor-pointer hover:underline">View all</span>
-                            </div>
-                            <div className="space-y-4">
-                                {[
-                                    { name: 'Sarah M.', status: 'Open', time: '2m ago' },
-                                    { name: 'Alex D.', status: 'Pending', time: '15m ago' },
-                                    { name: 'James W.', status: 'Resolved', time: '1h ago' },
-                                ].map((ticket, i) => (
-                                    <div key={i} className="flex items-center justify-between pb-4 border-b border-[var(--ui-border)] last:border-0 last:pb-0">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-[var(--ui-bg)] flex items-center justify-center text-xs font-bold text-[var(--ui-text-muted)] border border-[var(--ui-border)]">
-                                                {ticket.name.charAt(0)}
-                                            </div>
-                                            <div>
-                                                <div className="text-sm font-bold text-[var(--ui-text)]">{ticket.name}</div>
-                                                <div className="text-xs text-[var(--ui-text-muted)]">Login issue</div>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col items-end">
-                                             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full mb-1
-                                                ${ticket.status === 'Open' ? 'bg-[var(--ui-accent-faint)] text-[var(--ui-accent)]' : 
-                                                  ticket.status === 'Resolved' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'}`}>
-                                                {ticket.status}
-                                             </span>
-                                             <span className="text-[10px] text-[var(--ui-text-muted)]">{ticket.time}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                         </div>
+                ))}
+            </div>
+            
+            <div className="absolute top-0 left-0 p-12 opacity-[0.02] pointer-events-none rotate-90 origin-top-left">
+                <span className="text-6xl font-black uppercase tracking-[1em] whitespace-nowrap">ATOMIC SCANNER</span>
+            </div>
+        </section>
 
-                         {/* Calendar Widget */}
-                         <div className="bg-[var(--ui-surface)] p-6 rounded-2xl shadow-sm border border-[var(--ui-border)] flex gap-6 overflow-hidden">
-                             <div className="flex-1">
-                                <h4 className="font-bold text-[var(--ui-text)] mb-4">October 2024</h4>
-                                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-[var(--ui-text-muted)] mb-2">
-                                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
-                                </div>
-                                <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-[var(--ui-text)]">
-                                    {/* Mock Calendar Grid */}
-                                    <span className="opacity-20">29</span><span className="opacity-20">30</span>
-                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                                    <span>6</span><span>7</span><span className="bg-[var(--ui-accent)] text-[var(--ui-accent-on)] rounded-full font-bold">8</span><span>9</span><span>10</span><span>11</span><span>12</span>
-                                    <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
-                                </div>
-                             </div>
-                             <div className="w-px bg-[var(--ui-border)]"></div>
-                             <div className="flex-1 space-y-4">
-                                <h5 className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-wider">Up Next</h5>
-                                <div className="border-l-2 border-[var(--ui-accent)] pl-3">
-                                    <div className="text-xs font-bold text-[var(--ui-text)]">Design Sync</div>
-                                    <div className="text-[10px] text-[var(--ui-text-muted)]">10:00 - 11:00 AM</div>
-                                </div>
-                                <div className="border-l-2 border-purple-500 pl-3">
-                                    <div className="text-xs font-bold text-[var(--ui-text)]">Product Review</div>
-                                    <div className="text-[10px] text-[var(--ui-text-muted)]">01:30 - 02:30 PM</div>
-                                </div>
-                             </div>
-                         </div>
+        {/* Prototype Simulation Area */}
+        <section className="space-y-16 py-24 border-t border-white/5">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 px-6">
+                <div className="space-y-8">
+                    <div className="flex items-center gap-4">
+                        <div className="h-0.5 w-16 bg-white rounded-full opacity-20" />
+                        <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.5em]">Simulation Deck.01</span>
                     </div>
+                    <h3 className="text-5xl font-black text-white uppercase tracking-tightest italic leading-none">Atomic <span className="text-white/20">Forge Preview.</span></h3>
+                    <p className="text-white/20 text-sm font-medium uppercase tracking-[0.2em] max-w-lg leading-relaxed">
+                        Validating spectral integrity across high-contrast volumetric layouts and tactical component mapping.
+                    </p>
                 </div>
-            </section>
-
-            {/* 4. Footer Area */}
-            <footer className="mt-20 border-t border-[var(--ui-border)] pt-12 pb-8">
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-                    <div className="col-span-2 md:col-span-1">
-                        <span className="text-xl font-black tracking-tighter text-[var(--ui-text)]">Tailwind Colours</span>
-                    </div>
-                    <div>
-                        <h6 className="font-bold text-[var(--ui-text)] text-sm mb-4 uppercase tracking-widest">Tools</h6>
-                        <ul className="space-y-2 text-sm text-[var(--ui-text-muted)]">
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Palette Generator</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Gradient Maker</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Contrast Check</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h6 className="font-bold text-[var(--ui-text)] text-sm mb-4 uppercase tracking-widest">Discover</h6>
-                        <ul className="space-y-2 text-sm text-[var(--ui-text-muted)]">
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Trending Palettes</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Design Systems</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Blog</a></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h6 className="font-bold text-[var(--ui-text)] text-sm mb-4 uppercase tracking-widest">Apps</h6>
-                        <ul className="space-y-2 text-sm text-[var(--ui-text-muted)]">
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">iOS App</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Figma Plugin</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">VS Code Extension</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h6 className="font-bold text-[var(--ui-text)] text-sm mb-4 uppercase tracking-widest">Company</h6>
-                        <ul className="space-y-2 text-sm text-[var(--ui-text-muted)]">
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">About</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Contact</a></li>
-                            <li><a href="#" className="hover:text-[var(--ui-accent)] transition-colors">Privacy</a></li>
-                        </ul>
-                    </div>
+                <div className="flex gap-4 p-2 bg-white/5 rounded-[32px] border border-white/10 backdrop-blur-3xl shadow-2xl">
+                    <button className="p-4 rounded-[24px] bg-white text-black shadow-4xl hover:scale-105 transition-all"><Monitor size={20} /></button>
+                    <button className="p-4 rounded-[24px] text-white/20 hover:text-white hover:bg-white/5 transition-all"><Smartphone size={20} /></button>
+                    <button className="p-4 rounded-[24px] text-white/20 hover:text-white hover:bg-white/5 transition-all"><Layout size={20} /></button>
                 </div>
+            </div>
+
+            <div className="glass-premium border border-white/10 rounded-[100px] p-24 shadow-5xl relative overflow-hidden bg-gradient-to-br from-black/60 via-transparent to-transparent">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--app-primary),transparent_70%)] opacity-5 pointer-events-none" />
                 
-                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[var(--ui-border)]">
-                    <p className="text-[var(--ui-text-muted)] text-sm mb-4 md:mb-0">© Tailwind Colours Project. Let’s make something cool!</p>
-                    <div className="flex gap-4">
-                        <span className="w-8 h-8 rounded-full bg-[var(--ui-surface)] border border-[var(--ui-border)] text-[var(--ui-text-muted)] flex items-center justify-center cursor-pointer hover:bg-[var(--ui-accent)] hover:text-[var(--ui-accent-on)] transition-colors">
-                            <Twitter size={16} strokeWidth={1.5} />
-                        </span>
-                        <span className="w-8 h-8 rounded-full bg-[var(--ui-surface)] border border-[var(--ui-border)] text-[var(--ui-text-muted)] flex items-center justify-center cursor-pointer hover:bg-[var(--ui-accent)] hover:text-[var(--ui-accent-on)] transition-colors">
-                            <Instagram size={16} strokeWidth={1.5} />
-                        </span>
-                        <span className="w-8 h-8 rounded-full bg-[var(--ui-surface)] border border-[var(--ui-border)] text-[var(--ui-text-muted)] flex items-center justify-center cursor-pointer hover:bg-[var(--ui-accent)] hover:text-[var(--ui-accent-on)] transition-colors">
-                            <ExternalLink size={16} strokeWidth={1.5} />
-                        </span>
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-24 relative z-10">
+                    
+                    {/* Left Deck: Control Console */}
+                    <div className="xl:col-span-4 space-y-16">
+                        <div className="bg-black/60 backdrop-blur-3xl p-16 rounded-[72px] border border-white/10 shadow-5xl space-y-12 hover:border-amber-400/40 transition-all duration-700 group/panel">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-5">
+                                    <div className="w-4 h-4 rounded-full bg-amber-400 animate-pulse shadow-[0_0_15px_rgba(251,191,36,0.6)]" />
+                                    <h4 className="text-[11px] font-black text-white uppercase tracking-[0.6em]">System Matrix</h4>
+                                </div>
+                                <Terminal className="text-white/10 group-hover/panel:text-amber-400 transition-colors" size={24} />
+                            </div>
+                            
+                            <nav className="space-y-4">
+                                {[
+                                    { label: 'Core Orbital Link', icon: Cpu, active: true },
+                                    { label: 'Atmospheric Sync', icon: Wind, active: false },
+                                    { label: 'Neural Protocols', icon: Component, active: false }
+                                ].map((item, i) => (
+                                    <div key={i} className={`flex items-center justify-between p-8 rounded-[36px] transition-all duration-700 cursor-pointer group/link border
+                                        ${item.active ? 'bg-white text-black shadow-4xl border-white' : 'bg-white/5 text-white/20 border-transparent hover:bg-white/10 hover:text-white hover:border-white/10'}`}>
+                                        <div className="flex items-center gap-6">
+                                            <item.icon size={24} strokeWidth={item.active ? 3 : 2} className="transition-transform group-hover/link:rotate-12" />
+                                            <span className="text-[11px] font-black uppercase tracking-widest">{item.label}</span>
+                                        </div>
+                                        <ArrowRight size={18} className={`transition-transform group-hover/link:translate-x-2 ${item.active ? 'opacity-100' : 'opacity-20'}`} />
+                                    </div>
+                                ))}
+                            </nav>
+                        </div>
+
+                        <div className="bg-white/5 p-16 rounded-[72px] border border-white/10 space-y-16 backdrop-blur-md relative overflow-hidden group/stats">
+                             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:scale-110 transition-transform duration-1000">
+                                <Activity size={120} />
+                             </div>
+                            <h4 className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em]">Spectral Flux Audit</h4>
+                            <div className="grid grid-cols-1 gap-12">
+                                <div className="space-y-5">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-[10px] font-black text-white/30 uppercase tracking-widest leading-none">Node Response</span>
+                                        <span className="text-4xl font-black text-white italic tracking-tighter leading-none">99.98%</span>
+                                    </div>
+                                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden shadow-inner">
+                                        <div className="h-full w-[99%] bg-white rounded-full shadow-[0_0_15px_white]" />
+                                    </div>
+                                </div>
+                                <div className="text-center space-y-2">
+                                     <span className="text-[10px] font-black text-white/10 uppercase tracking-[1em] block mb-4">Atomic Precision</span>
+                                     <div className="text-6xl font-black text-white tracking-widest leading-none">+0.002MS</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    {/* Right Deck: Prime Viewport */}
+                    <div className="xl:col-span-8 space-y-16">
+                        <section className="bg-white rounded-[90px] p-24 shadow-5xl relative overflow-hidden group/hero transition-all duration-1000 hover:scale-[1.01]">
+                            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-black/5 rounded-full translate-x-1/2 -translate-y-1/2 blur-[150px] pointer-events-none group-hover:scale-110 transition-transform duration-[2000ms]" />
+                            <div className="relative z-10 space-y-16">
+                                <div className="flex items-center gap-6">
+                                    <span className="px-6 py-3 rounded-[24px] bg-black text-white text-[10px] font-black uppercase tracking-[0.6em] shadow-2xl">PHASE: OMNI.GEN</span>
+                                    <div className="flex -space-x-5">
+                                        {[1,2,3,4,5].map(i => (
+                                            <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-gray-100 shadow-xl relative overflow-hidden group/avatar">
+                                                <div className="absolute inset-0 bg-gradient-to-tr from-gray-300 to-white opacity-40"></div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <span className="text-[10px] font-black text-black/30 uppercase tracking-[0.3em] ml-2">Mapping 24 Global Hubs</span>
+                                </div>
+                                
+                                <h2 className="text-8xl md:text-[160px] font-black text-black uppercase tracking-tightest leading-[0.7] max-w-4xl italic group-hover:translate-x-2 transition-transform duration-1000">
+                                    Forge <br/> <span className="text-amber-500">Atomic.</span>
+                                </h2>
+                                
+                                <p className="text-xl font-bold text-black/40 uppercase tracking-[0.3em] leading-relaxed max-w-2xl px-2">
+                                    Architecting the next evolution of structural interfaces for sentient computing environments.
+                                </p>
+                                
+                                <div className="flex flex-col sm:flex-row gap-8 pt-12">
+                                    <button className="bg-black text-white h-28 px-20 rounded-[44px] font-black uppercase tracking-[0.6em] text-[12px] hover:scale-105 active:scale-95 transition-all shadow-4xl flex items-center gap-8 group/prime">
+                                        Initialize Protocol
+                                        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center transition-all group-hover/prime:rotate-90 group-hover/prime:bg-amber-400 group-hover/prime:text-black">
+                                            <ArrowRight size={20} strokeWidth={3} />
+                                        </div>
+                                    </button>
+                                    <button className="h-28 px-12 text-black/40 hover:text-black font-black uppercase tracking-[0.5em] text-[12px] transition-all flex items-center gap-4 group/sec">
+                                        Read Technical Whitepaper
+                                        <ExternalLink size={18} className="opacity-40 group-hover/sec:translate-x-1 group-hover/sec:-translate-y-1 transition-transform" />
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                            {[
+                                { title: 'Essential Core', price: 'FREE', icon: Sparkles, color: 'text-white/20' },
+                                { title: 'Titan Access', price: '49', icon: Crown, color: 'text-amber-400', featured: true },
+                                { title: 'Enterprise Void', price: 'POA', icon: Diamond, color: 'text-white/20' }
+                            ].map((plan, i) => (
+                                <div key={i} className={`p-16 rounded-[72px] transition-all duration-700 hover:-translate-y-6 group/tier border-2
+                                    ${plan.featured ? 'bg-black border-amber-400/20 shadow-5xl' : 'bg-white/5 border-transparent hover:border-white/10'}`}>
+                                    <plan.icon size={48} className={`mb-12 ${plan.color}`} strokeWidth={plan.featured ? 2.5 : 1.5} />
+                                    <h5 className={`text-[11px] font-black mb-10 uppercase tracking-[0.5em] ${plan.featured ? 'text-amber-400' : 'text-white/30'}`}>{plan.title}</h5>
+                                    <div className={`text-7xl font-black mb-16 tracking-tightest italic uppercase ${plan.featured ? 'text-white' : 'text-white/10'}`}>
+                                        {plan.price !== 'FREE' && plan.price !== 'POA' && <span className="text-3xl align-top mr-1 font-bold italic">$</span>}
+                                        {plan.price}
+                                    </div>
+                                    <button className={`w-full h-20 rounded-[30px] text-[11px] font-black uppercase tracking-[0.4em] transition-all duration-500
+                                        ${plan.featured ? 'bg-amber-400 text-amber-950 shadow-4xl hover:scale-105 active:scale-95' : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'}`}>
+                                        Initialize
+                                    </button>
+                                </div>
+                            ))}
+                         </div>
+                    </div>
+
                 </div>
-            </footer>
-        </div>
+            </div>
+        </section>
+
+        {/* Branding Footer */}
+        <footer className="pt-24 pb-12 opacity-5 flex flex-col items-center gap-6">
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-white to-transparent"></div>
+            <span className="text-[10px] font-black uppercase tracking-[2em] whitespace-nowrap">Genesis Protocol / Chroma Core Registry End</span>
+        </footer>
+    </div>
     );
 };
 

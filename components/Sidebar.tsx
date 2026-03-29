@@ -1,22 +1,26 @@
-
 import React, { useState, useRef } from 'react';
+import { DesignSystem } from '../types';
 import { 
   Palette, 
   Type, 
-  LayoutGrid, 
+  Grid3X3, 
   Layers, 
   Component, 
   Zap, 
-  Moon, 
+  Wind, 
+  LayoutDashboard,
+  Moon,
   Sun,
-  GripVertical,
-  PenTool,
-  Square,
-  Download
+  ChevronRight,
+  Cpu,
+  UnfoldVertical,
+  Activity,
+  Terminal,
+  Ship,
+  Sparkles
 } from 'lucide-react';
-import { DesignSystem } from '../types';
 
-type View = 'colours' | 'typography' | 'spacing' | 'elevation' | 'icons' | 'gradients' | 'tailwind';
+type View = 'colours' | 'typography' | 'spacing' | 'elevation' | 'icons' | 'gradients' | 'tailwind' | 'flyonui';
 
 interface SidebarProps {
   currentView: View;
@@ -27,18 +31,18 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, toggleTheme, designSystem }) => {
-  const [items, setItems] = useState<{ id: View; label: string; icon: React.ElementType }[]>([
-    { id: 'colours', label: 'Colours', icon: Palette },
-    { id: 'typography', label: 'Typography', icon: Type },
-    { id: 'spacing', label: 'Spacing', icon: LayoutGrid },
-    { id: 'elevation', label: 'Elevation', icon: Layers },
-    { id: 'icons', label: 'Icons', icon: Component },
-    { id: 'gradients', label: 'Gradients', icon: Zap },
-    { id: 'tailwind', label: 'Tailwind', icon: Square },
+  const [items, setItems] = useState<{ id: View; label: string; icon: any; ref: string }[]>([
+    { id: 'colours', label: 'Spectrum', icon: Palette, ref: '0x01' },
+    { id: 'typography', label: 'Foundry', icon: Type, ref: '0x02' },
+    { id: 'spacing', label: 'Spatial', icon: Grid3X3, ref: '0x03' },
+    { id: 'elevation', label: 'Shadows', icon: Layers, ref: '0x04' },
+    { id: 'icons', label: 'Symbols', icon: Component, ref: '0x05' },
+    { id: 'gradients', label: 'Chroma', icon: Zap, ref: '0x06' },
+    { id: 'tailwind', label: 'Tailwind', icon: Wind, ref: '0x07' },
+    { id: 'flyonui', label: 'FlyonUI', icon: LayoutDashboard, ref: '0x08' },
   ]);
 
   const dragItem = useRef<number | null>(null);
-  const dragOverItem = useRef<number | null>(null);
 
   const handleDragStart = (e: React.DragEvent, position: number) => {
     dragItem.current = position;
@@ -69,20 +73,36 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
 
   const handleDragEnd = () => {
     dragItem.current = null;
-    dragOverItem.current = null;
   };
 
   return (
-    <nav className="w-20 md:w-64 h-full overflow-y-auto overflow-x-hidden bg-[var(--ui-surface)] border-r border-[var(--ui-border)] p-3 md:p-4 flex flex-col items-center md:items-start transition-colors duration-300">
-      <div className="mb-4 md:mb-8 flex items-center gap-3 w-full justify-center md:justify-start flex-shrink-0">
-        <div className="bg-[var(--ui-accent)] p-2.5 rounded-xl text-[var(--ui-accent-on)] shadow-lg shadow-[var(--ui-accent)]/20">
-          <PenTool size={20} strokeWidth={1.5} />
-        </div>
-        <h1 className="text-xl font-bold hidden md:block text-[var(--ui-text)] tracking-tighter leading-tight">Design System Tokens</h1>
+    <nav className="fixed md:static bottom-6 left-6 right-6 md:h-[calc(100vh-3rem)] md:w-80 md:my-6 md:ml-6 glass-premium rounded-[48px] p-6 md:p-8 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border border-white/10 shadow-5xl gap-10">
+      
+      {/* Brand & Status */}
+      <div className="hidden md:flex flex-col gap-6 px-2">
+          <div className="flex items-center gap-4 group">
+            <div className="w-14 h-14 bg-white text-black rounded-[22px] flex items-center justify-center shadow-4xl group-hover:scale-105 transition-transform duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-400 opacity-20"></div>
+                <Cpu size={28} strokeWidth={2.5} />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black tracking-tightest leading-none flex items-center gap-2">
+                GENESIS
+                <span className="text-[10px] bg-white/10 text-white/40 px-2 py-0.5 rounded-full font-mono">v3.0</span>
+              </h1>
+              <div className="flex items-center gap-2 mt-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse"></div>
+                  <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">Protocol Active</span>
+              </div>
+            </div>
+          </div>
+          <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent"></div>
       </div>
 
-      <ul className="space-y-1 w-full">
+      {/* Navigation Matrix */}
+      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-x-visible no-scrollbar p-1">
         {items.map((item, index) => {
+          const isActive = currentView === item.id;
           const Icon = item.icon;
           return (
             <li 
@@ -92,56 +112,61 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
               onDragEnter={(e) => handleDragEnter(e, index)}
               onDragEnd={handleDragEnd}
               onDragOver={(e) => e.preventDefault()}
-              className="cursor-move"
-              style={{ viewTransitionName: `nav-${item.id}` } as any}
+              className="flex-shrink-0 md:w-full"
             >
               <button
                 onClick={() => setCurrentView(item.id)}
-                className={`flex items-center gap-4 p-3 rounded-xl w-full transition-all duration-200 justify-center md:justify-start group relative
-                  ${currentView === item.id ? 
-                    'bg-[var(--ui-accent-faint)] text-[var(--ui-accent)]' : 
-                    'text-[var(--ui-text-muted)] hover:bg-[var(--ui-surface-hover)] hover:text-[var(--ui-text)]'}`}
+                className={`relative group flex items-center md:px-5 md:py-4 rounded-[24px] w-full transition-all duration-500 overflow-hidden border
+                  ${isActive ? 
+                    'bg-white text-black border-white shadow-4xl' : 
+                    'text-white/20 border-transparent hover:bg-white/5 hover:text-white/60 hover:border-white/5'}`}
               >
-                {currentView === item.id && (
-                  <div className="absolute left-0 w-1 h-6 bg-[var(--ui-accent)] rounded-r-full hidden md:block" />
-                )}
-                <div className="flex items-center gap-4">
-                   <Icon size={20} strokeWidth={1.5} className={`transition-transform duration-200 ${currentView === item.id ? 'scale-110' : 'group-hover:scale-110'}`} />
-                   <span className="hidden md:block font-medium text-sm tracking-tight">{item.label}</span>
+                <div className="relative z-10 flex items-center justify-between w-full">
+                  <div className="flex items-center gap-5">
+                    <Icon size={20} strokeWidth={isActive ? 3 : 2} className="transition-all duration-500" />
+                    <div className="hidden md:flex flex-col items-start">
+                        <span className="font-black text-[12px] uppercase tracking-widest">{item.label}</span>
+                        <span className={`text-[8px] font-mono mt-0.5 transition-colors ${isActive ? 'text-black/40' : 'text-white/10'}`}>{item.ref}</span>
+                    </div>
+                  </div>
+                  {isActive && <ChevronRight size={14} className="hidden md:block" />}
                 </div>
-                <GripVertical size={14} strokeWidth={1.5} className="ml-auto opacity-0 group-hover:opacity-20 hidden md:block" />
               </button>
             </li>
           );
         })}
       </ul>
 
-      <div className="mt-auto w-full pt-4 border-t border-[var(--ui-border)] flex-shrink-0 space-y-1">
-        <button 
-          onClick={() => {
-            parent.postMessage({ pluginMessage: { type: 'export-to-figma', designSystem } }, '*');
-          }}
-          className="flex items-center gap-4 p-3 rounded-xl w-full transition-all duration-200 justify-center md:justify-start text-[var(--ui-accent)] bg-[var(--ui-accent-faint)] hover:bg-[var(--ui-accent)] hover:text-[var(--ui-accent-on)] group"
-        >
-          <div className="transition-transform duration-200 group-hover:scale-110">
-            <Download size={20} strokeWidth={1.5} />
+      {/* System Deck Footer */}
+      <div className="hidden md:flex flex-col gap-4 mt-auto">
+          <div className="flex gap-3">
+            <button 
+                onClick={toggleTheme}
+                className="flex-1 flex items-center justify-center h-16 rounded-[24px] bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all duration-500 group shadow-xl"
+                title="Theme Shift"
+            >
+                {theme === 'light' ? <Moon size={20} className="group-hover:rotate-12 transition-transform" /> : <Sun size={20} className="group-hover:rotate-12 transition-transform" />}
+            </button>
+            <button 
+                className="flex-1 flex items-center justify-center h-16 rounded-[24px] bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all duration-500 group shadow-xl"
+                title="Terminal Access"
+            >
+                <Terminal size={20} />
+            </button>
           </div>
-          <span className="hidden md:block font-medium text-sm tracking-tight">
-            Export to Figma
-          </span>
-        </button>
 
-        <button 
-          onClick={toggleTheme}
-          className="flex items-center gap-4 p-3 rounded-xl w-full transition-all duration-200 justify-center md:justify-start text-[var(--ui-text-muted)] hover:bg-[var(--ui-surface-hover)] hover:text-[var(--ui-text)] group"
-        >
-          <div className="transition-transform duration-300 group-hover:rotate-12">
-            {theme === 'light' ? <Moon size={20} strokeWidth={1.5} /> : <Sun size={20} strokeWidth={1.5} />}
+          <button 
+            className="relative h-20 w-full bg-white text-black font-black text-[11px] uppercase tracking-[0.4em] rounded-[28px] overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-95 shadow-4xl flex items-center justify-center gap-4"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-300 opacity-20"></div>
+            <Ship size={18} strokeWidth={3} className="animate-bounce" />
+            DEPLOY SYSTEM
+          </button>
+
+          <div className="flex flex-col items-center gap-2 mt-4 opacity-5">
+              <Sparkles size={16} />
+              <span className="text-[8px] font-black uppercase tracking-[1em]">END OF COMMAND</span>
           </div>
-          <span className="hidden md:block font-medium text-sm tracking-tight">
-            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-          </span>
-        </button>
       </div>
     </nav>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { DesignSystem } from './types';
 import Sidebar from './components/Sidebar';
@@ -9,134 +8,122 @@ import ElevationStyles from './components/ElevationStyles';
 import Iconography from './components/Iconography';
 import GradientGenerator from './components/GradientGenerator';
 import TailwindPalette from './components/TailwindPalette';
+import FlyonUIExamples from './components/FlyonUIExamples';
 import { hexToRgb, getLuminance } from './utils';
 import './index.css';
+import 'flyonui/flyonui';
 
 const initialDesignSystem: DesignSystem = {
   colours: [
-      { name: 'primary', label: 'Primary', value: '#404040', description: 'Main brand colour' },
-      { name: 'secondary', label: 'Secondary', value: '#737373', description: 'Secondary accent colour' },
-      { name: 'tertiary', label: 'Tertiary', value: '#FF5733', description: 'Tertiary accent colour' },
-      { name: 'error', label: 'Error', value: '#EF4444', description: 'Colour for errors' },
-      { name: 'background', label: 'Background', value: '#FAFAFA', description: 'Overall page background' },
-      { name: 'surface', label: 'Surface', value: '#FFFFFF', description: 'Component backgrounds' },
-      { name: 'onPrimary', label: 'On Primary', value: '#FFFFFF', description: 'Text/icons on primary colour' },
-      { name: 'onSecondary', label: 'On Secondary', value: '#FFFFFF', description: 'Text/icons on secondary colour' },
-      { name: 'onSurface', label: 'On Surface', value: '#111111', description: 'Text/icons on surface colour' },
+      { name: 'primary', label: 'Primary', value: '#00E5FF', description: 'Main brand colour for directional focus' },
+      { name: 'secondary', label: 'Secondary', value: '#9CA3AF', description: 'Secondary accent for structural elements' },
+      { name: 'tertiary', label: 'Tertiary', value: '#AA00FF', description: 'Tertiary accent for specialized actions' },
+      { name: 'error', label: 'Error', value: '#EF4444', description: 'Critical system exception mapping' },
+      { name: 'background', label: 'Background', value: '#08090A', description: 'Overall base foundation' },
+      { name: 'surface', label: 'Surface', value: '#121417', description: 'Component container depth' },
+      { name: 'onPrimary', label: 'On Primary', value: '#000000', description: 'Contrast mapping for primary' },
+      { name: 'onSecondary', label: 'On Secondary', value: '#FFFFFF', description: 'Contrast mapping for secondary' },
+      { name: 'onSurface', label: 'On Surface', value: '#F3F4F6', description: 'Contrast mapping for surface' },
   ],
   typography: [
-    { name: 'displayLarge', label: 'Display Large', fontFamily: 'SF Pro', fontWeight: 500, fontSize: 57, lineHeight: 64, letterSpacing: -0.25 },
-    { name: 'headlineLarge', label: 'Headline Large', fontFamily: 'SF Pro', fontWeight: 500, fontSize: 32, lineHeight: 40, letterSpacing: 0 },
-    { name: 'headlineSmall', label: 'Headline Small', fontFamily: 'SF Pro', fontWeight: 500, fontSize: 24, lineHeight: 32, letterSpacing: 0 },
-    { name: 'titleLarge', label: 'Title Large', fontFamily: 'SF Pro', fontWeight: 500, fontSize: 22, lineHeight: 28, letterSpacing: 0 },
-    { name: 'bodyLarge', label: 'Body Large', fontFamily: 'SF Pro', fontWeight: 400, fontSize: 16, lineHeight: 24, letterSpacing: 0.5 },
-    { name: 'bodySmall', label: 'Body Small', fontFamily: 'SF Pro', fontWeight: 400, fontSize: 12, lineHeight: 16, letterSpacing: 0.4 },
-    { name: 'labelLarge', label: 'Label Large', fontFamily: 'SF Pro', fontWeight: 500, fontSize: 14, lineHeight: 20, letterSpacing: 0.1 },
+    { name: 'displayLarge', label: 'Display Large', fontFamily: 'Inter', fontWeight: 900, fontSize: 120, lineHeight: 110, letterSpacing: -5 },
+    { name: 'headlineLarge', label: 'Headline Large', fontFamily: 'Inter', fontWeight: 800, fontSize: 64, lineHeight: 72, letterSpacing: -2 },
+    { name: 'headlineSmall', label: 'Headline Small', fontFamily: 'Inter', fontWeight: 700, fontSize: 32, lineHeight: 40, letterSpacing: -1 },
+    { name: 'titleLarge', label: 'Title Large', fontFamily: 'Inter', fontWeight: 600, fontSize: 24, lineHeight: 32, letterSpacing: -0.5 },
+    { name: 'bodyLarge', label: 'Body Large', fontFamily: 'Inter', fontWeight: 400, fontSize: 18, lineHeight: 28, letterSpacing: 0 },
+    { name: 'bodySmall', label: 'Body Small', fontFamily: 'Inter', fontWeight: 400, fontSize: 14, lineHeight: 20, letterSpacing: 0 },
+    { name: 'labelLarge', label: 'Label Large', fontFamily: 'JetBrains Mono', fontWeight: 700, fontSize: 12, lineHeight: 16, letterSpacing: 2 },
   ],
   spacing: [
-    { name: 'xs', value: 4 },
-    { name: 's', value: 8 },
-    { name: 'm', value: 16 },
-    { name: 'l', value: 24 },
-    { name: 'xl', value: 32 },
-    { name: 'xxl', value: 64 },
+    { name: 'xs', value: 8 },
+    { name: 's', value: 16 },
+    { name: 'm', value: 32 },
+    { name: 'l', value: 64 },
+    { name: 'xl', value: 128 },
+    { name: 'xxl', value: 256 },
   ],
   elevation: [
-    { name: 'level0', level: 0, shadow: 'none' },
-    { name: 'level1', level: 1, shadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' },
-    { name: 'level2', level: 2, shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' },
-    { name: 'level3', level: 3, shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' },
+    { name: 'Flat', level: 0, shadow: 'none' },
+    { name: 'Ambient', level: 1, shadow: '0 4px 20px -5px rgba(0, 0, 0, 0.4)' },
+    { name: 'Floating', level: 2, shadow: '0 20px 50px -10px rgba(0, 0, 0, 0.6)' },
+    { name: 'Projected', level: 3, shadow: '0 40px 100px -20px rgba(0, 0, 0, 0.8)' },
   ],
   iconSizes: [
-    { name: 'small', value: 18, weight: 300 },
-    { name: 'medium', value: 24, weight: 300 },
-    { name: 'large', value: 32, weight: 300 },
-    { name: 'extraLarge', value: 48, weight: 300 },
+    { name: 'nano', value: 16, weight: 400 },
+    { name: 'standard', value: 24, weight: 400 },
+    { name: 'hero', value: 48, weight: 400 },
+    { name: 'massive', value: 96, weight: 400 },
   ],
   iconStyle: 'outlined',
-  iconWeight: 300,
+  iconWeight: 400,
   gradients: [
     {
-      name: 'Neon Lagoon',
-      type: 'linear',
-      rotation: 90,
-      stops: [
-        { id: '1', colour: '#00F260', position: 0 },
-        { id: '2', colour: '#0575E6', position: 100 }
-      ]
-    },
-    {
-      name: 'Synthwave',
+      name: 'Cyanide Flux',
       type: 'linear',
       rotation: 135,
       stops: [
-        { id: '1', colour: '#FF3CAC', position: 0 },
-        { id: '2', colour: '#784BA0', position: 50 },
-        { id: '3', colour: '#2B86C5', position: 100 }
+        { id: '1', colour: '#00E5FF', position: 0 },
+        { id: '2', colour: '#1200FF', position: 100 }
+      ]
+    },
+    {
+      name: 'Carbon Plasma',
+      type: 'radial',
+      rotation: 0,
+      stops: [
+        { id: '1', colour: '#333333', position: 0 },
+        { id: '2', colour: '#000000', position: 100 }
       ]
     }
   ],
   applyTheme: false
 };
 
-type View = 'colours' | 'typography' | 'spacing' | 'elevation' | 'icons' | 'gradients' | 'tailwind';
+type View = 'colours' | 'typography' | 'spacing' | 'elevation' | 'icons' | 'gradients' | 'tailwind' | 'flyonui';
 
 const App: React.FC = () => {
   const [designSystem, setDesignSystem] = useState<DesignSystem>(initialDesignSystem);
   const [currentView, setCurrentView] = useState<View>('colours');
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   
-  // Dynamically load Google Fonts when they are selected in the typography scale
   useEffect(() => {
-    const fontsToLoad = [...new Set(designSystem.typography.map(t => t.fontFamily))]
-      .filter(f => f !== 'SF Pro' && f !== 'Inter' && f !== 'Outfit' && f !== 'JetBrains Mono');
+    const fontsToLoad = [...new Set(designSystem.typography.map(t => t.fontFamily as string))]
+      .filter(f => !['Inter', 'JetBrains Mono', 'Roboto', 'Outfit', 'Montserrat'].includes(f));
     
-    if (fontsToLoad.length > 0) {
-      const linkId = 'dynamic-google-fonts';
+    if (fontsToLoad.length > 0 || true) {
+      const linkId = 'system-google-fonts';
       let link = document.getElementById(linkId) as HTMLLinkElement;
-      
       if (!link) {
         link = document.createElement('link');
         link.id = linkId;
         link.rel = 'stylesheet';
         document.head.appendChild(link);
       }
-      
-      const fontQuery = (fontsToLoad as string[]).map(f => f.replace(/\s+/g, '+')).join('&family=');
-      link.href = `https://fonts.googleapis.com/css2?family=${fontQuery}:wght@300;400;500;600;700;800;900&display=swap`;
+      const baseFonts = 'Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700';
+      const dynamicFonts = (fontsToLoad as string[]).map(f => f.replace(/\s+/g, '+')).join('&family=');
+      link.href = `https://fonts.googleapis.com/css2?family=${baseFonts}${dynamicFonts ? `&family=${dynamicFonts}` : ''}&display=swap`;
     }
   }, [designSystem.typography]);
 
-  // Generate CSS Variables based on current design system or defaults
   const getColorValue = (name: string) => designSystem.colours.find(c => c.name === name)?.value;
-  
-  // Calculate appropriate color-scheme for native inputs (like scrollbars, spin buttons)
-  const bgHex = designSystem.applyTheme ? getColorValue('background') : (theme === 'dark' ? '#050505' : '#F8FAFC');
-  let colorScheme = theme;
-  if (designSystem.applyTheme && bgHex) {
-    const rgb = hexToRgb(bgHex);
-    if (rgb) {
-      const lum = getLuminance(rgb.r, rgb.g, rgb.b);
-      colorScheme = lum < 0.5 ? 'dark' : 'light';
-    }
-  }
+  const bgHex = designSystem.applyTheme ? getColorValue('background') : (theme === 'dark' ? '#08090A' : '#F8FAFC');
 
   const themeStyles = `
     :root {
-      color-scheme: ${colorScheme};
-      
-      /* Design System Tokens (Dynamic) */
-      --app-primary: ${designSystem.applyTheme ? getColorValue('primary') : 'var(--ui-accent)'};
-      --app-on-primary: ${designSystem.applyTheme ? getColorValue('onPrimary') : 'var(--ui-accent-on)'};
-      --app-secondary: ${designSystem.applyTheme ? getColorValue('secondary') : 'var(--ui-text-muted)'};
-      --app-background: ${designSystem.applyTheme ? getColorValue('background') : 'var(--ui-bg)'};
-      --app-surface: ${designSystem.applyTheme ? getColorValue('surface') : 'var(--ui-surface)'};
-      --app-text: ${designSystem.applyTheme ? getColorValue('onSurface') : 'var(--ui-text)'};
-      --app-font-family: ${designSystem.applyTheme ? `"${designSystem.typography.find(t => t.name === 'bodyLarge')?.fontFamily || 'Outfit'}", var(--font-sans)` : 'var(--font-sans)'};
+      --app-primary: ${designSystem.applyTheme ? getColorValue('primary') : '#00E5FF'};
+      --app-background: ${designSystem.applyTheme ? getColorValue('background') : '#08090A'};
+      --app-surface: ${designSystem.applyTheme ? getColorValue('surface') : '#121417'};
+      --app-text: ${designSystem.applyTheme ? getColorValue('onSurface') : '#F3F4F6'};
     }
+    body {
+        background-color: var(--app-background);
+        font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.1); }
   `;
-
-  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
   const renderContent = () => {
     switch (currentView) {
@@ -176,21 +163,47 @@ const App: React.FC = () => {
         );
       case 'tailwind':
         return <TailwindPalette />;
+      case 'flyonui':
+        return <FlyonUIExamples />;
       default:
         return null;
     }
   };
 
   return (
-    <div className={theme}>
+    <div className={`${theme} min-h-screen relative overflow-hidden bg-[#08090a] selection:bg-white selection:text-black`}>
       <style>{themeStyles}</style>
-      <div className="flex h-[100dvh] text-[var(--ui-text)] bg-[var(--ui-bg)] transition-colors duration-300 glow-bg overflow-hidden">
-        <Sidebar currentView={currentView} setCurrentView={setCurrentView} theme={theme} toggleTheme={toggleTheme} designSystem={designSystem} />
-        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">
+      
+      {/* Background Atmosphere */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+          <div className="absolute inset-0 opacity-[0.02] [background-image:linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] [background-size:40px_40px]"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-black/20 to-black"></div>
+          <div className="glow-orb w-[800px] h-[800px] bg-cyan-500/5 top-[-400px] left-[-400px] blur-[100px]" />
+          <div className="glow-orb w-[600px] h-[600px] bg-blue-500/5 bottom-[-300px] right-[-300px] blur-[100px] [animation-delay:4s]" />
+      </div>
+
+      <div className="flex h-screen transition-all duration-700 overflow-hidden relative z-10">
+        <Sidebar 
+          currentView={currentView} 
+          setCurrentView={setCurrentView} 
+          theme={theme} 
+          toggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')} 
+          designSystem={designSystem} 
+        />
+        
+        <main className="flex-1 p-6 md:p-16 lg:p-24 overflow-y-auto custom-scrollbar scroll-smooth">
+          <div className="max-w-[1400px] mx-auto min-h-full">
             {renderContent()}
           </div>
         </main>
+
+        {/* Global HUD Decorations */}
+        <div className="fixed top-12 right-12 flex flex-col items-end gap-2 opacity-20 pointer-events-none group">
+            <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white">System Status: Nominal</span>
+            <div className="flex gap-1">
+                {[1,2,3,4,5].map(i => <div key={i} className="w-1 h-3 bg-white" />)}
+            </div>
+        </div>
       </div>
     </div>
   );
