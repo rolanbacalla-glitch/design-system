@@ -69,7 +69,7 @@ const TypographyScale: React.FC<TypographyScaleProps> = ({ typography, setTypogr
                 <Zap className="text-[var(--ui-text)] animate-pulse" size={14} aria-hidden="true" />
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Foundry Engine v3.0</span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+            <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">
                 Type <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Arch.</span>
             </h2>
             <div className="flex flex-col md:flex-row gap-12 items-start">
@@ -109,7 +109,7 @@ const TypographyScale: React.FC<TypographyScaleProps> = ({ typography, setTypogr
                         <div className="w-12 h-12 rounded-2xl bg-[var(--ui-text)]/5 flex items-center justify-center border border-[var(--ui-border)] shadow-lg" aria-hidden="true">
                             <Type className="text-[var(--ui-text)]" size={24} />
                         </div>
-                        <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest italic uppercase leading-none">Master Foundry</h3>
+                        <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest uppercase leading-none">Master Foundry</h3>
                     </div>
                     <div className="space-y-4">
                         <label htmlFor="master-typeface" className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text-muted)] px-1 block">Global Typeface Protocol</label>
@@ -144,7 +144,7 @@ const TypographyScale: React.FC<TypographyScaleProps> = ({ typography, setTypogr
                             </div>
                         </div>
                         <div className="space-y-1">
-                          <span className="text-lg font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none block">Nuclear Sync</span>
+                          <span className="text-lg font-black text-[var(--ui-text)] tracking-tightest uppercase leading-none block">Nuclear Sync</span>
                           <span className="text-[9px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest block">Lock master typeface across manifest</span>
                         </div>
                     </label>
@@ -187,7 +187,7 @@ const TypographyScale: React.FC<TypographyScaleProps> = ({ typography, setTypogr
                                     <div className="w-2 h-2 rounded-full bg-[var(--ui-text)]/50 shadow-[0_0_10px_rgba(var(--ui-text-rgb),0.5)]" aria-hidden="true" />
                                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Ref: 0x0{idx + 1}</span>
                                 </div>
-                                <h4 className="text-3xl font-black text-[var(--ui-text)] uppercase italic tracking-tightest leading-none">{token.label}</h4>
+                                <h4 className="text-3xl font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">{token.label}</h4>
                              </div>
                              <button 
                                 onClick={() => copyCSS(token)}

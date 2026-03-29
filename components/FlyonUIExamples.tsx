@@ -4,7 +4,7 @@ const FlyonUIExamples: React.FC = () => {
     return (
     <div className="space-y-16 pb-32 animate-in fade-in zoom-in-95 duration-700">
       <header className="space-y-4">
-        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic">The Armory</h2>
+        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest uppercase">The Armory</h2>
         <p className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-widest max-w-2xl leading-relaxed">
             Manifesting atomic components through the lens of atmospheric weightlessness. Powered by FlyonUI and the next generation of Tailwind.
         </p>
@@ -14,7 +14,7 @@ const FlyonUIExamples: React.FC = () => {
             <section className="space-y-8">
                 <div className="flex items-center gap-4 px-2">
                     <span className="material-symbols-outlined text-[var(--ui-accent)] text-3xl">radio_button_checked</span>
-                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">Trigger Tokens</h2>
+                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">Trigger Tokens</h2>
                 </div>
                 <div className="glass-premium p-12 rounded-[40px] border-white/5 shadow-2xl space-y-10">
                     <div className="flex flex-wrap gap-6 items-center">
@@ -40,7 +40,7 @@ const FlyonUIExamples: React.FC = () => {
             <section className="space-y-8">
                 <div className="flex items-center gap-4 px-2">
                     <span className="material-symbols-outlined text-[var(--ui-accent)] text-3xl">label</span>
-                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">Status Arrays</h2>
+                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">Status Arrays</h2>
                 </div>
                 <div className="glass-premium p-12 rounded-[40px] border-white/5 shadow-2xl flex flex-wrap gap-12 items-center">
                     <div className="flex gap-4">
@@ -71,7 +71,7 @@ const FlyonUIExamples: React.FC = () => {
             <section className="space-y-8">
                 <div className="flex items-center gap-4 px-2">
                     <span className="material-symbols-outlined text-[var(--ui-accent)] text-3xl">dashboard</span>
-                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">Surface Modules</h2>
+                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">Surface Modules</h2>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div className="glass-premium rounded-[48px] border-white/5 shadow-2xl overflow-hidden group hover:border-white/20 transition-all duration-500">
@@ -81,7 +81,7 @@ const FlyonUIExamples: React.FC = () => {
                         </figure>
                         <div className="p-10 space-y-6">
                             <div className="space-y-2">
-                                <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">Manifest Architecture</h2>
+                                <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">Manifest Architecture</h2>
                                 <p className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-widest leading-relaxed">Structural integrity met with atmospheric aesthetics. FlyonUI modules adapt to the foundational design system.</p>
                             </div>
                             <div className="flex justify-end pt-4">
@@ -97,7 +97,7 @@ const FlyonUIExamples: React.FC = () => {
                                  <div className="w-20 h-20 bg-[var(--ui-text)]/10 rounded-3xl mx-auto flex items-center justify-center border border-[var(--ui-glass-border)] group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                                      <span className="material-symbols-outlined text-4xl text-[var(--ui-text)]">diamond</span>
                                  </div>
-                                 <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">
+                                 <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">
                                      Atmospheric Grade
                                  </h2>
                                  <p className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-widest leading-relaxed px-4">
@@ -114,7 +114,7 @@ const FlyonUIExamples: React.FC = () => {
             <section className="space-y-8">
                 <div className="flex items-center gap-4 px-2">
                     <span className="material-symbols-outlined text-[var(--ui-accent)] text-3xl">input</span>
-                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">Input Shards</h2>
+                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">Input Shards</h2>
                 </div>
                 <div className="glass-premium p-12 rounded-[40px] border-white/5 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className="space-y-8">
@@ -158,7 +158,7 @@ const FlyonUIExamples: React.FC = () => {
              <section className="space-y-8">
                 <div className="flex items-center gap-4 px-2">
                     <span className="material-symbols-outlined text-[var(--ui-accent)] text-3xl">token</span>
-                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic">Glyph Registry</h2>
+                    <h2 className="text-2xl font-black text-[var(--ui-text)] uppercase tracking-tightest">Glyph Registry</h2>
                 </div>
                 <div className="glass-premium p-12 rounded-[40px] border-[var(--ui-glass-border)] shadow-2xl flex flex-wrap gap-12 justify-between items-center text-5xl">
                     <span className="material-symbols-outlined text-[var(--ui-text)] hover:text-[var(--ui-accent)] transition-colors duration-500 cursor-help">neuroscience</span>

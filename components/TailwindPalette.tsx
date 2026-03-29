@@ -82,7 +82,7 @@ const TailwindPalette: React.FC = () => {
                     <Zap className="text-amber-400" size={14} />
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-400">Spectral Array v3.0</span>
                 </div>
-                <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+                <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">
                     Chroma <span className="opacity-30">Forge.</span>
                 </h2>
                 <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">
@@ -173,7 +173,7 @@ const TailwindPalette: React.FC = () => {
                         <div className="h-0.5 w-16 bg-[var(--ui-text)] rounded-full opacity-20" />
                         <span className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.5em]">Simulation Deck.01</span>
                     </div>
-                    <h3 className="text-5xl font-black text-[var(--ui-text)] uppercase tracking-tightest italic leading-none">Atomic <span className="text-[var(--ui-text-muted)]">Forge Preview.</span></h3>
+                    <h3 className="text-5xl font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">Atomic <span className="text-[var(--ui-text-muted)]">Forge Preview.</span></h3>
                     <p className="text-[var(--ui-text-muted)] text-sm font-medium uppercase tracking-[0.2em] max-w-lg leading-relaxed">
                         Validating spectral integrity across high-contrast volumetric layouts and tactical component mapping.
                     </p>
@@ -228,7 +228,7 @@ const TailwindPalette: React.FC = () => {
                                 <div className="space-y-5">
                                     <div className="flex justify-between items-end">
                                         <span className="text-[10px] font-black text-[var(--ui-text-muted)] opacity-60 uppercase tracking-widest leading-none">Node Response</span>
-                                        <span className="text-4xl font-black text-[var(--ui-text)] italic tracking-tighter leading-none">99.98%</span>
+                                        <span className="text-4xl font-black text-[var(--ui-text)] tracking-tightest leading-none">99.98%</span>
                                     </div>
                                     <div className="h-2 w-full bg-[var(--ui-text)]/5 rounded-full overflow-hidden shadow-inner">
                                         <div className="h-full w-[99%] bg-[var(--ui-text)] rounded-full shadow-[0_0_15px_var(--ui-text)]" />
@@ -259,7 +259,7 @@ const TailwindPalette: React.FC = () => {
                                     <span className="text-[10px] font-black text-[var(--ui-text-muted)] opacity-60 uppercase tracking-[0.3em] ml-2">Mapping 24 Global Hubs</span>
                                 </div>
                                 
-                                <h2 className="text-6xl md:text-[100px] font-black text-[var(--ui-text)] uppercase tracking-tightest leading-[0.7] max-w-4xl italic group-hover:translate-x-2 transition-transform duration-1000">
+                                <h2 className="text-6xl md:text-[100px] font-black text-[var(--ui-text)] uppercase tracking-tightest leading-[0.7] max-w-4xl group-hover:translate-x-2 transition-transform duration-1000">
                                     Forge <br/> <span className="text-amber-500">Atomic.</span>
                                 </h2>
                                 
@@ -292,8 +292,8 @@ const TailwindPalette: React.FC = () => {
                                     ${plan.featured ? 'bg-[var(--ui-surface)] border-amber-400/20 shadow-5xl' : 'bg-[var(--ui-bg-muted)] border-transparent hover:border-[var(--ui-border)]'}`}>
                                     <plan.icon size={48} className={`mb-12 ${plan.color}`} strokeWidth={plan.featured ? 2.5 : 1.5} />
                                     <h5 className={`text-[11px] font-black mb-10 uppercase tracking-[0.5em] ${plan.featured ? 'text-amber-400' : 'text-[var(--ui-text-muted)] opacity-60'}`}>{plan.title}</h5>
-                                    <div className={`text-7xl font-black mb-16 tracking-tightest italic uppercase ${plan.featured ? 'text-[var(--ui-text)]' : 'text-[var(--ui-text)]/10'}`}>
-                                        {plan.price !== 'FREE' && plan.price !== 'POA' && <span className="text-3xl align-top mr-1 font-bold italic">$</span>}
+                                    <div className={`text-7xl font-black mb-16 tracking-tightest uppercase ${plan.featured ? 'text-[var(--ui-text)]' : 'text-[var(--ui-text)]/10'}`}>
+                                        {plan.price !== 'FREE' && plan.price !== 'POA' && <span className="text-3xl align-top mr-1 font-bold">$</span>}
                                         {plan.price}
                                     </div>
                                     <button className={`w-full h-20 rounded-[30px] text-[11px] font-black uppercase tracking-widest transition-all duration-500

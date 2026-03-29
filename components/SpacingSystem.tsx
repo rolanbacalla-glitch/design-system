@@ -48,7 +48,7 @@ const SpacingSystem: React.FC<SpacingSystemProps> = ({ spacing, setSpacing }) =>
             <Sparkles className="text-[var(--ui-text)]" size={14} aria-hidden="true" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Spatial Genesis v3.0</span>
         </div>
-        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">
             Space <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Arch.</span>
         </h2>
         <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">
@@ -68,7 +68,7 @@ const SpacingSystem: React.FC<SpacingSystemProps> = ({ spacing, setSpacing }) =>
                       <div className="w-12 h-12 rounded-2xl bg-[var(--ui-text)]/5 flex items-center justify-center border border-[var(--ui-border)] shadow-lg" aria-hidden="true">
                           <Settings className="text-[var(--ui-text)]" size={24} />
                       </div>
-                      <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest italic uppercase leading-none">Unit Reactor</h3>
+                      <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest uppercase leading-none">Unit Reactor</h3>
                   </div>
 
                   <div className="flex items-end gap-6">
@@ -118,7 +118,7 @@ const SpacingSystem: React.FC<SpacingSystemProps> = ({ spacing, setSpacing }) =>
                            <div className="w-12 h-12 rounded-2xl bg-[var(--ui-text)]/5 flex items-center justify-center border border-[var(--ui-border)] shadow-lg" aria-hidden="true">
                                <Layout className="text-[var(--ui-text)]" size={24} />
                            </div>
-                           <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest italic uppercase leading-none">Arch. Simulator</h3>
+                           <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest uppercase leading-none">Arch. Simulator</h3>
                        </div>
                        <nav className="flex bg-[var(--ui-bg-muted)] rounded-full p-1.5 border border-[var(--ui-border)] shadow-inner">
                            {(['stack', 'grid', 'inset'] as const).map(mode => (
@@ -173,7 +173,7 @@ const SpacingSystem: React.FC<SpacingSystemProps> = ({ spacing, setSpacing }) =>
                                     <div className="w-2 h-2 rounded-full bg-[var(--ui-text)] shadow-[0_0_10px_rgba(var(--ui-text-rgb),0.5)]" aria-hidden="true" />
                                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Spatial Id: {idx + 1}</span>
                                 </div>
-                                <h4 className="text-4xl font-black text-[var(--ui-text)] uppercase italic tracking-tightest leading-none">Token <span className="text-[var(--ui-text-muted)]">{token.name}</span></h4>
+                                <h4 className="text-4xl font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">Token <span className="text-[var(--ui-text-muted)]">{token.name}</span></h4>
                            </div>
                            <button 
                                 onClick={() => copyToken(token)}

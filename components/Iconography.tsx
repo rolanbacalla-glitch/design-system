@@ -130,7 +130,7 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                 </div>
             </div>
             <div className="space-y-1">
-              <h3 className="text-4xl font-black text-[var(--ui-text)] capitalize tracking-tightest italic leading-none">{icon.replace(/_/g, ' ')}</h3>
+              <h3 className="text-4xl font-black text-[var(--ui-text)] capitalize tracking-tightest leading-none">{icon.replace(/_/g, ' ')}</h3>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text)] opacity-40">System Vector Asset // Ref-00{icon.length}</p>
             </div>
           </div>
@@ -369,7 +369,7 @@ const Iconography: React.FC<IconographyProps> = ({
             <Sparkles className="text-[var(--ui-text)]" size={12} />
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text)]">Scalable Design Engine</span>
         </div>
-        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">Symbol <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Matrix</span></h2>
+        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">Symbol <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Matrix</span></h2>
         <p className="text-lg font-medium text-[var(--ui-text-muted)] uppercase tracking-[0.2em] leading-relaxed">The atomic visual language for ultra-premium interfaces. Vector-perfect variable tokens for universal scale.</p>
       </div>
 
@@ -409,7 +409,7 @@ const Iconography: React.FC<IconographyProps> = ({
                            <div className="flex justify-between items-end px-1">
                                <div className="space-y-1">
                                    <label htmlFor="global-icon-weight" className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text-muted)]">Vector Density</label>
-                                   <p className="text-[9px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest italic">Modulates optical weight</p>
+                                   <p className="text-[9px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest">Modulates optical weight</p>
                                </div>
                                <span className="text-2xl font-black text-[var(--ui-text)]">{iconWeight}</span>
                            </div>
@@ -446,7 +446,7 @@ const Iconography: React.FC<IconographyProps> = ({
                                </button>
                                
                                {isColourDropdownOpen && (
-                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 bg-[#121417] rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
+                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 bg-[var(--ui-surface)] rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
                                        {colours.map(c => (
                                            <button
                                                key={c.name}

@@ -41,7 +41,7 @@ const ElevationStyles: React.FC<ElevationStylesProps> = ({ elevation, setElevati
             <Zap className="text-[var(--ui-text)]" size={14} />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Spatial Hierarchy Protocol v3.0</span>
         </div>
-        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">
             Shadow <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Depth.</span>
         </h2>
         <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">
@@ -64,14 +64,14 @@ const ElevationStyles: React.FC<ElevationStylesProps> = ({ elevation, setElevati
                           <div className="w-12 h-12 rounded-2xl bg-[var(--ui-text)]/5 flex items-center justify-center border border-[var(--ui-border)] shadow-lg">
                               <Sun className="text-[var(--ui-text)]" size={24} />
                           </div>
-                          <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest italic uppercase">Light Reactor</h3>
+                          <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest uppercase">Light Reactor</h3>
                       </div>
 
                       <div className="space-y-6">
                            <div className="flex justify-between items-end px-1">
                                <div className="space-y-1">
                                    <label htmlFor="lumen-intensity" className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text-muted)]">Lumen Intensity</label>
-                                   <p className="text-[9px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest italic">Gamma Modulation</p>
+                                   <p className="text-[9px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest">Gamma Modulation</p>
                                </div>
                                <span className="text-2xl font-black text-[var(--ui-text)]">{lightIntensity}%</span>
                            </div>
@@ -164,7 +164,7 @@ const ElevationStyles: React.FC<ElevationStylesProps> = ({ elevation, setElevati
                                      <div className="flex items-center gap-3">
                                          <span className="text-[9px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.4em]">Token Id: {idx + 1}</span>
                                      </div>
-                                     <h4 className="text-3xl font-black text-[var(--ui-text)] uppercase italic tracking-tightest leading-none">{token.name}</h4>
+                                     <h4 className="text-3xl font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">{token.name}</h4>
                                 </div>
                                 <div className="px-6 py-2 bg-[var(--ui-text)]/5 border border-[var(--ui-border)] rounded-full">
                                     <span className="text-[10px] font-black text-[var(--ui-text)] uppercase tracking-widest">Level {token.level}</span>
