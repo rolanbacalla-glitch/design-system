@@ -59,7 +59,7 @@ const ContrastLab: React.FC = () => {
                         <div className="w-12 h-12 rounded-2xl bg-[var(--ui-text)]/5 flex items-center justify-center border border-[var(--ui-border)] shadow-lg">
                             <Eye className="text-[var(--ui-text)]" size={24} />
                         </div>
-                        <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest italic uppercase">Contrast Lab</h3>
+                        <h3 className="text-2xl font-black text-[var(--ui-text)] tracking-tightest uppercase">Contrast Lab</h3>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-8">
@@ -130,7 +130,7 @@ const ContrastLab: React.FC = () => {
                 >
                     <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay [background-image:linear-gradient(to_right,#ffffff20_1px,transparent_1px),linear-gradient(to_bottom,#ffffff20_1px,transparent_1px)] [background-size:32px_32px]"></div>
                     <div className="relative space-y-8 transform-gpu group-hover:translate-z-10 transition-transform duration-700">
-                        <h2 className="text-5xl md:text-7xl font-black tracking-tightest leading-none uppercase italic translate-y-2">Spectre</h2>
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tightest leading-none uppercase translate-y-2">Spectre</h2>
                         <p className="text-xl md:text-2xl font-medium max-w-md leading-relaxed uppercase tracking-widest opacity-80 decoration-current decoration-2 underline-offset-8 decoration-dotted">
                             Precision clarity protocols for the next evolution of structural interfaces.
                         </p>
@@ -193,7 +193,7 @@ const ColourPalette: React.FC<ColourPaletteProps> = ({ colours, setColours, appl
               <Sparkles className="text-[var(--ui-text)]" size={14} />
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Spectrum Registry v4.0</span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+          <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">
             Chroma <span className="text-[var(--ui-text-muted)]">Registry.</span>
           </h2>
           <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">
@@ -234,7 +234,7 @@ const ColourPalette: React.FC<ColourPaletteProps> = ({ colours, setColours, appl
             <Command className="text-red-500" />
           </div>
           <div className="space-y-1">
-            <h4 className="font-black text-xl text-[var(--ui-text)] uppercase italic tracking-tightest">Chromatic Exception</h4>
+            <h4 className="font-black text-xl text-[var(--ui-text)] uppercase tracking-tightest">Chromatic Exception</h4>
             <p className="text-red-400/80 font-bold uppercase text-[11px] tracking-widest">{error}</p>
           </div>
         </div>
@@ -246,7 +246,7 @@ const ColourPalette: React.FC<ColourPaletteProps> = ({ colours, setColours, appl
 
         <div className="space-y-12">
           <div className="flex items-center gap-6 px-4">
-              <h3 className="text-4xl font-black text-[var(--ui-text)] tracking-tightest italic uppercase">Vector Tokens</h3>
+              <h3 className="text-4xl font-black text-[var(--ui-text)] tracking-tightest uppercase">Vector Tokens</h3>
               <div className="flex-1 h-px bg-gradient-to-r from-[var(--ui-border)] to-transparent" />
           </div>
           
@@ -266,7 +266,7 @@ const ColourPalette: React.FC<ColourPaletteProps> = ({ colours, setColours, appl
                           </div>
                           <div className="space-y-1">
                               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)] block">Ref: 0x0{idx + 1}</span>
-                              <h4 className="text-3xl font-black text-[var(--ui-text)] italic uppercase tracking-tightest leading-none">{token.label}</h4>
+                              <h4 className="text-3xl font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">{token.label}</h4>
                           </div>
                       </div>
                       <button 

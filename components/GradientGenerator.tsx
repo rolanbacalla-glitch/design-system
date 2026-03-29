@@ -203,7 +203,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = () => {
                 <Layers className="text-[var(--ui-text)]" size={12} />
                 <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)]">Dynamic Assets</span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none">Hyper-Gradient <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Lab</span></h2>
+            <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest uppercase leading-none">Hyper-Gradient <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Lab</span></h2>
             <p className="text-sm font-medium text-[var(--ui-text-muted)] uppercase tracking-widest max-w-xl">Architect multi-dimensional atmospheric tokens with industrial precision.</p>
         </div>
         
@@ -268,7 +268,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = () => {
                             </button>
                         ))}
                     </div>
-                    <p className="text-[9px] text-center font-bold text-[var(--ui-text-muted)] uppercase tracking-widest italic pt-2">Click track to inject a new color stop</p>
+                    <p className="text-[9px] text-center font-bold text-[var(--ui-text-muted)] uppercase tracking-widest pt-2">Click track to inject a new color stop</p>
                 </div>
 
                 {/* Config Controls */}
@@ -403,7 +403,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = () => {
                             <Sparkles size={36} aria-hidden="true" />
                         </div>
                         <div className="space-y-4">
-                            <h3 className="text-4xl md:text-5xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">Chroma Zenith</h3>
+                            <h3 className="text-4xl md:text-5xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase">Chroma Zenith</h3>
                             <p className="text-sm font-bold text-[var(--ui-text-muted)] uppercase tracking-[0.3em]">Premium Atmosphere Protocol v3</p>
                         </div>
                         <div className="flex justify-center gap-6 pt-6">
@@ -427,7 +427,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = () => {
       <section className="pt-20 space-y-12">
            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
                <div className="space-y-2">
-                    <h3 className="text-4xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none">The Foundry</h3>
+                    <h3 className="text-4xl font-black text-[var(--ui-text)] tracking-tightest uppercase leading-none">The Foundry</h3>
                     <p className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-widest">Reference standard for architectural atmospheres</p>
                </div>
                <div className="flex items-center gap-3 bg-[var(--ui-text)]/5 px-6 py-3 rounded-full border border-[var(--ui-border)]">

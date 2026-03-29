@@ -81,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
                 <Cpu size={24} strokeWidth={2.5} />
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tightest leading-none flex items-center gap-2 text-[var(--ui-text)] uppercase italic">
+              <h1 className="text-2xl font-black tracking-tightest leading-none flex items-center gap-2 text-[var(--ui-text)] uppercase">
                 GENESIS
                 <span className="text-[10px] bg-[var(--ui-text)]/10 text-[var(--ui-text-muted)] px-2 py-0.5 rounded-full font-mono not-italic" aria-label="Version 4.0">v4.0</span>
               </h1>
