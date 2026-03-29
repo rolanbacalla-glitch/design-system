@@ -5,7 +5,6 @@ import {
   Command, 
   Cpu, 
   Zap, 
-  Info, 
   X, 
   Download, 
   Copy as CopyIcon, 
@@ -13,7 +12,6 @@ import {
   ChevronDown,
   Sparkles,
   Layers,
-  Box,
   Monitor
 } from 'lucide-react';
 
@@ -53,7 +51,7 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
   const [weight, setWeight] = useState(initialWeight);
   const [filled, setFilled] = useState(initialFill);
   const [colour, setColour] = useState(initialColour);
-  const [fetchError, setFetchError] = useState(false);
+  const [, setFetchError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -112,18 +110,18 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-4xl animate-in fade-in duration-300" onClick={onClose}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-[var(--ui-bg)]/80 backdrop-blur-4xl animate-in fade-in duration-300" onClick={onClose}>
       <div 
-        className="glass-premium bg-[var(--ui-surface)]/90 rounded-[50px] shadow-5xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-white/10 relative" 
+        className="glass-premium bg-[var(--ui-surface)]/90 rounded-[50px] shadow-5xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-[var(--ui-border)] relative" 
         onClick={e => e.stopPropagation()}
       >
         {/* Atmosphere Background */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--ui-accent)]/5 blur-[150px] rounded-full -mr-48 -mt-48 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--ui-text)]/5 blur-[150px] rounded-full -mr-48 -mt-48 pointer-events-none" />
         
         {/* Header */}
-        <div className="flex items-center justify-between p-10 border-b border-white/5 relative z-10">
+        <div className="flex items-center justify-between p-10 border-b border-[var(--ui-border)] relative z-10">
           <div className="flex items-center gap-8">
-            <div className="w-20 h-20 rounded-[28px] bg-black/40 flex items-center justify-center border border-white/10 shadow-inner group">
+            <div className="w-20 h-20 rounded-[28px] bg-[var(--ui-bg-muted)] flex items-center justify-center border border-[var(--ui-border)] shadow-inner group">
                 <div className="w-full h-full flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-6">
                     <span className="material-symbols-outlined text-5xl" style={{ 
                         color: colour,
@@ -132,13 +130,15 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                 </div>
             </div>
             <div className="space-y-1">
-              <h3 className="text-4xl font-black text-white capitalize tracking-tightest italic leading-none">{icon.replace(/_/g, ' ')}</h3>
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-accent)] opacity-60">System Vector Asset // Ref-00{icon.length}</p>
+              <h3 className="text-4xl font-black text-[var(--ui-text)] capitalize tracking-tightest italic leading-none">{icon.replace(/_/g, ' ')}</h3>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text)] opacity-40">System Vector Asset // Ref-00{icon.length}</p>
             </div>
           </div>
           <button 
+            type="button"
+            title="Close modal"
             onClick={onClose} 
-            className="w-14 h-14 flex items-center justify-center bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 rounded-2xl transition-all active:scale-90 border border-white/5"
+            className="w-14 h-14 flex items-center justify-center bg-[var(--ui-text)]/5 hover:bg-red-500/20 text-[var(--ui-text)]/40 hover:text-red-400 rounded-2xl transition-all active:scale-90 border border-[var(--ui-border)] focus:outline-none focus:ring-2 focus:ring-red-500/40"
           >
             <X size={24} />
           </button>
@@ -151,18 +151,22 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
             <div className="lg:col-span-7 space-y-12">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                    <div className="space-y-8">
-                      <div className="space-y-4">
-                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 block px-1">Structure Variant</label>
-                        <div className="flex bg-black/40 rounded-[20px] p-1.5 border border-white/5 shadow-inner">
+                       <div className="space-y-4">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)] block px-1">Structure Variant</label>
+                        <div className="flex bg-[var(--ui-bg-muted)] rounded-[20px] p-1.5 border border-[var(--ui-border)] shadow-inner">
                             <button 
+                              type="button"
                               onClick={() => setFilled(false)}
-                              className={`flex-1 py-3 px-6 rounded-[16px] text-[10px] font-black uppercase tracking-widest transition-all ${!filled ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+                              title="Set outlined style for asset"
+                              className={`flex-1 py-3 px-6 rounded-[16px] text-[10px] font-black uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${!filled ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
                             >
                               Outlined
                             </button>
                             <button 
+                              type="button"
                               onClick={() => { setFilled(true); setWeight(400); }}
-                              className={`flex-1 py-3 px-6 rounded-[16px] text-[10px] font-black uppercase tracking-widest transition-all ${filled ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+                              title="Set filled style for asset"
+                              className={`flex-1 py-3 px-6 rounded-[16px] text-[10px] font-black uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${filled ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
                             >
                               Filled
                             </button>
@@ -172,15 +176,16 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                       {!filled && (
                         <div className="space-y-4 animate-in slide-in-from-top-4 fade-in duration-500">
                              <div className="flex justify-between items-center px-1">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Optical Weight</label>
-                                <span className="text-xs font-black text-[var(--ui-accent)]">{weight}</span>
+                                <label htmlFor="asset-optical-weight" className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)]">Optical Weight</label>
+                                <span className="text-xs font-black text-[var(--ui-text)]">{weight}</span>
                             </div>
                             <input 
+                                id="asset-optical-weight"
                                 type="range" min="100" max="700" step="100"
                                 value={weight}
-                                title="Stroke weight"
+                                title="Stroke weight adjustment"
                                 onChange={(e) => setWeight(Number(e.target.value))}
-                                className="w-full h-1 bg-white/5 rounded-full appearance-none cursor-pointer accent-[var(--ui-accent)]"
+                                className="w-full h-1 bg-[var(--ui-text)]/5 rounded-full appearance-none cursor-pointer accent-[var(--ui-text)]"
                             />
                         </div>
                       )}
@@ -188,24 +193,26 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
 
                    <div className="space-y-8">
                        <div className="space-y-4">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 block px-1">Chroma Instance</label>
-                          <div className="flex items-center gap-4 bg-black/40 px-5 py-4 rounded-[24px] border border-white/5 shadow-inner">
-                              <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/10 shadow-2xl group flex-shrink-0">
+                          <label htmlFor="asset-colour-input" className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)] block px-1">Chroma Instance</label>
+                          <div className="flex items-center gap-4 bg-[var(--ui-bg-muted)] px-5 py-4 rounded-[24px] border border-[var(--ui-border)] shadow-inner group/input focus-within:border-[var(--ui-text)]/20 transition-all">
+                              <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-[var(--ui-border)] shadow-2xl flex-shrink-0">
                                   <input 
+                                    id="asset-colour-picker"
                                     type="color" 
                                     value={colour} 
-                                    title="Pick color"
+                                    title="Visual chroma picker"
                                     onChange={e => setColour(e.target.value)} 
                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer scale-[5]" 
                                   />
                                   <div className="w-full h-full" style={{ backgroundColor: colour }} />
                               </div>
                               <input 
+                                id="asset-colour-input"
                                 type="text" 
                                 value={colour.toUpperCase()} 
-                                title="Hex code"
+                                title="HEX chroma signature"
                                 onChange={e => setColour(e.target.value)} 
-                                className="flex-1 bg-transparent border-none text-white text-lg font-black tracking-tightest focus:ring-0 outline-none uppercase font-mono" 
+                                className="flex-1 bg-transparent border-none text-[var(--ui-text)] text-lg font-black tracking-tightest focus:ring-0 outline-none uppercase font-mono" 
                               />
                           </div>
                        </div>
@@ -213,21 +220,21 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
               </div>
 
               {/* Preview Canvas */}
-              <div className="bg-black border border-white/10 rounded-[48px] p-24 relative overflow-hidden flex items-center justify-center min-h-[400px] shadow-4xl group/stage">
-                  <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay [background-image:radial-gradient(circle_at_center,#ffffff10_0.5px,transparent_0.5px)] [background-size:32px_32px]"></div>
+              <div className="bg-[var(--ui-bg)] border border-[var(--ui-border)] rounded-[48px] p-24 relative overflow-hidden flex items-center justify-center min-h-[400px] shadow-4xl group/stage">
+                  <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay [background-image:radial-gradient(circle_at_center,var(--ui-text)_0.5px,transparent_0.5px)] [background-size:32px_32px]"></div>
                   
                   {loading ? (
-                       <Zap className="animate-pulse text-[var(--ui-accent)] opacity-20" size={64} />
+                       <Zap className="animate-pulse text-[var(--ui-text)] opacity-20" size={64} />
                   ) : (
                       <div 
-                        className="transition-all duration-700 hover:scale-125 drop-shadow-[0_0_60px_rgba(255,255,255,0.1)] transform-gpu hover:rotate-3"
+                        className="transition-all duration-700 hover:scale-125 drop-shadow-[0_0_60px_rgba(var(--ui-text-rgb),0.1)] transform-gpu hover:rotate-3"
                         style={{ color: colour, width: sizeToken.value * 2.5, height: sizeToken.value * 2.5 }}
                         dangerouslySetInnerHTML={{ __html: getProcessedSvg() }}
                       />
                   )}
 
                   <div className="absolute bottom-10 flex gap-4">
-                      <div className="px-6 py-2 glass-premium rounded-full border-white/10 text-[10px] font-black text-white/30 uppercase tracking-[0.3em] whitespace-nowrap">
+                      <div className="px-6 py-2 glass-premium rounded-full border border-[var(--ui-border)] text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.3em] whitespace-nowrap">
                          Preview Stage // {sizeToken.value}px Base
                       </div>
                   </div>
@@ -236,41 +243,47 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
 
             {/* Right: Code & Assets */}
             <div className="lg:col-span-5 space-y-10">
-               <div className="flex bg-black/40 rounded-[24px] p-1.5 border border-white/5 shadow-inner">
+               <div className="flex bg-[var(--ui-bg-muted)] rounded-[24px] p-1.5 border border-[var(--ui-border)] shadow-inner">
                   <button 
+                    type="button"
                     onClick={() => setActiveTab('web')}
-                    className={`flex-1 py-3 px-6 text-[10px] font-black uppercase tracking-widest transition-all rounded-[18px] ${activeTab === 'web' ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+                    title="CDN Integration protocol"
+                    className={`flex-1 py-3 px-6 text-[10px] font-black uppercase tracking-widest transition-all rounded-[18px] focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${activeTab === 'web' ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
                   >
                     CDN Integration
                   </button>
                   <button 
+                    type="button"
                     onClick={() => setActiveTab('svg')}
-                    className={`flex-1 py-3 px-6 text-[10px] font-black uppercase tracking-widest transition-all rounded-[18px] ${activeTab === 'svg' ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+                    title="Inline SVG protocol"
+                    className={`flex-1 py-3 px-6 text-[10px] font-black uppercase tracking-widest transition-all rounded-[18px] focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${activeTab === 'svg' ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
                   >
                     Inline Protocol
                   </button>
                </div>
 
                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ui-accent)] to-white/10 rounded-[40px] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                  <div className="relative bg-black rounded-[40px] p-10 border border-white/10 overflow-hidden shadow-2xl">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ui-text)] to-transparent rounded-[40px] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                  <div className="relative bg-[var(--ui-bg)] rounded-[40px] p-10 border border-[var(--ui-border)] overflow-hidden shadow-2xl">
                     <button 
+                      type="button"
                       onClick={() => {
                           const text = activeTab === 'web' 
                               ? `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${filled ? 1 : 0}, 'wght' ${weight}, 'GRAD' 0, 'opsz' 24; font-size: ${sizeToken.value}px; color: ${colour};">\n  ${icon}\n</span>`
                               : getProcessedSvg();
                           copyToClipboard(text, 'COPIED TO BUFFER');
                       }}
-                      className="absolute top-8 right-8 p-4 text-white/20 hover:text-white bg-white/5 hover:bg-white/10 rounded-2xl transition-all border border-white/5"
+                      title="Copy code specification"
+                      className={`absolute top-8 right-8 p-4 bg-[var(--ui-text)]/5 hover:bg-[var(--ui-text)]/10 rounded-2xl transition-all border border-[var(--ui-border)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${copyFeedback ? 'text-emerald-500 border-emerald-500/20' : 'text-[var(--ui-text)]/20 hover:text-[var(--ui-text)]'}`}
                     >
-                      {copyFeedback ? <Check size={20} className="text-[var(--ui-accent)]" /> : <CopyIcon size={20} />}
+                      {copyFeedback ? <Check size={20} /> : <CopyIcon size={20} />}
                     </button>
                     
                     <div className="mb-8">
-                       <span className="text-[10px] font-black text-[var(--ui-accent)] uppercase tracking-[0.3em]">{activeTab === 'web' ? 'Dynamic Font Implementation' : 'Scalable Vector Logic'}</span>
+                       <span className="text-[10px] font-black text-[var(--ui-text)] uppercase tracking-[0.3em]">{activeTab === 'web' ? 'Dynamic Font Implementation' : 'Scalable Vector Logic'}</span>
                     </div>
 
-                    <pre className="text-white/60 font-mono text-[11px] leading-relaxed overflow-x-auto custom-scrollbar whitespace-pre-wrap break-all max-h-[350px]">
+                    <pre className="text-[var(--ui-text)]/60 font-mono text-[11px] leading-relaxed overflow-x-auto custom-scrollbar whitespace-pre-wrap break-all max-h-[350px]">
                       {activeTab === 'web' && (
 `<span class="material-symbols-outlined" style="
   font-variation-settings: 'FILL' ${filled ? 1 : 0}, 'wght' ${weight}; 
@@ -286,11 +299,19 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                </div>
                
                <div className="flex gap-4">
-                  <button className="flex-1 py-5 bg-white text-black rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-3xl flex items-center justify-center gap-3">
+                  <button 
+                    type="button"
+                    title="Export asset as PNG"
+                    className="flex-1 py-5 bg-[var(--ui-text)] text-[var(--ui-bg)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-3xl flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                  >
                       <Download size={14} />
                       Export PNG
                   </button>
-                  <button className="flex-1 py-5 bg-white/5 border border-white/10 text-white rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:bg-white/10 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3">
+                  <button 
+                    type="button"
+                    title="View component API documentation"
+                    className="flex-1 py-5 bg-[var(--ui-text)]/5 border border-[var(--ui-border)] text-[var(--ui-text)] rounded-[24px] font-black text-[10px] uppercase tracking-widest transition-all hover:bg-[var(--ui-text)]/10 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                  >
                       <CopyIcon size={14} />
                       Component API
                   </button>
@@ -347,36 +368,40 @@ const Iconography: React.FC<IconographyProps> = ({
       
       {/* Header Section */}
       <div className="space-y-6 max-w-4xl px-4">
-        <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[var(--ui-accent-faint)] border border-[var(--ui-accent)]/20">
-            <Sparkles className="text-[var(--ui-accent)]" size={12} />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-accent)]">Scalable Design Engine</span>
+        <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[var(--ui-text)]/5 border border-[var(--ui-text)]/10">
+            <Sparkles className="text-[var(--ui-text)]" size={12} />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text)]">Scalable Design Engine</span>
         </div>
-        <h2 className="text-6xl md:text-8xl font-black text-white tracking-tightest leading-none uppercase italic">Symbol <span className="text-[var(--ui-accent)]">Matrix</span></h2>
-        <p className="text-lg font-medium text-white/30 uppercase tracking-[0.2em] leading-relaxed">The atomic visual language for ultra-premium interfaces. Vector-perfect variable tokens for universal scale.</p>
+        <h2 className="text-6xl md:text-8xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">Symbol <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Matrix</span></h2>
+        <p className="text-lg font-medium text-[var(--ui-text-muted)] uppercase tracking-[0.2em] leading-relaxed">The atomic visual language for ultra-premium interfaces. Vector-perfect variable tokens for universal scale.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
           {/* Controls Hub */}
           <aside className="lg:col-span-12 xl:col-span-4 space-y-8">
-              <div className="glass-premium p-10 rounded-[50px] border-white/10 shadow-3xl space-y-12 relative overflow-hidden">
-                   <div className="absolute top-0 right-0 p-8 opacity-5">
+              <div className="glass-premium p-10 rounded-[50px] border-[var(--ui-border)] shadow-3xl space-y-12 relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-8 opacity-5 text-[var(--ui-text)]">
                       <Cpu size={120} />
                    </div>
 
                    <div className="space-y-10 relative z-10">
                        <div className="space-y-4">
-                           <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 px-1">Global Rendering Protocol</label>
-                           <div className="grid grid-cols-2 gap-3 p-2 bg-black/40 rounded-[28px] border border-white/5 shadow-inner">
+                           <label className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text-muted)] px-1">Global Rendering Protocol</label>
+                           <div className="grid grid-cols-2 gap-3 p-2 bg-[var(--ui-bg-muted)] rounded-[28px] border border-[var(--ui-border)] shadow-inner">
                                <button 
+                                type="button"
                                 onClick={() => setIconStyle('outlined')}
-                                className={`py-4 rounded-[22px] text-[10px] font-black uppercase tracking-widest transition-all ${iconStyle === 'outlined' ? 'bg-white text-black shadow-2xl' : 'text-white/40 hover:text-white'}`}
+                                title="Switch to outlined icon set"
+                                className={`py-4 rounded-[22px] text-[10px] font-black uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${iconStyle === 'outlined' ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-2xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
                                >
                                 Outlined
                                </button>
                                <button 
+                                type="button"
                                 onClick={() => setIconStyle('filled')}
-                                className={`py-4 rounded-[22px] text-[10px] font-black uppercase tracking-widest transition-all ${iconStyle === 'filled' ? 'bg-white text-black shadow-2xl' : 'text-white/40 hover:text-white'}`}
+                                title="Switch to filled icon set"
+                                className={`py-4 rounded-[22px] text-[10px] font-black uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${iconStyle === 'filled' ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-2xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
                                >
                                 Filled
                                </button>
@@ -386,19 +411,20 @@ const Iconography: React.FC<IconographyProps> = ({
                        <div className="space-y-6">
                            <div className="flex justify-between items-end px-1">
                                <div className="space-y-1">
-                                   <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Vector Density</label>
-                                   <p className="text-[9px] font-bold text-white/10 uppercase tracking-widest italic">Modulates optical weight</p>
+                                   <label htmlFor="global-icon-weight" className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text-muted)]">Vector Density</label>
+                                   <p className="text-[9px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest italic">Modulates optical weight</p>
                                </div>
-                               <span className="text-2xl font-black text-[var(--ui-accent)]">{iconWeight}</span>
+                               <span className="text-2xl font-black text-[var(--ui-text)]">{iconWeight}</span>
                            </div>
                            <input 
+                               id="global-icon-weight"
                                type="range" min="100" max="700" step="100"
                                value={iconWeight} 
-                               title="Global stroke weight"
+                               title="Global vector stroke weight"
                                onChange={(e) => setIconWeight(Number(e.target.value))}
-                               className="w-full h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-[var(--ui-accent)] shadow-xl"
+                               className="w-full h-1.5 bg-[var(--ui-text)]/5 rounded-full appearance-none cursor-pointer accent-[var(--ui-text)] shadow-xl"
                            />
-                           <div className="flex justify-between text-[8px] font-black text-white/10 uppercase tracking-[0.3em]">
+                           <div className="flex justify-between text-[8px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.3em]">
                                <span>Hairline</span>
                                <span>System</span>
                                <span>Industrial</span>
@@ -406,30 +432,35 @@ const Iconography: React.FC<IconographyProps> = ({
                        </div>
 
                        <div className="space-y-4">
-                           <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 px-1">Primary Chroma</label>
+                           <label htmlFor="primary-chroma-button" className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text-muted)] px-1">Primary Chroma</label>
                            <div className="relative">
                                <button 
-                                    onClick={() => setIsColourDropdownOpen(!isColourDropdownOpen)}
-                                    className="w-full flex items-center justify-between gap-6 bg-black/40 border border-white/5 p-6 rounded-[28px] group hover:border-white/20 transition-all shadow-inner"
+                                      id="primary-chroma-button"
+                                      type="button"
+                                      onClick={() => setIsColourDropdownOpen(!isColourDropdownOpen)}
+                                      title="Select primary chroma from palette"
+                                      className="w-full flex items-center justify-between gap-6 bg-[var(--ui-bg-muted)] border border-[var(--ui-border)] p-6 rounded-[28px] group hover:border-[var(--ui-text)]/20 transition-all shadow-inner focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
                                >
                                    <div className="flex items-center gap-4">
-                                       <div className="w-8 h-8 rounded-xl shadow-2xl border border-white/10" style={{ backgroundColor: selectedColour }}></div>
-                                       <span className="text-sm font-black text-white uppercase tracking-widest">{colours.find(c => c.value === selectedColour)?.label || 'Custom Logic'}</span>
+                                       <div className="w-8 h-8 rounded-xl shadow-2xl border border-[var(--ui-border)]" style={{ backgroundColor: selectedColour }}></div>
+                                       <span className="text-sm font-black text-[var(--ui-text)] uppercase tracking-widest">{colours.find(c => c.value === selectedColour)?.label || 'Custom Logic'}</span>
                                    </div>
-                                   <ChevronDown size={18} className={`text-white/20 group-hover:text-white transition-transform duration-300 ${isColourDropdownOpen ? 'rotate-180' : ''}`} />
+                                   <ChevronDown size={18} className={`text-[var(--ui-text-muted)] group-hover:text-[var(--ui-text)] transition-transform duration-300 ${isColourDropdownOpen ? 'rotate-180' : ''}`} />
                                </button>
                                
                                {isColourDropdownOpen && (
-                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 glass-premium rounded-[32px] border-white/10 z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
+                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 glass-premium rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
                                        {colours.map(c => (
                                            <button
                                                key={c.name}
+                                               type="button"
                                                onClick={() => { setSelectedColour(c.value); setIsColourDropdownOpen(false); }}
-                                               className="w-full flex items-center gap-4 px-6 py-4 text-xs font-black text-white/40 hover:text-white hover:bg-white/5 rounded-2xl transition-all uppercase tracking-widest"
+                                               title={`Select ${c.label} chroma`}
+                                               className={`w-full flex items-center gap-4 px-6 py-4 text-xs font-black text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-text)]/5 rounded-2xl transition-all uppercase tracking-widest focus:outline-none focus:bg-[var(--ui-text)]/5 ${selectedColour === c.value ? 'text-[var(--ui-text)]' : ''}`}
                                            >
-                                               <div className="w-5 h-5 rounded-lg border border-white/10 shadow-lg" style={{ backgroundColor: c.value }}></div>
+                                               <div className="w-5 h-5 rounded-lg border border-[var(--ui-border)] shadow-lg" style={{ backgroundColor: c.value }}></div>
                                                {c.label}
-                                               {selectedColour === c.value && <Check size={16} className="ml-auto text-[var(--ui-accent)]" />}
+                                               {selectedColour === c.value && <Check size={16} className="ml-auto text-emerald-500" />}
                                            </button>
                                        ))}
                                    </div>
@@ -440,15 +471,15 @@ const Iconography: React.FC<IconographyProps> = ({
               </div>
 
               {/* Stat Card */}
-              <div className="bg-gradient-to-br from-black to-gray-900/50 p-10 rounded-[50px] border border-white/5 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-[var(--ui-accent)]/5 blur-[80px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+              <div className="bg-gradient-to-br from-[var(--ui-bg)] to-[var(--ui-bg-muted)] p-10 rounded-[50px] border border-[var(--ui-border)] relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-[var(--ui-text)]/5 blur-[80px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
                   <div className="relative space-y-6">
-                      <div className="w-16 h-16 rounded-[24px] bg-[var(--ui-accent-faint)] flex items-center justify-center border border-[var(--ui-accent)]/20">
-                          <Layers className="text-[var(--ui-accent)]" size={24} />
+                      <div className="w-16 h-16 rounded-[24px] bg-[var(--ui-text)]/5 flex items-center justify-center border border-[var(--ui-border)]">
+                          <Layers className="text-[var(--ui-text)]" size={24} />
                       </div>
                       <div className="space-y-2">
-                           <h5 className="text-xl font-black text-white uppercase tracking-tightest leading-none">Universal Sync</h5>
-                           <p className="text-[11px] font-bold text-white/30 uppercase tracking-widest leading-relaxed">Variable font technology allows for fluid transitions across 7 weight classes and 0-100 fill states without reloading assets.</p>
+                           <h5 className="text-xl font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">Universal Sync</h5>
+                           <p className="text-[11px] font-bold text-[var(--ui-text-muted)] uppercase tracking-widest leading-relaxed">Variable font technology allows for fluid transitions across 7 weight classes and 0-100 fill states without reloading assets.</p>
                       </div>
                   </div>
               </div>
@@ -459,17 +490,18 @@ const Iconography: React.FC<IconographyProps> = ({
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 px-4">
                   <div className="relative flex-1 group">
                       <div className="absolute inset-y-0 left-8 flex items-center pointer-events-none">
-                          <Search className="text-white/20 group-focus-within:text-[var(--ui-accent)] transition-colors" size={20} />
+                          <Search className="text-[var(--ui-text-muted)] group-focus-within:text-[var(--ui-text)] transition-colors" size={20} />
                       </div>
                       <input 
+                          id="matrix-search-input"
                           type="text"
                           placeholder="Command search system assets..."
-                          title="Search matrix"
+                          title="Search symbol matrix"
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="w-full bg-black/40 border border-white/10 rounded-[32px] pl-20 pr-10 py-7 text-lg font-black text-white placeholder:text-white/10 focus:outline-none focus:ring-4 focus:ring-[var(--ui-accent)]/10 focus:border-[var(--ui-accent)]/20 transition-all shadow-inner"
+                          className="w-full bg-[var(--ui-bg-muted)] border border-[var(--ui-border)] rounded-[32px] pl-20 pr-10 py-7 text-lg font-black text-[var(--ui-text)] placeholder:text-[var(--ui-text-muted)] focus:outline-none focus:ring-4 focus:ring-[var(--ui-text)]/5 focus:border-[var(--ui-text)]/20 transition-all shadow-inner"
                       />
-                      <div className="absolute right-8 inset-y-0 flex items-center pointer-events-none opacity-20">
+                      <div className="absolute right-8 inset-y-0 flex items-center pointer-events-none opacity-20 text-[var(--ui-text)]">
                            <Command size={18} />
                       </div>
                   </div>
@@ -479,8 +511,10 @@ const Iconography: React.FC<IconographyProps> = ({
                 {categories.map(cat => (
                     <button 
                         key={cat}
+                        type="button"
                         onClick={() => setSelectedCategory(cat)}
-                        className={`px-10 py-4 rounded-full text-[10px] font-black uppercase tracking-[0.3em] whitespace-nowrap border transition-all active:scale-95 ${selectedCategory === cat ? 'bg-white text-black border-white shadow-3xl shadow-white/10' : 'bg-white/5 text-white/40 border-white/5 hover:border-white/20 hover:bg-white/10'}`}
+                        title={`Filter by category: ${cat}`}
+                        className={`px-10 py-4 rounded-full text-[10px] font-black uppercase tracking-[0.3em] whitespace-nowrap border transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${selectedCategory === cat ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] border-[var(--ui-text)] shadow-3xl shadow-[var(--ui-text)]/10' : 'bg-[var(--ui-bg-muted)] text-[var(--ui-text-muted)] border-[var(--ui-border)] hover:border-[var(--ui-text)]/20 hover:bg-[var(--ui-bg)]'}`}
                     >
                         {cat}
                     </button>
@@ -492,13 +526,15 @@ const Iconography: React.FC<IconographyProps> = ({
                   {filteredIcons.map((icon, i) => (
                     <button 
                         key={icon}
+                        type="button"
                         onClick={() => setActiveModalIcon({ name: icon, sizeToken: iconSizes[1] })}
-                        className="group relative glass-premium bg-black/20 p-10 rounded-[48px] border-white/5 hover:border-[var(--ui-accent)]/30 hover:-translate-y-4 transition-all duration-500 overflow-hidden flex flex-col items-center justify-center gap-8"
+                        title={`View vector definition for ${icon}`}
+                        className="group relative glass-premium bg-[var(--ui-bg-muted)]/20 p-10 rounded-[48px] border border-[var(--ui-border)] hover:border-[var(--ui-text)]/30 hover:-translate-y-4 transition-all duration-500 overflow-hidden flex flex-col items-center justify-center gap-8 focus:outline-none focus:-translate-y-4 focus:border-[var(--ui-text)]/30"
                         style={{ animationDelay: `${i * 20}ms` }}
                     >
-                        <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="absolute -top-10 -left-10 w-32 h-32 bg-[var(--ui-text)]/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         
-                        <div className="relative w-24 h-24 rounded-[32px] bg-black/40 flex items-center justify-center text-white/10 group-hover:text-white transition-all shadow-inner border border-white/5 group-hover:scale-110 group-hover:rotate-6 transform-gpu">
+                        <div className="relative w-24 h-24 rounded-[32px] bg-[var(--ui-bg-muted)] flex items-center justify-center text-[var(--ui-text)]/10 group-hover:text-[var(--ui-text)] group-focus:text-[var(--ui-text)] transition-all shadow-inner border border-[var(--ui-border)] group-hover:scale-110 group-hover:rotate-6 group-focus:scale-110 group-focus:rotate-6 transform-gpu">
                             <span 
                                 className="material-symbols-outlined transition-all duration-500" 
                                 style={{ 
@@ -511,33 +547,35 @@ const Iconography: React.FC<IconographyProps> = ({
                         </div>
                         
                         <div className="space-y-1 text-center w-full px-2">
-                             <span className="text-[9px] font-black text-white/10 uppercase tracking-widest block">v-0{i+1}</span>
-                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors truncate block">
+                             <span className="text-[9px] font-black text-[var(--ui-text-muted)] uppercase tracking-widest block">v-0{i+1}</span>
+                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)] group-hover:text-[var(--ui-text)] group-focus:text-[var(--ui-text)] transition-colors truncate block">
                                 {icon.replace(/_/g, ' ')}
                             </span>
                         </div>
 
-                        <div className="absolute inset-0 rounded-[48px] border border-[var(--ui-accent)]/0 group-hover:border-[var(--ui-accent)]/10 transition-all pointer-events-none"></div>
+                        <div className="absolute inset-0 rounded-[48px] border border-[var(--ui-text)]/0 group-hover:border-[var(--ui-text)]/10 transition-all pointer-events-none"></div>
                     </button>
                   ))}
                   
                   {isFetchingIcons && Array.from({ length: 15 }).map((_, i) => (
-                      <div key={i} className="aspect-square rounded-[48px] bg-white/5 animate-pulse border border-white/5"></div>
+                      <div key={i} className="aspect-square rounded-[48px] bg-[var(--ui-bg-muted)] animate-pulse border border-[var(--ui-border)]"></div>
                   ))}
               </div>
 
               {filteredIcons.length === 0 && !isFetchingIcons && (
-                <div className="py-24 flex flex-col items-center justify-center glass-premium rounded-[60px] border-dashed border-white/10 mx-4 space-y-8">
-                    <div className="w-40 h-40 rounded-full bg-white/5 border border-white/5 flex items-center justify-center opacity-20">
+                <div className="py-24 flex flex-col items-center justify-center glass-premium rounded-[60px] border-dashed border-[var(--ui-border)] mx-4 space-y-8">
+                    <div className="w-40 h-40 rounded-full bg-[var(--ui-bg-muted)] border border-[var(--ui-border)] flex items-center justify-center opacity-20 text-[var(--ui-text)]">
                         <Monitor size={80} strokeWidth={1} />
                     </div>
                     <div className="text-center space-y-2">
-                         <h4 className="text-3xl font-black text-white/40 uppercase tracking-tightest leading-none">Matrix Disconnect</h4>
-                         <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.4em]">No matching vector signatures found in repository</p>
+                         <h4 className="text-3xl font-black text-[var(--ui-text-muted)] uppercase tracking-tightest leading-none">Matrix Disconnect</h4>
+                         <p className="text-[10px] font-bold text-[var(--ui-text-muted)] uppercase tracking-[0.4em]">No matching vector signatures found in repository</p>
                     </div>
                     <button 
+                        type="button"
                         onClick={() => setSearchTerm('')}
-                        className="px-8 py-3 bg-white/10 hover:bg-white text-white/60 hover:text-black rounded-full font-black text-[10px] uppercase tracking-widest transition-all"
+                        title="Clear search query"
+                        className="px-8 py-3 bg-[var(--ui-text)]/10 hover:bg-[var(--ui-text)] text-[var(--ui-text-muted)] hover:text-[var(--ui-bg)] rounded-full font-black text-[10px] uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]"
                     >
                         Reset Matrix Search
                     </button>
@@ -561,9 +599,9 @@ const Iconography: React.FC<IconographyProps> = ({
       {/* Footer Branding */}
       <div className="pt-24 pb-12 flex justify-center opacity-10">
            <div className="flex items-center gap-4">
-                <div className="h-px w-24 bg-white"></div>
-                <span className="text-[10px] font-black uppercase tracking-[0.8em]">End of Archive</span>
-                <div className="h-px w-24 bg-white"></div>
+                <div className="h-px w-24 bg-[var(--ui-text)]"></div>
+                <span className="text-[10px] font-black uppercase tracking-[0.8em] text-[var(--ui-text)]">End of Archive</span>
+                <div className="h-px w-24 bg-[var(--ui-text)]"></div>
            </div>
       </div>
     </div>

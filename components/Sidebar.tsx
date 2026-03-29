@@ -11,12 +11,7 @@ import {
   LayoutDashboard,
   Moon,
   Sun,
-  ChevronRight,
   Cpu,
-  UnfoldVertical,
-  Activity,
-  Terminal,
-  Ship,
   Sparkles
 } from 'lucide-react';
 
@@ -76,31 +71,31 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
   };
 
   return (
-    <nav className="fixed md:static bottom-0 left-0 right-0 md:min-h-screen md:w-80 glass-premium rounded-none p-6 md:p-8 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border-r border-white/10 gap-10">
+    <nav className="fixed md:static bottom-0 left-0 right-0 md:min-h-screen md:w-56 glass-premium rounded-none p-4 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border-r border-[var(--ui-border)] gap-8 font-inter">
       
       {/* Brand & Status */}
-      <div className="hidden md:flex flex-col gap-6 px-2">
+      <header className="hidden md:flex flex-col gap-6 px-2">
           <div className="flex items-center gap-4 group">
-            <div className="w-14 h-14 bg-white text-black rounded-[22px] flex items-center justify-center shadow-4xl group-hover:scale-105 transition-transform duration-500 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-400 opacity-20"></div>
-                <Cpu size={28} strokeWidth={2.5} />
+            <div className="w-12 h-12 bg-[var(--ui-text)] text-[var(--ui-bg)] rounded-[18px] flex items-center justify-center shadow-4xl group-hover:scale-105 transition-transform duration-500 relative overflow-hidden" aria-hidden="true">
+                <div className="absolute inset-0 bg-gradient-to-br from-[var(--ui-text)] to-[var(--ui-text-muted)] opacity-20"></div>
+                <Cpu size={24} strokeWidth={2.5} />
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tightest leading-none flex items-center gap-2">
+              <h1 className="text-2xl font-black tracking-tightest leading-none flex items-center gap-2 text-[var(--ui-text)] uppercase italic">
                 GENESIS
-                <span className="text-[10px] bg-white/10 text-white/40 px-2 py-0.5 rounded-full font-mono">v3.0</span>
+                <span className="text-[10px] bg-[var(--ui-text)]/10 text-[var(--ui-text-muted)] px-2 py-0.5 rounded-full font-mono not-italic" aria-label="Version 4.0">v4.0</span>
               </h1>
               <div className="flex items-center gap-2 mt-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse"></div>
-                  <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">Protocol Active</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse" aria-hidden="true"></div>
+                  <span className="text-[9px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.3em]">Protocol Active</span>
               </div>
             </div>
           </div>
-          <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent"></div>
-      </div>
+          <div className="h-px w-full bg-gradient-to-r from-[var(--ui-text)]/10 via-[var(--ui-text)]/5 to-transparent" aria-hidden="true"></div>
+      </header>
 
       {/* Navigation Matrix */}
-      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-x-visible no-scrollbar p-1">
+      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-x-visible no-scrollbar p-1 list-none" role="menubar">
         {items.map((item, index) => {
           const isActive = currentView === item.id;
           const Icon = item.icon;
@@ -113,47 +108,53 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
               onDragEnd={handleDragEnd}
               onDragOver={(e) => e.preventDefault()}
               className="flex-shrink-0 md:w-full"
+              role="none"
             >
               <button
                 onClick={() => setCurrentView(item.id)}
-                className={`relative group flex items-center md:px-2 md:py-4 w-full transition-all duration-500 overflow-hidden
+                role="menuitem"
+                aria-current={isActive ? 'page' : undefined}
+                title={`Switch to ${item.label} manifest view`}
+                className={`relative group flex items-center px-4 py-3 md:px-2 md:py-4 w-full transition-all duration-500 overflow-hidden focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 rounded-xl
                   ${isActive ? 
-                    'text-white border-b border-white/60' : 
-                    'text-white/20 border-b border-transparent hover:text-white/60'}`}
+                    'text-[var(--ui-text)] border-b border-[var(--ui-text)]/60 bg-[var(--ui-text)]/5' : 
+                    'text-[var(--ui-text-muted)] border-b border-transparent hover:text-[var(--ui-text)]/80 hover:bg-[var(--ui-text)]/[0.02]'}`}
               >
-                <div className="relative z-10 flex items-center justify-between w-full">
+                <div className="relative z-10 flex items-center justify-between w-full pointer-events-none">
                   <div className="flex items-center gap-5">
-                    <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="transition-all duration-500" />
+                    <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="transition-all duration-500" aria-hidden="true" />
                     <div className="hidden md:flex flex-col items-start">
                         <span className={`font-black text-[12px] uppercase tracking-widest transition-all duration-500 ${isActive ? 'translate-x-1' : ''}`}>{item.label}</span>
-                        <span className={`text-[8px] font-mono mt-0.5 transition-colors ${isActive ? 'text-white/40' : 'text-white/10'}`}>{item.ref}</span>
+                        <span className={`text-[8px] font-mono mt-0.5 transition-colors ${isActive ? 'text-[var(--ui-text-muted)]' : 'text-[var(--ui-text)]/20'}`}>{item.ref}</span>
                     </div>
                   </div>
-                  {isActive && <div className="hidden md:block w-1 h-1 rounded-full bg-white animate-pulse" />}
+                  {isActive && <div className="hidden md:block w-1 h-1 rounded-full bg-[var(--ui-text)] animate-pulse" aria-hidden="true" />}
                 </div>
               </button>
             </li>
           );
         })}
-      </ul>
-
-      {/* System Deck Footer */}
-      <div className="hidden md:flex flex-col gap-4 mt-auto">
-          <div className="flex gap-3">
+        
+        {/* Utilities Section */}
+        <li className="hidden md:block mt-8 border-t border-[var(--ui-border)] pt-8" role="none">
+          <div className="flex flex-col gap-4">
             <button 
                 onClick={toggleTheme}
-                className="flex-1 flex items-center justify-center h-16 rounded-[24px] bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all duration-500 group shadow-xl"
-                title="Theme Shift"
+                type="button"
+                className="flex items-center justify-center h-16 rounded-[24px] bg-[var(--ui-bg-muted)] border border-[var(--ui-border)] text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-bg)] transition-all duration-500 group shadow-xl focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                title={`Shift to ${theme === 'light' ? 'Dark' : 'Light'} UI protocol`}
+                aria-label={`Toggle theme, currently ${theme} mode`}
             >
-                {theme === 'light' ? <Moon size={20} className="group-hover:rotate-12 transition-transform" /> : <Sun size={20} className="group-hover:rotate-12 transition-transform" />}
+                {theme === 'light' ? <Moon size={20} className="group-hover:rotate-12 transition-transform" aria-hidden="true" /> : <Sun size={20} className="group-hover:rotate-12 transition-transform" aria-hidden="true" />}
             </button>
-          </div>
 
-          <div className="flex flex-col items-center gap-2 mt-4 opacity-5">
-              <Sparkles size={16} />
-              <span className="text-[8px] font-black uppercase tracking-[1em]">END OF COMMAND</span>
+            <div className="flex flex-col items-center gap-2 mt-4 opacity-50 pointer-events-none">
+                <Sparkles size={16} className="text-[var(--ui-text-muted)]" aria-hidden="true" />
+                <span className="text-[8px] font-black uppercase tracking-[1em] text-[var(--ui-text-muted)]">END OF COMMAND</span>
+            </div>
           </div>
-      </div>
+        </li>
+      </ul>
     </nav>
   );
 };

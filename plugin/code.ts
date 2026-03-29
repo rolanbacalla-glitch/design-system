@@ -1,3 +1,4 @@
+/// <reference types="@figma/plugin-typings" />
 
 // This is the Figma plugin logic (backend).
 // It handles messages from the UI (App.tsx) and interacts with the Figma API.
