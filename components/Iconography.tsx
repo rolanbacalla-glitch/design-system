@@ -336,10 +336,7 @@ const Iconography: React.FC<IconographyProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [allIcons, setAllIcons] = useState<string[]>([]);
   const [isFetchingIcons, setIsFetchingIcons] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [isColourDropdownOpen, setIsColourDropdownOpen] = useState(false);
-
-  const categories = ['All', 'Action', 'Objects', 'Devices', 'Media', 'System', 'Network', 'Finance', 'Health'];
 
   useEffect(() => {
     setIsFetchingIcons(true);
@@ -449,7 +446,7 @@ const Iconography: React.FC<IconographyProps> = ({
                                </button>
                                
                                {isColourDropdownOpen && (
-                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 glass-premium rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
+                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 glass-premium bg-[var(--ui-surface)] rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
                                        {colours.map(c => (
                                            <button
                                                key={c.name}
@@ -485,7 +482,7 @@ const Iconography: React.FC<IconographyProps> = ({
               </div>
           </aside>
 
-          {/* Matrix Explorer */}
+               {/* Matrix Explorer */}
           <main className="lg:col-span-12 xl:col-span-8 space-y-12">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 px-4">
                   <div className="relative flex-1 group">
@@ -505,20 +502,6 @@ const Iconography: React.FC<IconographyProps> = ({
                            <Command size={18} />
                       </div>
                   </div>
-              </div>
-
-              <div className="flex gap-4 overflow-x-auto custom-scrollbar pb-6 px-4">
-                {categories.map(cat => (
-                    <button 
-                        key={cat}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat)}
-                        title={`Filter by category: ${cat}`}
-                        className={`px-10 py-4 rounded-full text-[10px] font-black uppercase tracking-[0.3em] whitespace-nowrap border transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${selectedCategory === cat ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] border-[var(--ui-text)] shadow-3xl shadow-[var(--ui-text)]/10' : 'bg-[var(--ui-bg-muted)] text-[var(--ui-text-muted)] border-[var(--ui-border)] hover:border-[var(--ui-text)]/20 hover:bg-[var(--ui-bg)]'}`}
-                    >
-                        {cat}
-                    </button>
-                ))}
               </div>
 
               {/* Asset Matrix */}
