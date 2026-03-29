@@ -182,7 +182,7 @@ const App: React.FC = () => {
           <div className="glow-orb w-[600px] h-[600px] bg-blue-500/5 bottom-[-300px] right-[-300px] blur-[100px] [animation-delay:4s]" />
       </div>
 
-      <div className="flex h-screen transition-all duration-700 overflow-hidden relative z-10">
+      <div className="flex transition-all duration-700 relative z-10">
         <Sidebar 
           currentView={currentView} 
           setCurrentView={setCurrentView} 
@@ -191,7 +191,7 @@ const App: React.FC = () => {
           designSystem={designSystem} 
         />
         
-        <main className="flex-1 p-6 md:p-16 lg:p-24 overflow-y-auto custom-scrollbar scroll-smooth">
+        <main className="flex-1 p-6 md:p-16 lg:p-24 scroll-smooth">
           <div className="max-w-[1400px] mx-auto min-h-full">
             {renderContent()}
           </div>

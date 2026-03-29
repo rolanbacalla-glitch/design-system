@@ -76,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
   };
 
   return (
-    <nav className="fixed md:static bottom-0 left-0 right-0 md:h-screen md:w-80 glass-premium rounded-none p-6 md:p-8 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border-r border-white/10 gap-10">
+    <nav className="fixed md:static bottom-0 left-0 right-0 md:min-h-screen md:w-80 glass-premium rounded-none p-6 md:p-8 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border-r border-white/10 gap-10">
       
       {/* Brand & Status */}
       <div className="hidden md:flex flex-col gap-6 px-2">
@@ -100,7 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
       </div>
 
       {/* Navigation Matrix */}
-      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-y-auto md:overflow-x-visible no-scrollbar p-1 flex-1">
+      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-x-visible no-scrollbar p-1">
         {items.map((item, index) => {
           const isActive = currentView === item.id;
           const Icon = item.icon;
@@ -147,21 +147,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
             >
                 {theme === 'light' ? <Moon size={20} className="group-hover:rotate-12 transition-transform" /> : <Sun size={20} className="group-hover:rotate-12 transition-transform" />}
             </button>
-            <button 
-                className="flex-1 flex items-center justify-center h-16 rounded-[24px] bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all duration-500 group shadow-xl"
-                title="Terminal Access"
-            >
-                <Terminal size={20} />
-            </button>
           </div>
-
-          <button 
-            className="relative h-20 w-full bg-white text-black font-black text-[11px] uppercase tracking-[0.4em] rounded-[28px] overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-95 shadow-4xl flex items-center justify-center gap-4"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-300 opacity-20"></div>
-            <Ship size={18} strokeWidth={3} className="animate-bounce" />
-            DEPLOY SYSTEM
-          </button>
 
           <div className="flex flex-col items-center gap-2 mt-4 opacity-5">
               <Sparkles size={16} />
