@@ -9,7 +9,6 @@ import Iconography from './components/Iconography';
 import GradientGenerator from './components/GradientGenerator';
 import TailwindPalette from './components/TailwindPalette';
 import FlyonUIExamples from './components/FlyonUIExamples';
-import { hexToRgb, getLuminance } from './utils';
 import './index.css';
 import 'flyonui/flyonui';
 
@@ -26,21 +25,21 @@ const initialDesignSystem: DesignSystem = {
       { name: 'onSurface', label: 'On Surface', value: '#F3F4F6', description: 'Contrast mapping for surface' },
   ],
   typography: [
-    { name: 'displayLarge', label: 'Display Large', fontFamily: 'Inter', fontWeight: 900, fontSize: 120, lineHeight: 110, letterSpacing: -5 },
-    { name: 'headlineLarge', label: 'Headline Large', fontFamily: 'Inter', fontWeight: 800, fontSize: 64, lineHeight: 72, letterSpacing: -2 },
-    { name: 'headlineSmall', label: 'Headline Small', fontFamily: 'Inter', fontWeight: 700, fontSize: 32, lineHeight: 40, letterSpacing: -1 },
-    { name: 'titleLarge', label: 'Title Large', fontFamily: 'Inter', fontWeight: 600, fontSize: 24, lineHeight: 32, letterSpacing: -0.5 },
-    { name: 'bodyLarge', label: 'Body Large', fontFamily: 'Inter', fontWeight: 400, fontSize: 18, lineHeight: 28, letterSpacing: 0 },
-    { name: 'bodySmall', label: 'Body Small', fontFamily: 'Inter', fontWeight: 400, fontSize: 14, lineHeight: 20, letterSpacing: 0 },
-    { name: 'labelLarge', label: 'Label Large', fontFamily: 'JetBrains Mono', fontWeight: 700, fontSize: 12, lineHeight: 16, letterSpacing: 2 },
+    { name: 'displayLarge', label: 'Display Large', fontFamily: 'Inter', fontWeight: 900, fontSize: 80, lineHeight: 88, letterSpacing: -3 },
+    { name: 'headlineLarge', label: 'Headline Large', fontFamily: 'Inter', fontWeight: 800, fontSize: 48, lineHeight: 56, letterSpacing: -1.5 },
+    { name: 'headlineSmall', label: 'Headline Small', fontFamily: 'Inter', fontWeight: 700, fontSize: 28, lineHeight: 36, letterSpacing: -0.5 },
+    { name: 'titleLarge', label: 'Title Large', fontFamily: 'Inter', fontWeight: 600, fontSize: 20, lineHeight: 28, letterSpacing: -0.2 },
+    { name: 'bodyLarge', label: 'Body Large', fontFamily: 'Inter', fontWeight: 400, fontSize: 16, lineHeight: 24, letterSpacing: 0 },
+    { name: 'bodySmall', label: 'Body Small', fontFamily: 'Inter', fontWeight: 400, fontSize: 13, lineHeight: 18, letterSpacing: 0 },
+    { name: 'labelLarge', label: 'Label Large', fontFamily: 'JetBrains Mono', fontWeight: 700, fontSize: 10, lineHeight: 14, letterSpacing: 1 },
   ],
   spacing: [
-    { name: 'xs', value: 8 },
-    { name: 's', value: 16 },
-    { name: 'm', value: 32 },
-    { name: 'l', value: 64 },
-    { name: 'xl', value: 128 },
-    { name: 'xxl', value: 256 },
+    { name: 'xs', value: 4 },
+    { name: 's', value: 8 },
+    { name: 'm', value: 16 },
+    { name: 'l', value: 32 },
+    { name: 'xl', value: 64 },
+    { name: 'xxl', value: 128 },
   ],
   elevation: [
     { name: 'Flat', level: 0, shadow: 'none' },
@@ -88,7 +87,7 @@ const App: React.FC = () => {
   
   useEffect(() => {
     const fontsToLoad = [...new Set(designSystem.typography.map(t => t.fontFamily as string))]
-      .filter(f => !['Inter', 'JetBrains Mono', 'Roboto', 'Outfit', 'Montserrat'].includes(f));
+      .filter((f: string) => !['Inter', 'JetBrains Mono', 'Roboto', 'Outfit', 'Montserrat'].includes(f));
     
     if (fontsToLoad.length > 0 || true) {
       const linkId = 'system-google-fonts';
@@ -104,26 +103,6 @@ const App: React.FC = () => {
       link.href = `https://fonts.googleapis.com/css2?family=${baseFonts}${dynamicFonts ? `&family=${dynamicFonts}` : ''}&display=swap`;
     }
   }, [designSystem.typography]);
-
-  const getColorValue = (name: string) => designSystem.colours.find(c => c.name === name)?.value;
-  const bgHex = designSystem.applyTheme ? getColorValue('background') : (theme === 'dark' ? '#08090A' : '#F8FAFC');
-
-  const themeStyles = `
-    :root {
-      --app-primary: ${designSystem.applyTheme ? getColorValue('primary') : '#00E5FF'};
-      --app-background: ${designSystem.applyTheme ? getColorValue('background') : '#08090A'};
-      --app-surface: ${designSystem.applyTheme ? getColorValue('surface') : '#121417'};
-      --app-text: ${designSystem.applyTheme ? getColorValue('onSurface') : '#F3F4F6'};
-    }
-    body {
-        background-color: var(--app-background);
-        font-family: 'Inter', sans-serif;
-    }
-    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.1); }
-  `;
 
   const renderContent = () => {
     switch (currentView) {
@@ -171,15 +150,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`${theme} min-h-screen relative overflow-hidden bg-[#08090a] selection:bg-white selection:text-black`}>
-      <style>{themeStyles}</style>
+    <div className={`${theme} min-h-screen relative bg-[var(--ui-bg)] selection:bg-[var(--ui-text)]/[0.3] scroll-smooth transition-colors duration-700`}>
       
       {/* Background Atmosphere */}
       <div className="fixed inset-0 pointer-events-none -z-10">
-          <div className="absolute inset-0 opacity-[0.02] [background-image:linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] [background-size:40px_40px]"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-black/20 to-black"></div>
-          <div className="glow-orb w-[800px] h-[800px] bg-cyan-500/5 top-[-400px] left-[-400px] blur-[100px]" />
-          <div className="glow-orb w-[600px] h-[600px] bg-blue-500/5 bottom-[-300px] right-[-300px] blur-[100px] [animation-delay:4s]" />
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02] [background-image:linear-gradient(to_right,var(--ui-text)_1px,transparent_1px),linear-gradient(to_bottom,var(--ui-text)_1px,transparent_1px)] [background-size:40px_40px]"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-transparent to-[var(--ui-bg)]"></div>
+          <div className={`glow-orb w-[800px] h-[800px] bg-cyan-500/5 top-[-400px] left-[-400px] blur-[100px] transition-colors duration-1000`} />
+          <div className={`glow-orb w-[600px] h-[600px] bg-blue-500/5 bottom-[-300px] right-[-300px] blur-[100px] [animation-delay:4s] transition-colors duration-1000`} />
       </div>
 
       <div className="flex transition-all duration-700 relative z-10">
@@ -191,7 +169,7 @@ const App: React.FC = () => {
           designSystem={designSystem} 
         />
         
-        <main className="flex-1 p-6 md:p-16 lg:p-24 scroll-smooth">
+        <main className="flex-1 p-4 md:p-8 lg:p-12">
           <div className="max-w-[1400px] mx-auto min-h-full">
             {renderContent()}
           </div>
@@ -199,9 +177,9 @@ const App: React.FC = () => {
 
         {/* Global HUD Decorations */}
         <div className="fixed top-12 right-12 flex flex-col items-end gap-2 opacity-20 pointer-events-none group">
-            <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white">System Status: Nominal</span>
+            <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[var(--ui-text)]">System Status: Nominal</span>
             <div className="flex gap-1">
-                {[1,2,3,4,5].map(i => <div key={i} className="w-1 h-3 bg-white" />)}
+                {[1,2,3,4,5].map(i => <div key={i} className="w-1 h-3 bg-[var(--ui-text)]" />)}
             </div>
         </div>
       </div>

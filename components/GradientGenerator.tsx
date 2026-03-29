@@ -1,16 +1,10 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { GradientToken, GradientStop } from '../types';
 import { 
-  Copy, 
   RefreshCw, 
-  Trash2, 
-  Plus, 
   Heart, 
-  MoreHorizontal, 
-  GripVertical, 
   Maximize2, 
   Sparkles,
-  Palette,
   Zap,
   Code,
   Layout,
@@ -23,7 +17,7 @@ interface GradientGeneratorProps {
   onSave: (gradient: GradientToken) => void;
 }
 
-// Ultra-Premium Preset Gradients
+// Ultra-Premium Preset Gradients - Keeping these as they are "presets" but can be theme-aware if needed
 const PRESET_GRADIENTS: GradientToken[] = [
     {
       name: 'Cyber Neon',
@@ -90,43 +84,58 @@ const AnglePicker: React.FC<{ angle: number, onChange: (angle: number) => void }
         window.addEventListener('mouseup', handleMouseUp);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+            onChange((angle + 15) % 360);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+            onChange((angle - 15 + 360) % 360);
+        }
+    };
+
     return (
         <div 
             ref={dialRef}
             onMouseDown={onMouseDown}
-            className="w-32 h-32 rounded-full bg-black/40 border border-white/5 relative flex items-center justify-center cursor-crosshair group shadow-inner"
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            role="slider"
+            aria-label="Gradient rotation angle"
+            aria-valuemin={0}
+            aria-valuemax={360}
+            aria-valuenow={angle}
+            className="w-32 h-32 rounded-full bg-[var(--ui-bg-muted)] border border-[var(--ui-border)] relative flex items-center justify-center cursor-crosshair group shadow-inner focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
         >
             {/* Degree Marks */}
             {Array.from({ length: 8 }).map((_, i) => (
                 <div 
                     key={i} 
-                    className="absolute w-0.5 h-2 bg-white/10 rounded-full" 
+                    className="absolute w-0.5 h-2 bg-[var(--ui-text)]/10 rounded-full" 
                     style={{ transform: `rotate(${i * 45}deg) translateY(-54px)` }}
                 />
             ))}
             
             {/* Center Pointer */}
             <div 
-                className="absolute w-1 h-14 bg-gradient-to-t from-[var(--ui-accent)] to-transparent rounded-full origin-bottom bottom-1/2 transition-transform duration-200 ease-out"
+                className="absolute w-1 h-14 bg-gradient-to-t from-[var(--ui-text)] to-transparent rounded-full origin-bottom bottom-1/2 transition-transform duration-200 ease-out opacity-20 group-hover:opacity-40"
                 style={{ transform: `rotate(${angle}deg)` }}
             />
             
             {/* Handle */}
             <div 
-                className="absolute w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] border-2 border-[var(--ui-accent)] transition-all duration-200"
+                className="absolute w-4 h-4 rounded-full bg-[var(--ui-text)] shadow-[0_0_15px_rgba(var(--ui-text-rgb),0.5)] border-2 border-[var(--ui-bg)] transition-all duration-200"
                 style={{ transform: `rotate(${angle - 90}deg) translateX(48px)` }}
             />
 
-            <div className="absolute inset-0 rounded-full border border-white/0 group-hover:border-white/10 transition-colors" />
+            <div className="absolute inset-0 rounded-full border border-[var(--ui-text)]/0 group-hover:border-[var(--ui-text)]/10 transition-colors" />
             
-            <div className="absolute bottom-6 text-[10px] font-black text-white/40 uppercase tracking-widest">
+            <div className="absolute bottom-6 text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-widest pointer-events-none">
                 {angle}°
             </div>
         </div>
     );
 };
 
-const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, onSave }) => {
+const GradientGenerator: React.FC<GradientGeneratorProps> = () => {
   // --- State ---
   const [stops, setStops] = useState<GradientStop[]>([
     { id: '1', colour: '#D4145A', position: 0 },
@@ -137,7 +146,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
   const [selectedStopId, setSelectedStopId] = useState<string>('1');
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [gallery, setGallery] = useState<GradientToken[]>(PRESET_GRADIENTS);
+  const [gallery] = useState<GradientToken[]>(PRESET_GRADIENTS);
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -146,7 +155,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
   , [stops, selectedStopId]);
 
   // --- Logic ---
-  const generateCss = (currentStops: GradientStop[], angle: number, gradType: 'linear' | 'radial') => {
+  const generateCssRaw = (currentStops: GradientStop[], angle: number, gradType: 'linear' | 'radial') => {
     const sorted = [...currentStops].sort((a, b) => a.position - b.position);
     const stopStr = sorted.map(s => `${s.colour} ${s.position}%`).join(', ');
     return gradType === 'linear' ? `linear-gradient(${angle}deg, ${stopStr})` : `radial-gradient(circle, ${stopStr})`;
@@ -166,7 +175,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
   };
 
   const handleCopy = (mode: 'css' | 'tailwind') => {
-    const css = generateCss(stops, rotation, type);
+    const css = generateCssRaw(stops, rotation, type);
     const text = mode === 'css' ? `background: ${css};` : `bg-[${css}]`;
     navigator.clipboard.writeText(text);
     setCopyFeedback(mode);
@@ -182,86 +191,91 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
     setRotation(Math.floor(Math.random() * 360));
   };
 
-  const currentCss = generateCss(stops, rotation, type);
+  const currentCss = generateCssRaw(stops, rotation, type);
 
   return (
-    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-8 duration-1000 font-inter">
       
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--ui-accent-faint)] border border-[var(--ui-accent)]/20">
-                <Layers className="text-[var(--ui-accent)]" size={12} />
-                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--ui-accent)]">Dynamic Assets</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--ui-text)]/5 border border-[var(--ui-text)]/10">
+                <Layers className="text-[var(--ui-text)]" size={12} />
+                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)]">Dynamic Assets</span>
             </div>
-            <h2 className="text-6xl font-black text-white tracking-tightest uppercase italic leading-none">Hyper-Gradient <span className="text-[var(--ui-accent)]">Lab</span></h2>
-            <p className="text-sm font-medium text-white/30 uppercase tracking-widest max-w-xl">Architect multi-dimensional atmospheric tokens with industrial precision.</p>
+            <h2 className="text-6xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none">Hyper-Gradient <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Lab</span></h2>
+            <p className="text-sm font-medium text-[var(--ui-text-muted)] uppercase tracking-widest max-w-xl">Architect multi-dimensional atmospheric tokens with industrial precision.</p>
         </div>
         
-        <div className="flex bg-black/40 p-2 rounded-[24px] border border-white/5 backdrop-blur-xl">
+        <nav className="flex bg-[var(--ui-bg-muted)] p-2 rounded-[24px] border border-[var(--ui-border)] backdrop-blur-xl">
              <button 
+                type="button"
                 onClick={() => setType('linear')}
-                className={`px-8 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all ${type === 'linear' ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+                title="Switch to Linear Gradient projection"
+                className={`px-8 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${type === 'linear' ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
              >
                  Linear
              </button>
              <button 
+                type="button"
                 onClick={() => setType('radial')}
-                className={`px-8 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all ${type === 'radial' ? 'bg-white text-black shadow-xl' : 'text-white/40 hover:text-white'}`}
+                title="Switch to Radial Gradient projection"
+                className={`px-8 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${type === 'radial' ? 'bg-[var(--ui-text)] text-[var(--ui-bg)] shadow-xl' : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)]'}`}
              >
                  Radial
              </button>
-        </div>
-      </div>
+        </nav>
+      </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         
         {/* Configuration Panel */}
-        <div className="lg:col-span-12 xl:col-span-5 space-y-8">
-            <div className="glass-premium p-10 rounded-[50px] border-white/10 shadow-3xl space-y-12 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-5">
+        <section className="lg:col-span-12 xl:col-span-5 space-y-8">
+            <div className="glass-premium p-10 rounded-[50px] border border-[var(--ui-border)] shadow-3xl space-y-12 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-8 opacity-5 text-[var(--ui-text)] pointer-events-none">
                     <Zap size={120} />
                 </div>
 
                 {/* Gradient Track */}
                 <div className="space-y-6">
-                    <div className="flex justify-between items-center">
-                        <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Atmosphere Track</label>
-                        <span className="text-[9px] font-bold text-[var(--ui-accent)] uppercase tracking-widest bg-[var(--ui-accent-faint)] px-2 py-0.5 rounded-md">
+                    <div className="flex justify-between items-center px-1">
+                        <label className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.2em]">Atmosphere Track</label>
+                        <span className="text-[9px] font-bold text-[var(--ui-text)] uppercase tracking-widest bg-[var(--ui-text)]/5 px-2 py-0.5 rounded-md">
                             {stops.length} STOPS
                         </span>
                     </div>
                     
-                    <div className="relative pt-10 pb-4">
-                        <div 
-                            ref={sliderRef}
-                            onClick={handleSliderClick}
-                            className="h-16 rounded-[28px] relative cursor-pointer shadow-inner border border-white/10 overflow-visible transition-transform hover:scale-[1.01]"
-                            style={{ background: currentCss }}
-                        >
-                            {stops.map(stop => (
-                                <button
-                                    key={stop.id}
-                                    onClick={(e) => { e.stopPropagation(); setSelectedStopId(stop.id); }}
-                                    className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border-4 shadow-3xl transition-all duration-300 group
-                                        ${selectedStopId === stop.id ? 'border-white scale-125 z-20 ring-4 ring-[var(--ui-accent)]/30' : 'border-white/20 hover:scale-110 hover:border-white/50'}`}
-                                    style={{ left: `calc(${stop.position}% - 20px)`, backgroundColor: stop.colour }}
-                                >
-                                    <div className="absolute top-full mt-4 left-1/2 -translate-x-1/2 text-[8px] font-black text-white opacity-0 group-hover:opacity-60 transition-opacity">
-                                        {stop.position}%
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
+                    <div 
+                        ref={sliderRef}
+                        onClick={handleSliderClick}
+                        className="relative h-16 rounded-[28px] cursor-pointer shadow-inner border border-[var(--ui-border)] overflow-visible transition-transform hover:scale-[1.01]"
+                        style={{ background: currentCss }}
+                        aria-label="Color stop interaction track. Click to add a stop."
+                    >
+                        {stops.map(stop => (
+                            <button
+                                key={stop.id}
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); setSelectedStopId(stop.id); }}
+                                title={`Adjust stop at ${stop.position}% position`}
+                                className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border-4 shadow-3xl transition-all duration-300 group focus:outline-none focus:ring-4 focus:ring-[var(--ui-text)]/40
+                                    ${selectedStopId === stop.id ? 'border-[var(--ui-text)] scale-125 z-20 ring-4 ring-[var(--ui-text)]/10' : 'border-[var(--ui-text)]/20 hover:scale-110 hover:border-[var(--ui-text)]/50'}`}
+                                style={{ left: `calc(${stop.position}% - 20px)`, backgroundColor: stop.colour }}
+                            >
+                                <span className="absolute top-full mt-4 left-1/2 -translate-x-1/2 text-[8px] font-black text-[var(--ui-text)] opacity-0 group-hover:opacity-60 transition-opacity">
+                                    {stop.position}%
+                                </span>
+                            </button>
+                        ))}
                     </div>
-                    <p className="text-[9px] text-center font-bold text-white/20 uppercase tracking-widest italic pt-2">Click track to inject a new color stop</p>
+                    <p className="text-[9px] text-center font-bold text-[var(--ui-text-muted)] uppercase tracking-widest italic pt-2">Click track to inject a new color stop</p>
                 </div>
 
                 {/* Config Controls */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-8">
                         <div className="space-y-4">
-                             <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Vector Projection</label>
+                             <label className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.2em] px-1">Vector Projection</label>
                              <div className="flex justify-center py-4">
                                 <AnglePicker angle={rotation} onChange={setRotation} />
                              </div>
@@ -270,54 +284,59 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
 
                     <div className="space-y-8">
                          <div className="space-y-4">
-                            <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Stop refinement</label>
-                            <div className="bg-black/40 p-6 rounded-[32px] border border-white/5 space-y-6">
+                            <label className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.2em] px-1">Stop refinement</label>
+                            <div className="bg-[var(--ui-bg-muted)] p-6 rounded-[32px] border border-[var(--ui-border)] space-y-6">
                                 <div className="space-y-3">
-                                    <div className="flex justify-between text-[9px] font-black text-white/30 uppercase tracking-widest">
+                                    <div className="flex justify-between px-1 text-[9px] font-black text-[var(--ui-text-muted)] uppercase tracking-widest">
                                         <span>Value</span>
                                         <span>{selectedStop.colour.toUpperCase()}</span>
                                     </div>
-                                    <div className="flex items-center gap-4 bg-white/5 p-3 rounded-2xl border border-white/5">
-                                        <div className="w-8 h-8 rounded-xl relative overflow-hidden border border-white/10 shadow-inner group">
+                                    <div className="flex items-center gap-4 bg-[var(--ui-text)]/5 p-3 rounded-2xl border border-[var(--ui-border)] focus-within:ring-2 focus-within:ring-[var(--ui-text)]/10 transition-all">
+                                        <div className="w-8 h-8 rounded-xl relative overflow-hidden border border-[var(--ui-border)] shadow-inner group">
                                             <input 
+                                                id="stop-color-picker"
                                                 type="color" 
                                                 value={selectedStop.colour}
-                                                title="Pick color"
+                                                title={`Change color for stop at ${selectedStop.position}%`}
                                                 onChange={(e) => updateStop(selectedStop.id, { colour: e.target.value })}
                                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer scale-150"
                                             />
-                                            <div className="w-full h-full" style={{ backgroundColor: selectedStop.colour }} />
+                                            <div className="w-full h-full pointer-events-none" style={{ backgroundColor: selectedStop.colour }} />
                                         </div>
                                         <input 
+                                            id="stop-color-info"
                                             type="text" 
-                                            title="Hex value"
+                                            title="Hexadecimal color value mapping"
                                             value={selectedStop.colour.toUpperCase()}
                                             onChange={(e) => updateStop(selectedStop.id, { colour: e.target.value })}
-                                            className="bg-transparent border-none text-white font-black text-lg focus:ring-0 outline-none w-full"
+                                            className="bg-transparent border-none text-[var(--ui-text)] font-black text-lg focus:ring-0 outline-none w-full uppercase"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="space-y-3">
-                                    <div className="flex justify-between text-[9px] font-black text-white/30 uppercase tracking-widest">
+                                    <div className="flex justify-between px-1 text-[9px] font-black text-[var(--ui-text-muted)] uppercase tracking-widest">
                                         <span>Position</span>
                                         <span>{selectedStop.position}%</span>
                                     </div>
                                     <input 
+                                        id="stop-position-slider"
                                         type="range" min="0" max="100"
                                         value={selectedStop.position}
-                                        title="Position percentage"
+                                        title={`Dimensional position override for selected stop`}
                                         onChange={(e) => updateStop(selectedStop.id, { position: Number(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-[var(--ui-accent)]"
+                                        className="w-full h-1 bg-[var(--ui-text)]/10 rounded-full appearance-none cursor-pointer accent-[var(--ui-text)] focus:outline-none focus:ring-4 focus:ring-[var(--ui-text)]/10"
                                     />
                                 </div>
                                 
                                 <button
+                                    type="button"
                                     onClick={() => {
                                         if (stops.length > 2) setStops(stops.filter(s => s.id !== selectedStopId));
                                     }}
-                                    title="Remove stop"
-                                    className="w-full py-3 bg-red-500/5 hover:bg-red-500/10 text-red-500/40 hover:text-red-500 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                                    title="Purge specifically selected stop from track"
+                                    disabled={stops.length <= 2}
+                                    className="w-full py-3 bg-red-500/5 hover:bg-red-500/10 disabled:opacity-20 disabled:cursor-not-allowed text-red-500/60 hover:text-red-500 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-red-500/20"
                                 >
                                     Purge Stop
                                 </button>
@@ -329,70 +348,73 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
                 {/* Output Actions */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                     <button 
+                        type="button"
                         onClick={randomize}
-                        title="Randomize gradient"
-                        className="flex-1 py-5 bg-white/5 hover:bg-white/10 text-white/60 hover:text-white font-black rounded-[24px] border border-white/5 transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px]"
+                        title="Randomize atmospheric entropy via sync"
+                        className="flex-1 py-5 bg-[var(--ui-text)]/5 hover:bg-[var(--ui-text)]/10 text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] font-black rounded-[24px] border border-[var(--ui-border)] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
                     >
                         <RefreshCw size={14} />
                         Entropy Sync
                     </button>
                     <button 
+                         type="button"
                          onClick={() => handleCopy('css')}
-                         title="Copy CSS snippet"
-                         className="flex-1 py-5 bg-white text-black font-black rounded-[24px] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] shadow-2xl hover:shadow-white/20"
+                         title="Generate and copy standard CSS3 gradient snippet"
+                         className="flex-1 py-5 bg-[var(--ui-text)] text-[var(--ui-bg)] font-black rounded-[24px] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] shadow-2xl hover:shadow-[var(--ui-text)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/40"
                     >
                         {copyFeedback === 'css' ? 'Copied Static' : 'Generate CSS'}
                         {!copyFeedback && <Code size={14} />}
                     </button>
                     <button 
+                         type="button"
                          onClick={() => handleCopy('tailwind')}
-                         title="Copy Tailwind class"
-                         className="flex-1 py-5 bg-[var(--ui-accent)] text-[var(--ui-accent-on)] font-black rounded-[24px] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] shadow-2xl hover:bg-[var(--ui-accent-hover)]"
+                         title="Generate and copy atomic Tailwind utility class"
+                         className="flex-1 py-5 bg-[var(--ui-bg)] text-[var(--ui-text)] border border-[var(--ui-border)] font-black rounded-[24px] transition-all flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-[10px] shadow-2xl hover:bg-[var(--ui-bg-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
                     >
                         {copyFeedback === 'tailwind' ? 'Copied Component' : 'Generate Utility'}
                         {!copyFeedback && <Zap size={14} />}
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
         {/* Live Preview / High-Fidelity Rendering */}
         <div className="lg:col-span-12 xl:col-span-7 space-y-8">
             <div 
-                className="w-full h-full min-h-[600px] rounded-[60px] shadow-4xl border-[16px] border-black/40 relative overflow-hidden group transition-all duration-1000 hover:scale-[1.01] flex items-center justify-center"
+                className="w-full h-full min-h-[600px] rounded-[60px] shadow-4xl border-[16px] border-[var(--ui-bg-muted)] relative overflow-hidden group transition-all duration-1000 hover:scale-[1.01] flex items-center justify-center"
                  style={{ background: currentCss }}
             >
                 {/* Background Atmosphere */}
                 <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <div className="absolute top-10 right-10 flex gap-4 opacity-0 group-hover:opacity-100 transition-all translate-x-10 group-hover:translate-x-0 duration-500">
-                    <button title="Fullscreen" className="p-4 glass-premium rounded-3xl text-white/40 hover:text-white border-white/10 hover:scale-110 active:scale-90 transition-all">
+                <div className="absolute top-10 right-10 flex gap-4 opacity-0 group-hover:opacity-100 transition-all translate-x-10 group-hover:translate-x-0 duration-500 z-30">
+                    <button type="button" title="View Fullscreen projection" className="p-4 glass-premium rounded-3xl text-[var(--ui-text)]/40 hover:text-[var(--ui-text)] border border-[var(--ui-border)] hover:scale-110 active:scale-90 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20">
                         <Maximize2 size={24} />
                     </button>
-                    <button title="Layout" className="p-4 glass-premium rounded-3xl text-white/40 hover:text-white border-white/10 hover:scale-110 active:scale-90 transition-all">
+                    <button type="button" title="Toggle Simulation Layout" className="p-4 glass-premium rounded-3xl text-[var(--ui-text)]/40 hover:text-[var(--ui-text)] border border-[var(--ui-border)] hover:scale-110 active:scale-90 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20">
                         <Layout size={24} />
                     </button>
                 </div>
 
                 {/* Premium Mockup Hero overlay */}
-                <div className="glass-premium p-16 rounded-[48px] border-white/20 backdrop-blur-4xl shadow-5xl max-w-[85%] relative overflow-hidden group/hero group-hover:-translate-y-4 transition-all duration-700">
-                    <div className="absolute -top-24 -left-24 w-64 h-64 bg-white/10 blur-[100px] rounded-full group-hover/hero:scale-150 transition-transform duration-1000"></div>
+                <div className="glass-premium p-16 rounded-[48px] border border-[var(--ui-border)] backdrop-blur-4xl shadow-5xl max-w-[85%] relative overflow-hidden group/hero group-hover:-translate-y-4 transition-all duration-700">
+                    <div className="absolute -top-24 -left-24 w-64 h-64 bg-[var(--ui-text)]/10 blur-[100px] rounded-full group-hero:scale-150 transition-transform duration-1000"></div>
                     <div className="relative text-center space-y-8">
-                        <div className="w-20 h-20 rounded-[28px] bg-white text-black flex items-center justify-center mx-auto shadow-2xl rotate-3 group-hover/hero:rotate-0 transition-transform duration-500">
-                            <Sparkles size={36} />
+                        <div className="w-20 h-20 rounded-[28px] bg-[var(--ui-text)] text-[var(--ui-bg)] flex items-center justify-center mx-auto shadow-2xl rotate-3 group-hero:rotate-0 transition-transform duration-500">
+                            <Sparkles size={36} aria-hidden="true" />
                         </div>
                         <div className="space-y-4">
-                            <h3 className="text-4xl md:text-5xl font-black text-white tracking-tightest leading-none uppercase italic">Chroma Zenith</h3>
-                            <p className="text-sm font-bold text-white/40 uppercase tracking-[0.3em]">Premium Atmosphere Protocol</p>
+                            <h3 className="text-4xl md:text-5xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">Chroma Zenith</h3>
+                            <p className="text-sm font-bold text-[var(--ui-text-muted)] uppercase tracking-[0.3em]">Premium Atmosphere Protocol v3</p>
                         </div>
                         <div className="flex justify-center gap-6 pt-6">
-                            <div className="px-8 py-4 bg-white/10 rounded-2xl border border-white/10 text-[10px] font-black text-white uppercase tracking-widest">Dynamic</div>
-                            <div className="px-8 py-4 bg-white/10 rounded-2xl border border-white/10 text-[10px] font-black text-white uppercase tracking-widest">Weightless</div>
+                            <div className="px-8 py-4 bg-[var(--ui-text)]/10 rounded-2xl border border-[var(--ui-border)] text-[10px] font-black text-[var(--ui-text)] uppercase tracking-widest">Dynamic Engine</div>
+                            <div className="px-8 py-4 bg-[var(--ui-text)]/10 rounded-2xl border border-[var(--ui-border)] text-[10px] font-black text-[var(--ui-text)] uppercase tracking-widest">Weightless UI</div>
                         </div>
                     </div>
                 </div>
 
                 {/* Mouse Interaction Indicator */}
-                <div className="absolute bottom-10 left-10 flex items-center gap-4 text-white/20">
+                <div className="absolute bottom-10 left-10 flex items-center gap-4 text-[var(--ui-text)]/20 pointer-events-none">
                      <MousePointer2 size={16} />
                      <span className="text-[10px] font-black uppercase tracking-[0.3em]">Holographic Engine Active</span>
                 </div>
@@ -405,12 +427,12 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
       <section className="pt-20 space-y-12">
            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
                <div className="space-y-2">
-                    <h3 className="text-4xl font-black text-white tracking-tightest uppercase italic leading-none">The Foundry</h3>
-                    <p className="text-xs font-bold text-white/30 uppercase tracking-widest">Reference standard for architectural atmospheres</p>
+                    <h3 className="text-4xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none">The Foundry</h3>
+                    <p className="text-xs font-bold text-[var(--ui-text-muted)] uppercase tracking-widest">Reference standard for architectural atmospheres</p>
                </div>
-               <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-full border border-white/10">
-                   <div className="w-1.5 h-1.5 rounded-full bg-[var(--ui-accent)] animate-pulse" />
-                   <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Cloud Sync Active</span>
+               <div className="flex items-center gap-3 bg-[var(--ui-text)]/5 px-6 py-3 rounded-full border border-[var(--ui-border)]">
+                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+                   <span className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-widest">Cloud Sync Active</span>
                </div>
            </div>
 
@@ -418,11 +440,13 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
                 {gallery.map((grad, i) => (
                     <div 
                         key={grad.name}
-                        className="glass-premium rounded-[50px] border-white/5 shadow-3xl hover:border-white/20 hover:-translate-y-4 transition-all duration-500 overflow-hidden group relative"
+                        className="glass-premium rounded-[50px] border border-[var(--ui-border)] shadow-3xl hover:border-[var(--ui-text)]/20 hover:-translate-y-4 transition-all duration-500 overflow-hidden group relative"
                     >
-                         <div 
-                            className="h-64 w-full relative cursor-pointer active:scale-95 transition-transform"
-                            style={{ background: generateCss(grad.stops, grad.rotation, grad.type) }}
+                         <button 
+                            type="button"
+                            className="h-64 w-full relative active:scale-95 transition-transform overflow-hidden block"
+                            style={{ background: generateCssRaw(grad.stops, grad.rotation, grad.type) }}
+                            title={`Inject ${grad.name} preset into generator`}
                             onClick={() => {
                                 setStops(grad.stops.map(s => ({...s})));
                                 setRotation(grad.rotation);
@@ -430,31 +454,37 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = ({ savedGradients, o
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
                          >
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md flex items-center justify-center">
-                                 <div className="px-10 py-4 bg-white text-black rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl scale-90 group-hover:scale-100 transition-all duration-500">
+                            <span className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md flex items-center justify-center">
+                                 <span className="px-10 py-4 bg-white text-black rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl scale-90 group-hover:scale-100 transition-all duration-500">
                                      Inject Token
-                                 </div>
-                            </div>
-                         </div>
-                         <div className="p-8 flex items-center justify-between bg-black/20 backdrop-blur-xl border-t border-white/5">
-                             <div className="space-y-1">
-                                 <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">preset-0{i+1}</span>
-                                 <h4 className="text-lg font-black text-white uppercase tracking-tightest">{grad.name}</h4>
-                             </div>
-                             <button 
-                                onClick={(e) => { e.stopPropagation(); setFavorites(prev => prev.includes(grad.name) ? prev.filter(f => f !== grad.name) : [...prev, grad.name]); }}
-                                className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${favorites.includes(grad.name) ? 'bg-red-500/10 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]' : 'bg-white/5 text-white/20 hover:bg-white/10 hover:text-white border border-white/5'}`}
-                             >
-                                 <Heart size={20} fill={favorites.includes(grad.name) ? "currentColor" : "none"} />
-                             </button>
+                                 </span>
+                            </span>
+                         </button>
+                         <div className="p-8 flex items-center justify-between bg-[var(--ui-bg)]/20 backdrop-blur-xl border-t border-[var(--ui-border)]">
+                              <div className="space-y-1">
+                                  <span className="text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-widest">preset-0{i+1}</span>
+                                  <h4 className="text-lg font-black text-[var(--ui-text)] uppercase tracking-tightest leading-none">{grad.name}</h4>
+                              </div>
+                              <button 
+                                 type="button"
+                                 title={`${favorites.includes(grad.name) ? 'Remove from' : 'Add to'} favorites archive`}
+                                 onClick={(e) => { e.stopPropagation(); setFavorites(prev => prev.includes(grad.name) ? prev.filter(f => f !== grad.name) : [...prev, grad.name]); }}
+                                 className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20 ${favorites.includes(grad.name) ? 'bg-red-500/10 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]' : 'bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:bg-[var(--ui-text)]/10 hover:text-[var(--ui-text)] border border-[var(--ui-border)]'}`}
+                              >
+                                  <Heart size={20} fill={favorites.includes(grad.name) ? "currentColor" : "none"} />
+                              </button>
                          </div>
                     </div>
                 ))}
            </div>
            
            <div className="flex justify-center pt-16 pb-24">
-                <button className="px-16 py-6 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-white/40 uppercase tracking-[0.4em] hover:bg-white/10 hover:text-white transition-all active:scale-95 group shadow-4xl relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <button 
+                    type="button"
+                    title="Browse the Eternal Depository of architectural gradients"
+                    className="px-16 py-6 bg-[var(--ui-text)]/5 border border-[var(--ui-border)] rounded-full text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.4em] hover:bg-[var(--ui-text)]/10 hover:text-[var(--ui-text)] transition-all active:scale-95 group shadow-4xl relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-[var(--ui-text)]/20"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--ui-text)]/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     Browse Eternal Depository
                 </button>
            </div>

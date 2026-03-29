@@ -10,9 +10,15 @@
 
 :root {
   --ui-bg: #08090A;
+  --ui-bg-muted: rgba(255, 255, 255, 0.03);
   --ui-surface: #121417;
   --ui-accent: #00E5FF;
   --ui-accent-on: #000000;
+  --ui-text: #F3F4F6;
+  --ui-text-muted: rgba(255, 255, 255, 0.4);
+  --ui-border: rgba(255, 255, 255, 0.08);
+  --ui-glass-bg: rgba(18, 20, 23, 0.7);
+  --ui-glass-border: rgba(255, 255, 255, 0.1);
   
   --shadow-4xl: 0 40px 100px -20px rgba(0, 0, 0, 0.8), 0 20px 50px -10px rgba(0, 0, 0, 0.4);
   --shadow-5xl: 0 60px 150px -30px rgba(0, 0, 0, 0.9), 0 30px 60px -15px rgba(0, 0, 0, 0.5);
@@ -20,32 +26,32 @@
 
 .light {
   --ui-bg: #F8FAFC;
+  --ui-bg-muted: rgba(0, 0, 0, 0.03);
   --ui-surface: #FFFFFF;
-  --ui-accent: #0EA5E9;
+  --ui-accent: #0284C7;
   --ui-accent-on: #FFFFFF;
+  --ui-text: #1E293B;
+  --ui-text-muted: rgba(30, 41, 59, 0.5);
+  --ui-border: rgba(0, 0, 0, 0.08);
+  --ui-glass-bg: rgba(255, 255, 255, 0.6);
+  --ui-glass-border: rgba(0, 0, 0, 0.05);
 }
 
 /* Base Reset */
 body {
   background-color: var(--ui-bg);
-  color: #F3F4F6;
+  color: var(--ui-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Genesis Premium Utilities */
 .glass-premium {
-  background: rgba(18, 20, 23, 0.7);
+  background: var(--ui-glass-bg);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
   backdrop-filter: blur(32px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--ui-border);
   box-shadow: var(--shadow-4xl);
-}
-
-.light .glass-premium {
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 .shadow-4xl { box-shadow: var(--shadow-4xl); }
@@ -59,6 +65,11 @@ body {
   pointer-events: none;
   opacity: 0.15;
   animation: float-orb 30s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Mode Orb adjustments */
+.light .glow-orb {
+  opacity: 0.05;
 }
 
 @keyframes float-orb {
@@ -89,14 +100,14 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--ui-text-muted);
   border-radius: 20px;
   border: 1px solid transparent;
   background-clip: content-box;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--ui-text);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -128,13 +139,12 @@ body {
   z-index: 50;
 }
 
-/* Typography Fluidity */
-html {
-  font-size: 16px;
-}
-
-@media (min-width: 1400px) {
-  html { font-size: 18px; }
+.light .scanline::before {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.01) 50%
+  );
 }
 
 /* Selection */
