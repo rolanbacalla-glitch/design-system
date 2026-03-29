@@ -203,7 +203,7 @@ const GradientGenerator: React.FC<GradientGeneratorProps> = () => {
                 <Layers className="text-[var(--ui-text)]" size={12} />
                 <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)]">Dynamic Assets</span>
             </div>
-            <h2 className="text-6xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none">Hyper-Gradient <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Lab</span></h2>
+            <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest uppercase italic leading-none">Hyper-Gradient <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Lab</span></h2>
             <p className="text-sm font-medium text-[var(--ui-text-muted)] uppercase tracking-widest max-w-xl">Architect multi-dimensional atmospheric tokens with industrial precision.</p>
         </div>
         

@@ -82,7 +82,7 @@ const TailwindPalette: React.FC = () => {
                     <Zap className="text-amber-400" size={14} />
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-400">Spectral Array v3.0</span>
                 </div>
-                <h2 className="text-7xl md:text-9xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+                <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
                     Chroma <span className="opacity-30">Forge.</span>
                 </h2>
                 <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">
@@ -259,7 +259,7 @@ const TailwindPalette: React.FC = () => {
                                     <span className="text-[10px] font-black text-[var(--ui-text-muted)] opacity-60 uppercase tracking-[0.3em] ml-2">Mapping 24 Global Hubs</span>
                                 </div>
                                 
-                                <h2 className="text-8xl md:text-[160px] font-black text-[var(--ui-text)] uppercase tracking-tightest leading-[0.7] max-w-4xl italic group-hover:translate-x-2 transition-transform duration-1000">
+                                <h2 className="text-6xl md:text-[100px] font-black text-[var(--ui-text)] uppercase tracking-tightest leading-[0.7] max-w-4xl italic group-hover:translate-x-2 transition-transform duration-1000">
                                     Forge <br/> <span className="text-amber-500">Atomic.</span>
                                 </h2>
                                 

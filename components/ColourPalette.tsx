@@ -130,7 +130,7 @@ const ContrastLab: React.FC = () => {
                 >
                     <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay [background-image:linear-gradient(to_right,#ffffff20_1px,transparent_1px),linear-gradient(to_bottom,#ffffff20_1px,transparent_1px)] [background-size:32px_32px]"></div>
                     <div className="relative space-y-8 transform-gpu group-hover:translate-z-10 transition-transform duration-700">
-                        <h2 className="text-6xl md:text-8xl font-black tracking-tightest leading-none uppercase italic translate-y-2">Spectre</h2>
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tightest leading-none uppercase italic translate-y-2">Spectre</h2>
                         <p className="text-xl md:text-2xl font-medium max-w-md leading-relaxed uppercase tracking-widest opacity-80 decoration-current decoration-2 underline-offset-8 decoration-dotted">
                             Precision clarity protocols for the next evolution of structural interfaces.
                         </p>

@@ -41,7 +41,7 @@ const ElevationStyles: React.FC<ElevationStylesProps> = ({ elevation, setElevati
             <Zap className="text-[var(--ui-text)]" size={14} />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--ui-text-muted)]">Spatial Hierarchy Protocol v3.0</span>
         </div>
-        <h2 className="text-7xl md:text-9xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
+        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">
             Shadow <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Depth.</span>
         </h2>
         <p className="text-xl font-medium text-[var(--ui-text-muted)] max-w-2xl leading-relaxed uppercase tracking-widest px-1">

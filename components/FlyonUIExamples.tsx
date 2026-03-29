@@ -4,7 +4,7 @@ const FlyonUIExamples: React.FC = () => {
     return (
     <div className="space-y-16 pb-32 animate-in fade-in zoom-in-95 duration-700">
       <header className="space-y-4">
-        <h1 className="text-5xl font-black text-white tracking-tightest uppercase italic">The Armory</h1>
+        <h2 className="text-5xl md:text-7xl font-black text-white tracking-tightest uppercase italic">The Armory</h2>
         <p className="text-xs font-bold text-white/30 uppercase tracking-widest max-w-2xl leading-relaxed">
             Manifesting atomic components through the lens of atmospheric weightlessness. Powered by FlyonUI and the next generation of Tailwind.
         </p>

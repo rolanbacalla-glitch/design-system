@@ -369,7 +369,7 @@ const Iconography: React.FC<IconographyProps> = ({
             <Sparkles className="text-[var(--ui-text)]" size={12} />
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--ui-text)]">Scalable Design Engine</span>
         </div>
-        <h2 className="text-6xl md:text-8xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">Symbol <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Matrix</span></h2>
+        <h2 className="text-5xl md:text-7xl font-black text-[var(--ui-text)] tracking-tightest leading-none uppercase italic">Symbol <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--ui-text)] to-[var(--ui-text-muted)]">Matrix</span></h2>
         <p className="text-lg font-medium text-[var(--ui-text-muted)] uppercase tracking-[0.2em] leading-relaxed">The atomic visual language for ultra-premium interfaces. Vector-perfect variable tokens for universal scale.</p>
       </div>
 
