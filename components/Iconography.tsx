@@ -51,6 +51,7 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
   const [weight, setWeight] = useState(initialWeight);
   const [filled, setFilled] = useState(initialFill);
   const [colour, setColour] = useState(initialColour);
+  const [size, setSize] = useState(sizeToken.value);
   const [, setFetchError] = useState(false);
 
   useEffect(() => {
@@ -93,8 +94,8 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
     const doc = parser.parseFromString(svgContent, 'image/svg+xml');
     const svg = doc.querySelector('svg');
     if (svg) {
-      svg.setAttribute('width', sizeToken.value.toString());
-      svg.setAttribute('height', sizeToken.value.toString());
+      svg.setAttribute('width', size.toString());
+      svg.setAttribute('height', size.toString());
       svg.setAttribute('fill', colour);
       if (!svg.getAttribute('viewBox')) svg.setAttribute('viewBox', '0 0 24 24');
       return svg.outerHTML;
@@ -189,6 +190,21 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                             />
                         </div>
                       )}
+
+                      <div className="space-y-4 animate-in slide-in-from-top-4 fade-in duration-500">
+                           <div className="flex justify-between items-center px-1">
+                              <label htmlFor="asset-scale-protocol" className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--ui-text-muted)]">Scale Protocol</label>
+                              <span className="text-xs font-black text-[var(--ui-text)]">{size}px</span>
+                          </div>
+                          <input 
+                              id="asset-scale-protocol"
+                              type="range" min="16" max="96" step="4"
+                              value={size}
+                              title="Global scale adjustment"
+                              onChange={(e) => setSize(Number(e.target.value))}
+                              className="w-full h-1 bg-[var(--ui-text)]/5 rounded-full appearance-none cursor-pointer accent-[var(--ui-text)]"
+                          />
+                      </div>
                    </div>
 
                    <div className="space-y-8">
@@ -227,15 +243,15 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                        <Zap className="animate-pulse text-[var(--ui-text)] opacity-20" size={64} />
                   ) : (
                       <div 
-                        className="transition-all duration-700 hover:scale-125 drop-shadow-[0_0_60px_rgba(var(--ui-text-rgb),0.1)] transform-gpu hover:rotate-3"
-                        style={{ color: colour, width: sizeToken.value * 2.5, height: sizeToken.value * 2.5 }}
+                        className="transition-transform duration-700 hover:scale-125 drop-shadow-[0_0_60px_rgba(var(--ui-text-rgb),0.1)] transform-gpu hover:rotate-3"
+                        style={{ color: colour, width: size * 2.5, height: size * 2.5 }}
                         dangerouslySetInnerHTML={{ __html: getProcessedSvg() }}
                       />
                   )}
 
                   <div className="absolute bottom-10 flex gap-4">
                       <div className="px-6 py-2 glass-premium rounded-full border border-[var(--ui-border)] text-[10px] font-black text-[var(--ui-text-muted)] uppercase tracking-[0.3em] whitespace-nowrap">
-                         Preview Stage // {sizeToken.value}px Base
+                         Preview Stage // {size}px Base
                       </div>
                   </div>
               </div>
@@ -269,7 +285,7 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                       type="button"
                       onClick={() => {
                           const text = activeTab === 'web' 
-                              ? `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${filled ? 1 : 0}, 'wght' ${weight}, 'GRAD' 0, 'opsz' 24; font-size: ${sizeToken.value}px; color: ${colour};">\n  ${icon}\n</span>`
+                              ? `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${filled ? 1 : 0}, 'wght' ${weight}, 'GRAD' 0, 'opsz' 24; font-size: ${size}px; color: ${colour};">\n  ${icon}\n</span>`
                               : getProcessedSvg();
                           copyToClipboard(text, 'COPIED TO BUFFER');
                       }}
@@ -287,7 +303,7 @@ const IconAssetModal: React.FC<IconAssetModalProps> = ({ icon, sizeToken, initia
                       {activeTab === 'web' && (
 `<span class="material-symbols-outlined" style="
   font-variation-settings: 'FILL' ${filled ? 1 : 0}, 'wght' ${weight}; 
-  font-size: ${sizeToken.value}px; 
+  font-size: ${size}px; 
   color: ${colour};
 ">
   ${icon}
