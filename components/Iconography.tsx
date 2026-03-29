@@ -446,7 +446,7 @@ const Iconography: React.FC<IconographyProps> = ({
                                </button>
                                
                                {isColourDropdownOpen && (
-                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 bg-[var(--ui-surface)] backdrop-blur-3xl rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
+                                   <div className="absolute top-full left-0 right-0 mt-6 p-3 bg-[#121417] rounded-[32px] border border-[var(--ui-border)] z-30 shadow-5xl animate-in fade-in zoom-in-95 duration-400">
                                        {colours.map(c => (
                                            <button
                                                key={c.name}
