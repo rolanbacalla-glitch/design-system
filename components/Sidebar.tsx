@@ -100,7 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
       </div>
 
       {/* Navigation Matrix */}
-      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-x-visible no-scrollbar p-1">
+      <ul className="flex md:flex-col gap-3 w-full overflow-x-auto md:overflow-y-auto md:overflow-x-visible no-scrollbar p-1 flex-1">
         {items.map((item, index) => {
           const isActive = currentView === item.id;
           const Icon = item.icon;
