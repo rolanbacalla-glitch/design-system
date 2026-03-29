@@ -380,7 +380,7 @@ const Iconography: React.FC<IconographyProps> = ({
           
           {/* Controls Hub */}
           <aside className="lg:col-span-12 xl:col-span-4 space-y-8">
-              <div className="glass-premium p-10 rounded-[50px] border-[var(--ui-border)] shadow-3xl space-y-12 relative overflow-hidden">
+              <div className={`glass-premium p-10 rounded-[50px] border-[var(--ui-border)] shadow-3xl space-y-12 relative ${isColourDropdownOpen ? 'z-50' : 'z-10'}`}>
                    <div className="absolute top-0 right-0 p-8 opacity-5 text-[var(--ui-text)]">
                       <Cpu size={120} />
                    </div>
