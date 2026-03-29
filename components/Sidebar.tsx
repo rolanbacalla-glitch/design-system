@@ -76,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
   };
 
   return (
-    <nav className="fixed md:static bottom-6 left-6 right-6 md:h-[calc(100vh-3rem)] md:w-80 md:my-6 md:ml-6 glass-premium rounded-[48px] p-6 md:p-8 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border border-white/10 shadow-5xl gap-10">
+    <nav className="fixed md:static bottom-0 left-0 right-0 md:h-screen md:w-80 glass-premium rounded-none p-6 md:p-8 flex md:flex-col items-center md:items-stretch transition-all duration-700 z-50 backdrop-blur-3xl border-r border-white/10 gap-10">
       
       {/* Brand & Status */}
       <div className="hidden md:flex flex-col gap-6 px-2">
@@ -116,20 +116,20 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, theme, t
             >
               <button
                 onClick={() => setCurrentView(item.id)}
-                className={`relative group flex items-center md:px-5 md:py-4 rounded-[24px] w-full transition-all duration-500 overflow-hidden border
+                className={`relative group flex items-center md:px-2 md:py-4 w-full transition-all duration-500 overflow-hidden
                   ${isActive ? 
-                    'bg-white text-black border-white shadow-4xl' : 
-                    'text-white/20 border-transparent hover:bg-white/5 hover:text-white/60 hover:border-white/5'}`}
+                    'text-white border-b border-white/60' : 
+                    'text-white/20 border-b border-transparent hover:text-white/60'}`}
               >
                 <div className="relative z-10 flex items-center justify-between w-full">
                   <div className="flex items-center gap-5">
-                    <Icon size={20} strokeWidth={isActive ? 3 : 2} className="transition-all duration-500" />
+                    <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="transition-all duration-500" />
                     <div className="hidden md:flex flex-col items-start">
-                        <span className="font-black text-[12px] uppercase tracking-widest">{item.label}</span>
-                        <span className={`text-[8px] font-mono mt-0.5 transition-colors ${isActive ? 'text-black/40' : 'text-white/10'}`}>{item.ref}</span>
+                        <span className={`font-black text-[12px] uppercase tracking-widest transition-all duration-500 ${isActive ? 'translate-x-1' : ''}`}>{item.label}</span>
+                        <span className={`text-[8px] font-mono mt-0.5 transition-colors ${isActive ? 'text-white/40' : 'text-white/10'}`}>{item.ref}</span>
                     </div>
                   </div>
-                  {isActive && <ChevronRight size={14} className="hidden md:block" />}
+                  {isActive && <div className="hidden md:block w-1 h-1 rounded-full bg-white animate-pulse" />}
                 </div>
               </button>
             </li>
