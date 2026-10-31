@@ -3,132 +3,37 @@
 import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import * as Icons from "phosphor-react";
+import materialIconsData from "@/data/material-icons.json";
 
 type IconWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 type PhosphorIconComponent = React.ComponentType<Icons.IconProps>;
+type IconSetType = "all" | "material" | "phosphor";
 
-const MATERIAL_DESIGN_ALIASES: Record<string, string[]> = {
-  volume: ["speaker", "sound", "audio", "mute"],
-  volume_up: ["speakerhigh", "speakersimplehigh"],
-  volume_down: ["speakerlow", "speakersimplelow"],
-  volume_off: ["speakernone", "speakersimplenone"],
-  volume_mute: ["speakerslash", "speakersimpleslash"],
-  sound: ["speaker", "volume", "audio"],
-  audio: ["speaker", "volume", "sound", "music", "fileaudio", "headphones"],
-  music: ["musicnotes", "musicnotesimple", "playlist"],
-  delete: ["trash"],
-  remove: ["trash", "x", "minus", "xcircle"],
-  add: ["plus", "pluscircle"],
-  create: ["plus", "pencil"],
-  edit: ["pencil", "pensimple", "paintbrush"],
-  settings: ["gear", "sliders", "wrench"],
-  options: ["gear", "sliders", "dotsthree"],
-  tune: ["sliders", "slidershorizontal"],
-  search: ["magnifyingglass", "filesearch"],
-  find: ["magnifyingglass"],
-  home: ["house"],
-  user: ["user", "person", "users"],
-  account: ["user", "person", "usercircle"],
-  profile: ["user", "usercircle"],
-  mail: ["envelope"],
-  email: ["envelope"],
-  message: ["chat", "chats", "chatteardrop"],
-  chat: ["chat", "chats", "chatcircle"],
-  notification: ["bell"],
-  notifications: ["bell"],
-  alert: ["warning", "warningcircle", "bell"],
-  warning: ["warning", "warningcircle"],
-  help: ["question"],
-  info: ["info", "infocircle"],
-  logout: ["signout"],
-  login: ["signin"],
-  lock: ["lock", "locksimple", "lockkey"],
-  unlock: ["lockopen", "lockkeyopen"],
-  favorite: ["heart", "star"],
-  favourite: ["heart", "star"],
-  star: ["star"],
-  like: ["thumbsup", "heart"],
-  dislike: ["thumbsdown"],
-  cart: ["shoppingcart", "shoppingbag"],
-  shop: ["shoppingbag", "storefront"],
-  refresh: ["arrowclockwise", "arrowsclockwise"],
-  sync: ["arrowsclockwise", "arrowclockwise"],
-  reload: ["arrowclockwise"],
-  share: ["sharenetwork", "share"],
-  upload: ["uploadsimple", "upload"],
-  download: ["downloadsimple", "download"],
-  more: ["dotsthree", "dots"],
-  menu: ["list"],
-  hamburger: ["list"],
-  close: ["x", "xcircle"],
-  cancel: ["x", "xcircle"],
-  clear: ["x", "xcircle"],
-  exit: ["x", "signout"],
-  done: ["check", "checkcircle"],
-  check: ["check", "checkcircle", "sealcheck"],
-  success: ["checkcircle", "sealcheck"],
-  error: ["xcircle", "warningcircle"],
-  visibility: ["eye"],
-  hide: ["eyeslash"],
-  eye: ["eye", "eyeslash"],
-  location: ["mappin", "navigationarrow"],
-  place: ["mappin"],
-  pin: ["mappin", "pushpin"],
-  map: ["maptrifold", "mappin"],
-  dark: ["moon", "moonstars"],
-  light: ["sun"],
-  night: ["moon"],
-  day: ["sun"],
-  time: ["clock", "timer", "hourglass"],
-  date: ["calendar", "calendarblank"],
-  calendar: ["calendar", "calendarblank"],
-  security: ["shield", "shieldcheck"],
-  verified: ["sealcheck", "shieldcheck", "checkcircle"],
-  attach: ["paperclip"],
-  attachment: ["paperclip"],
-  link: ["link", "linksimple", "linkbreak"],
-  code: ["code", "terminal", "filecode"],
-  terminal: ["terminal", "code"],
-  developer: ["code", "terminal"],
-  document: ["file", "textcolumns", "article"],
-  doc: ["file", "textcolumns", "article"],
-  copy: ["copy", "copysimple"],
-  paste: ["clipboard", "clippaper"],
-  cut: ["scissors"],
-  image: ["image", "pictureinpicture"],
-  photo: ["camera", "image"],
-  picture: ["image"],
-  camera: ["camera"],
-  video: ["video", "videocamera", "play"],
-  movie: ["filmstrip", "video", "videocamera"],
-  play: ["play", "playcircle"],
-  pause: ["pause", "pausecircle"],
-  stop: ["stop", "stopcircle"],
-  call: ["phone", "phonecall"],
-  phone: ["phone", "deviceMobile"],
-  mobile: ["devicemobile"],
-  tablet: ["devicetablet"],
-  desktop: ["desktop", "monitor"],
-  laptop: ["laptop"],
-  bluetooth: ["bluetooth"],
-  wifi: ["wifi", "wifihigh"],
-  battery: ["batteryfull", "batterycharging"],
-  folder: ["folder", "foldernotch"],
-  cloud: ["cloud", "cloudarrowup", "cloudarrowdown"],
-  filter: ["funnel", "faders"],
-  sort: ["arrowsdownup", "sortascending", "sortdescending"],
-  send: ["paperplane", "paperplanetilt"],
-};
+interface UnifiedIconItem {
+  id: string;
+  name: string;
+  source: "material" | "phosphor";
+  tags?: string[];
+  phosphorIcon?: PhosphorIconComponent;
+  materialName?: string;
+}
 
 export const IconPlayground: React.FC = () => {
-  const [selectedIconName, setSelectedIconName] = useState("Cube");
+  const [selectedIcon, setSelectedIcon] = useState<UnifiedIconItem>({
+    id: "material-volume_up",
+    name: "volume_up",
+    source: "material",
+    materialName: "volume_up",
+  });
+  const [activeSet, setActiveSet] = useState<IconSetType>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [size, setSize] = useState(56);
   const [weight, setWeight] = useState<IconWeight>("regular");
   const [showKeylines, setShowKeylines] = useState(true);
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
-  const ALL_ICONS = useMemo(() => {
+  // Phosphor Icon items
+  const PHOSPHOR_ICONS: UnifiedIconItem[] = useMemo(() => {
     return Object.entries(Icons)
       .filter(
         ([name, Icon]) =>
@@ -137,27 +42,53 @@ export const IconPlayground: React.FC = () => {
           name !== "Icons" &&
           /^[A-Z]/.test(name)
       )
-      .map(([name, Icon]) => ({ name, icon: Icon as unknown as PhosphorIconComponent }))
+      .map(([name, Icon]) => ({
+        id: `phosphor-${name}`,
+        name,
+        source: "phosphor" as const,
+        phosphorIcon: Icon as unknown as PhosphorIconComponent,
+      }))
       .sort((a, b) => a.name.localeCompare(b.name));
   }, []);
 
-  const filteredIcons = useMemo(() => {
-    if (!searchQuery.trim()) return ALL_ICONS.slice(0, 48);
-    const q = searchQuery.toLowerCase().trim().replace(/[-_\s]+/g, "");
-    const aliasTerms = MATERIAL_DESIGN_ALIASES[q] || [];
-    
-    // Check direct name match or semantic Material Design alias matches
-    return ALL_ICONS.filter((icon) => {
-      const lower = icon.name.toLowerCase();
-      if (lower.includes(q)) return true;
-      return aliasTerms.some((term) => lower.includes(term));
-    }).slice(0, 48);
-  }, [searchQuery, ALL_ICONS]);
+  // Material Design Icons list (from official Google database)
+  const MATERIAL_ICONS: UnifiedIconItem[] = useMemo(() => {
+    return (materialIconsData as { name: string; tags: string[]; category: string }[]).map(
+      (item) => ({
+        id: `material-${item.name}`,
+        name: item.name,
+        source: "material" as const,
+        tags: item.tags,
+        materialName: item.name,
+      })
+    );
+  }, []);
 
-  const SelectedIcon = useMemo(() => {
-    const item = ALL_ICONS.find((i) => i.name === selectedIconName);
-    return item?.icon || Icons.Cube;
-  }, [selectedIconName, ALL_ICONS]);
+  // Combined pool
+  const ALL_ICONS = useMemo(() => {
+    if (activeSet === "material") return MATERIAL_ICONS;
+    if (activeSet === "phosphor") return PHOSPHOR_ICONS;
+    return [...MATERIAL_ICONS, ...PHOSPHOR_ICONS];
+  }, [activeSet, MATERIAL_ICONS, PHOSPHOR_ICONS]);
+
+  const filteredIcons = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) {
+      if (activeSet === "material") return MATERIAL_ICONS.slice(0, 56);
+      if (activeSet === "phosphor") return PHOSPHOR_ICONS.slice(0, 56);
+      // Give a balanced initial view
+      return [...MATERIAL_ICONS.slice(0, 28), ...PHOSPHOR_ICONS.slice(0, 28)];
+    }
+
+    const cleanQ = q.replace(/[-_\s]+/g, "");
+
+    return ALL_ICONS.filter((item) => {
+      const nameClean = item.name.toLowerCase().replace(/[-_\s]+/g, "");
+      if (nameClean.includes(cleanQ)) return true;
+      if (item.tags && item.tags.some((t) => t.toLowerCase().includes(q))) return true;
+      return false;
+    }).slice(0, 72);
+  }, [searchQuery, ALL_ICONS, activeSet, MATERIAL_ICONS, PHOSPHOR_ICONS]);
 
   const handleCopy = (type: string, content: string) => {
     navigator.clipboard.writeText(content);
@@ -165,10 +96,41 @@ export const IconPlayground: React.FC = () => {
     setTimeout(() => setCopiedType(null), 1600);
   };
 
-  const exports = {
-    react: `<${selectedIconName} size={${size}} weight="${weight}" className="text-[var(--sys-primary)]" />`,
-    tokenCss: `.icon-${selectedIconName.toLowerCase()} {\n  width: ${size}px;\n  height: ${size}px;\n  color: var(--sys-primary);\n}`,
-  };
+  // Generate code snippet based on selected icon source
+  const exports = useMemo(() => {
+    if (selectedIcon.source === "material") {
+      const code = `<span className="material-symbols-outlined text-[var(--sys-primary)]" style={{ fontSize: ${size} }}>\n  ${selectedIcon.materialName}\n</span>`;
+      return {
+        code,
+        label: "React / HTML Code",
+      };
+    }
+    const code = `<${selectedIcon.name} size={${size}} weight="${weight}" className="text-[var(--sys-primary)]" />`;
+    return {
+      code,
+      label: "Phosphor React Code",
+    };
+  }, [selectedIcon, size, weight]);
+
+  // Convert weight string to numeric font-variation weight for Material Symbols
+  const materialWeightNumeric = useMemo(() => {
+    switch (weight) {
+      case "thin":
+        return 200;
+      case "light":
+        return 300;
+      case "regular":
+        return 400;
+      case "bold":
+        return 700;
+      case "fill":
+        return 400;
+      case "duotone":
+        return 500;
+      default:
+        return 400;
+    }
+  }, [weight]);
 
   return (
     <section id="icons" className="scroll-mt-24 space-y-10">
@@ -178,7 +140,7 @@ export const IconPlayground: React.FC = () => {
           <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[var(--sys-primary)]">
             <span>06 // ICONS & SYMBOLS</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
-            <span>6 STROKE WEIGHTS</span>
+            <span>GOOGLE MATERIAL DESIGN + PHOSPHOR</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
             Icon Library &{" "}
@@ -187,176 +149,250 @@ export const IconPlayground: React.FC = () => {
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Search over 1,200 icons, preview 6 stroke weights (<code className="font-mono">thin</code>{" "}
-            to <code className="font-mono">duotone</code>), check alignment guides, and copy
-            ready-to-use React code.
+            Connected to the official{" "}
+            <strong className="text-[var(--sys-on-surface)]">Google Material Design Icons</strong>{" "}
+            database (2,120+ symbols) and Phosphor Icons (1,040+ SF Symbols style). Search by name,
+            keyword, or action (e.g. <code className="font-mono">volume</code>,{" "}
+            <code className="font-mono">settings</code>, <code className="font-mono">lock</code>).
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left 4 Cols: Optical Keyline Inspector & Weight Controls */}
-          <div className="lg:col-span-4 tonal-card p-6 flex flex-col justify-between space-y-6">
-            {/* Keyline Preview Box */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-mono uppercase text-[var(--sys-primary)]">
-                  Icon Preview
+        {/* Left 4 Cols: Optical Keyline Inspector & Weight Controls */}
+        <div className="lg:col-span-4 tonal-card p-6 flex flex-col justify-between space-y-6">
+          {/* Keyline Preview Box */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-mono uppercase text-[var(--sys-primary)] flex items-center gap-1.5">
+                <span>Icon Preview</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)]">
+                  {selectedIcon.source === "material" ? "Material Design" : "Phosphor"}
                 </span>
-                <button
-                  onClick={() => setShowKeylines(!showKeylines)}
-                  className="font-mono text-[11px] px-2 py-0.5 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] cursor-pointer"
+              </span>
+              <button
+                onClick={() => setShowKeylines(!showKeylines)}
+                className="font-mono text-[11px] px-2 py-0.5 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] cursor-pointer"
+              >
+                Guides: {showKeylines ? "ON" : "OFF"}
+              </button>
+            </div>
+
+            <div className="relative h-56 rounded-2xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] flex items-center justify-center overflow-hidden">
+              {showKeylines && (
+                <>
+                  <div className="absolute inset-0 swiss-grid-bg opacity-60 pointer-events-none" />
+                  {/* Keyline Circle & Square Guides */}
+                  <div className="absolute w-32 h-32 rounded-full border border-dashed border-[var(--sys-primary)]/35 pointer-events-none" />
+                  <div className="absolute w-28 h-28 border border-[var(--sys-primary)]/25 pointer-events-none" />
+                  <div className="absolute inset-x-0 top-1/2 h-px bg-[var(--sys-primary)]/25 pointer-events-none" />
+                  <div className="absolute inset-y-0 left-1/2 w-px bg-[var(--sys-primary)]/25 pointer-events-none" />
+                </>
+              )}
+
+              {/* Live Icon Rendering */}
+              {selectedIcon.source === "material" ? (
+                <span
+                  className="material-symbols-outlined text-[var(--sys-primary)] select-none transition-all duration-150"
+                  style={{
+                    fontSize: `${size}px`,
+                    fontVariationSettings: `'FILL' ${
+                      weight === "fill" ? 1 : 0
+                    }, 'wght' ${materialWeightNumeric}, 'GRAD' 0, 'opsz' 48`,
+                  }}
                 >
-                  Guides: {showKeylines ? "ON" : "OFF"}
-                </button>
-              </div>
-
-              <div className="relative h-56 rounded-2xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] flex items-center justify-center overflow-hidden">
-                {showKeylines && (
-                  <>
-                    <div className="absolute inset-0 swiss-grid-bg opacity-60 pointer-events-none" />
-                    {/* Keyline Circle & Square Guides */}
-                    <div className="absolute w-32 h-32 rounded-full border border-dashed border-[var(--sys-primary)]/35 pointer-events-none" />
-                    <div className="absolute w-28 h-28 border border-[var(--sys-primary)]/25 pointer-events-none" />
-                    <div className="absolute inset-x-0 top-1/2 h-px bg-[var(--sys-primary)]/25 pointer-events-none" />
-                    <div className="absolute inset-y-0 left-1/2 w-px bg-[var(--sys-primary)]/25 pointer-events-none" />
-                  </>
-                )}
-
-                <SelectedIcon
+                  {selectedIcon.materialName}
+                </span>
+              ) : selectedIcon.phosphorIcon ? (
+                <selectedIcon.phosphorIcon
                   size={size}
                   weight={weight}
                   className="text-[var(--sys-primary)] relative z-10 transition-all duration-150"
                 />
+              ) : null}
 
-                <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-[10px] text-[var(--sys-on-surface-tertiary)]">
-                  <span>{selectedIconName}</span>
-                  <span className="tabular-nums">
-                    {size}×{size}px • {weight}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Weight Matrix */}
-            <div className="space-y-2">
-              <div className="text-xs font-medium text-[var(--sys-on-surface-secondary)]">
-                Stroke Weight
-              </div>
-              <div className="grid grid-cols-3 gap-1.5">
-                {(["thin", "light", "regular", "bold", "fill", "duotone"] as const).map((w) => (
-                  <button
-                    key={w}
-                    onClick={() => setWeight(w)}
-                    className={cn(
-                      "py-2 px-2.5 rounded-lg text-xs font-mono capitalize border transition-all cursor-pointer",
-                      weight === w
-                        ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] border-[var(--sys-primary)] font-semibold"
-                        : "bg-[var(--sys-surface-lowest)] text-[var(--sys-on-surface-secondary)] border-[var(--sys-outline-variant)] hover:text-[var(--sys-on-surface)]"
-                    )}
-                  >
-                    {w}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Optical Size Slider */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-[var(--sys-on-surface-secondary)]">Icon Size</span>
-                <span className="font-mono font-bold text-[var(--sys-primary)] tabular-nums">
-                  {size}px
+              <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-[10px] text-[var(--sys-on-surface-tertiary)]">
+                <span className="truncate pr-2">{selectedIcon.name}</span>
+                <span className="tabular-nums shrink-0">
+                  {size}×{size}px • {weight}
                 </span>
               </div>
-              <input
-                type="range"
-                min={20}
-                max={112}
-                step={4}
-                value={size}
-                onChange={(e) => setSize(Number(e.target.value))}
-                className="precision-slider"
-              />
-            </div>
-
-            {/* Export Buttons */}
-            <div className="space-y-2 pt-2 border-t border-[var(--sys-outline-variant)]">
-              <button
-                onClick={() => handleCopy("react", exports.react)}
-                className="w-full py-2.5 px-3.5 rounded-xl bg-[var(--sys-surface-lowest)] hover:bg-[var(--sys-surface-high)] border border-[var(--sys-outline-variant)] flex items-center justify-between text-xs font-mono text-[var(--sys-on-surface)] transition-colors cursor-pointer"
-              >
-                <span className="truncate pr-2">{exports.react}</span>
-                {copiedType === "react" ? (
-                  <Icons.Check size={14} className="text-emerald-400 shrink-0" />
-                ) : (
-                  <Icons.Copy size={14} className="text-[var(--sys-on-surface-tertiary)] shrink-0" />
-                )}
-              </button>
             </div>
           </div>
 
-          {/* Right 8 Cols: Searchable Glyph Browser */}
-          <div className="lg:col-span-8 tonal-card p-6 flex flex-col justify-between space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sys-outline-variant)] pb-4">
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)]">
-                  Browse Icons ({ALL_ICONS.length} Available)
-                </h3>
-                <p className="text-xs text-[var(--sys-on-surface-tertiary)]">
-                  Click any icon to preview its stroke weights and copy the code.
-                </p>
-              </div>
+          {/* Weight Matrix */}
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-[var(--sys-on-surface-secondary)]">
+              Stroke Weight
+            </div>
+            <div className="grid grid-cols-3 gap-1.5">
+              {(["thin", "light", "regular", "bold", "fill", "duotone"] as const).map((w) => (
+                <button
+                  key={w}
+                  onClick={() => setWeight(w)}
+                  className={cn(
+                    "py-2 px-2.5 rounded-lg text-xs font-mono capitalize border transition-all cursor-pointer",
+                    weight === w
+                      ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] border-[var(--sys-primary)] font-semibold"
+                      : "bg-[var(--sys-surface-lowest)] text-[var(--sys-on-surface-secondary)] border-[var(--sys-outline-variant)] hover:text-[var(--sys-on-surface)]"
+                  )}
+                >
+                  {w}
+                </button>
+              ))}
+            </div>
+          </div>
 
-              <div className="relative w-full sm:w-64">
-                <Icons.MagnifyingGlass
-                  size={14}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--sys-on-surface-tertiary)]"
-                />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search icons (e.g. Sparkle, Heart)..."
-                  className="w-full pl-8 pr-8 py-2 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] focus:border-[var(--sys-primary)] text-xs text-[var(--sys-on-surface)] outline-none"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-on-surface)]"
-                  >
-                    <Icons.X size={12} />
-                  </button>
-                )}
-              </div>
+          {/* Optical Size Slider */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-[var(--sys-on-surface-secondary)]">Icon Size</span>
+              <span className="font-mono font-bold text-[var(--sys-primary)] tabular-nums">
+                {size}px
+              </span>
+            </div>
+            <input
+              type="range"
+              min={20}
+              max={112}
+              step={4}
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              className="precision-slider"
+            />
+          </div>
+
+          {/* Export Button */}
+          <div className="space-y-2 pt-2 border-t border-[var(--sys-outline-variant)]">
+            <button
+              onClick={() => handleCopy("export", exports.code)}
+              className="w-full py-2.5 px-3.5 rounded-xl bg-[var(--sys-surface-lowest)] hover:bg-[var(--sys-surface-high)] border border-[var(--sys-outline-variant)] flex items-center justify-between text-xs font-mono text-[var(--sys-on-surface)] transition-colors cursor-pointer"
+            >
+              <span className="truncate pr-2">{exports.code.replace(/\n\s*/g, " ")}</span>
+              {copiedType === "export" ? (
+                <Icons.Check size={14} className="text-emerald-400 shrink-0" />
+              ) : (
+                <Icons.Copy size={14} className="text-[var(--sys-on-surface-tertiary)] shrink-0" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Right 8 Cols: Searchable Database Glyph Browser */}
+        <div className="lg:col-span-8 tonal-card p-6 flex flex-col justify-between space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sys-outline-variant)] pb-4">
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)] flex items-center gap-2">
+                <span>Browse Icons</span>
+                <span className="text-[11px] font-mono font-normal text-[var(--sys-primary)]">
+                  ({ALL_ICONS.length.toLocaleString()} symbols connected)
+                </span>
+              </h3>
+              <p className="text-xs text-[var(--sys-on-surface-tertiary)]">
+                Click any symbol to preview on the keyline grid and copy clean code.
+              </p>
             </div>
 
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-              {filteredIcons.map((item) => {
-                const Icon = item.icon;
-                const active = selectedIconName === item.name;
+            {/* Filter by Database Set */}
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] text-xs font-medium">
+              {(
+                [
+                  { id: "all", label: "All Icons" },
+                  { id: "material", label: "Material Design" },
+                  { id: "phosphor", label: "Phosphor" },
+                ] as const
+              ).map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveSet(tab.id)}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg transition-colors cursor-pointer text-xs",
+                    activeSet === tab.id
+                      ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] font-semibold"
+                      : "text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-on-surface)]"
+                  )}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-full">
+            <Icons.MagnifyingGlass
+              size={15}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--sys-on-surface-tertiary)]"
+            />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search Material Design or Phosphor icons (e.g. volume, settings, battery, mic)..."
+              className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] focus:border-[var(--sys-primary)] text-xs text-[var(--sys-on-surface)] outline-none"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-on-surface)] cursor-pointer"
+                aria-label="Clear search"
+              >
+                <Icons.X size={14} />
+              </button>
+            )}
+          </div>
+
+          {/* Icon Grid */}
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 min-h-[320px] content-start">
+            {filteredIcons.length > 0 ? (
+              filteredIcons.map((item) => {
+                const active = selectedIcon.id === item.id;
                 return (
                   <button
-                    key={item.name}
-                    onClick={() => setSelectedIconName(item.name)}
+                    key={item.id}
+                    onClick={() => setSelectedIcon(item)}
                     className={cn(
-                      "p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer",
+                      "p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer min-h-[76px]",
                       active
                         ? "bg-[var(--sys-primary-container)] text-[var(--sys-on-primary-container)] border-[var(--sys-primary)] shadow-xs"
                         : "bg-[var(--sys-surface-lowest)] text-[var(--sys-on-surface-secondary)] border-[var(--sys-outline-variant)] hover:border-[var(--sys-outline)] hover:text-[var(--sys-on-surface)]"
                     )}
-                    title={item.name}
+                    title={`${item.name} (${item.source === "material" ? "Material Design" : "Phosphor"})`}
                   >
-                    <Icon size={22} weight={active ? weight : "regular"} />
+                    {item.source === "material" ? (
+                      <span
+                        className="material-symbols-outlined text-[22px] select-none"
+                        style={{
+                          fontVariationSettings: `'FILL' ${
+                            active && weight === "fill" ? 1 : 0
+                          }, 'wght' ${materialWeightNumeric}, 'opsz' 24`,
+                        }}
+                      >
+                        {item.materialName}
+                      </span>
+                    ) : item.phosphorIcon ? (
+                      <item.phosphorIcon size={22} weight={active ? weight : "regular"} />
+                    ) : null}
                     <span className="font-mono text-[9px] truncate w-full text-center opacity-75">
                       {item.name}
                     </span>
                   </button>
                 );
-              })}
-            </div>
+              })
+            ) : (
+              <div className="col-span-full py-12 text-center text-xs text-[var(--sys-on-surface-tertiary)] space-y-1">
+                <div>No icons matching &ldquo;{searchQuery}&rdquo;</div>
+                <div className="text-[11px]">
+                  Try searching for keywords like <code className="font-mono text-[var(--sys-primary)]">volume</code>,{" "}
+                  <code className="font-mono text-[var(--sys-primary)]">sound</code>,{" "}
+                  <code className="font-mono text-[var(--sys-primary)]">phone</code>, or{" "}
+                  <code className="font-mono text-[var(--sys-primary)]">settings</code>.
+                </div>
+              </div>
+            )}
           </div>
         </div>
+      </div>
     </section>
   );
 };
