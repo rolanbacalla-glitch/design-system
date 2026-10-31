@@ -16,6 +16,7 @@ import {
   Lightning,
   Sliders,
 } from "phosphor-react";
+import { useToast } from "@/components/ui/toast-provider";
 
 export const ComponentsSection: React.FC = () => {
   // Interactive Specimen State
@@ -26,10 +27,12 @@ export const ComponentsSection: React.FC = () => {
   const [morphActive, setMorphActive] = useState(false);
   const [inputVal, setInputVal] = useState("oklch(0.77 0.152 258)");
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const copySnippet = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedCode(id);
+    showToast("Copied button TSX code to clipboard");
     setTimeout(() => setCopiedCode(null), 1500);
   };
 

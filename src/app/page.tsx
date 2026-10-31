@@ -18,15 +18,57 @@ import {
   ShieldCheck,
   Swatches,
   ArrowUpRight,
+  ArrowUp,
   Sparkle,
   FigmaLogo,
   TerminalWindow,
 } from "phosphor-react";
+import { ToastProvider } from "@/components/ui/toast-provider";
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [seed, setSeed] = useState<SeedConfig>(SEED_PRESETS[0]);
   const [activeSection, setActiveSection] = useState<string>("tokens");
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Scroll spy with IntersectionObserver
+  useEffect(() => {
+    const sectionIds = ["tokens", "surfaces", "typography", "components", "motion", "icons", "export"];
+    const observers: IntersectionObserver[] = [];
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0,
+    };
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const obs = new IntersectionObserver(observerCallback, observerOptions);
+        obs.observe(el);
+        observers.push(obs);
+      }
+    });
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Sync live seed parameters and theme polarity to root CSS variables
   useEffect(() => {
@@ -49,17 +91,38 @@ export default function Home() {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="min-h-screen bg-[var(--sys-surface-canvas)] text-[var(--sys-on-surface)] selection:bg-[var(--sys-primary)]/25">
-      {/* Z-Level 2: Floating Liquid Glass Navigation & Command Bar */}
-      <FloatingCommandBar
-        activeSection={activeSection}
-        onSelectSection={handleSelectSection}
-        theme={theme}
-        onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-        seed={seed}
-        onSelectPreset={(preset) => setSeed(preset)}
-      />
+    <ToastProvider>
+      <div className="min-h-screen bg-[var(--sys-surface-canvas)] text-[var(--sys-on-surface)] selection:bg-[var(--sys-primary)]/25">
+        {/* Z-Level 2: Floating Liquid Glass Navigation & Command Bar */}
+        <FloatingCommandBar
+          activeSection={activeSection}
+          onSelectSection={handleSelectSection}
+          theme={theme}
+          onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+          seed={seed}
+          onSelectPreset={(preset) => setSeed(preset)}
+        />
+
+        {/* Floating Back to Top Button */}
+        {showScrollTop && (
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            style={{
+              backdropFilter: "blur(40px) saturate(190%)",
+              WebkitBackdropFilter: "blur(40px) saturate(190%)",
+            }}
+            className="fixed bottom-6 right-6 z-50 p-3 rounded-full liquid-glass-regular backdrop-blur-2xl shadow-xl hover:scale-105 active:scale-95 text-[var(--sys-on-surface)] border border-[var(--sys-outline)] transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sys-primary)]"
+          >
+            <ArrowUp size={18} weight="bold" />
+          </button>
+        )}
 
       {/* Main Content Container */}
       <main className="max-w-[1400px] mx-auto px-4 sm:px-8 pt-28 pb-24 space-y-24">
@@ -204,5 +267,6 @@ export default function Home() {
         <ExportCompilerSection seed={seed} />
       </main>
     </div>
+  </ToastProvider>
   );
 }

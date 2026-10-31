@@ -17,6 +17,7 @@ import {
   TerminalWindow,
   FileCode,
 } from "phosphor-react";
+import { useToast } from "@/components/ui/toast-provider";
 
 interface ExportCompilerSectionProps {
   seed: SeedConfig;
@@ -27,6 +28,7 @@ type ExportTarget = "tailwind" | "figma" | "stitch" | "cursor";
 export const ExportCompilerSection: React.FC<ExportCompilerSectionProps> = ({ seed }) => {
   const [activeTarget, setActiveTarget] = useState<ExportTarget>("tailwind");
   const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const cursorRulesPreview = useMemo(
     () => `---
@@ -84,6 +86,7 @@ alwaysApply: true
   const handleCopy = () => {
     navigator.clipboard.writeText(current.code);
     setCopied(true);
+    showToast(`Copied ${current.label} to clipboard`);
     setTimeout(() => setCopied(false), 1800);
   };
 

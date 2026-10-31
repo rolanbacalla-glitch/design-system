@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import * as Icons from "phosphor-react";
 import materialIconsData from "@/data/material-icons.json";
+import { useToast } from "@/components/ui/toast-provider";
 
 type IconWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 type PhosphorIconComponent = React.ComponentType<Icons.IconProps>;
@@ -13,6 +14,7 @@ interface UnifiedIconItem {
   id: string;
   name: string;
   source: "material" | "phosphor";
+  category?: string;
   tags?: string[];
   phosphorIcon?: PhosphorIconComponent;
   materialName?: string;
@@ -25,12 +27,26 @@ export const IconPlayground: React.FC = () => {
     source: "material",
     materialName: "volume_up",
   });
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [activeSet, setActiveSet] = useState<IconSetType>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [size, setSize] = useState(56);
   const [weight, setWeight] = useState<IconWeight>("regular");
   const [showKeylines, setShowKeylines] = useState(true);
   const [copiedType, setCopiedType] = useState<string | null>(null);
+  const { showToast } = useToast();
+
+  const CATEGORIES = [
+    { id: "all", label: "All" },
+    { id: "av", label: "Audio & Video" },
+    { id: "action", label: "Actions" },
+    { id: "communication", label: "Communication" },
+    { id: "device", label: "Devices" },
+    { id: "hardware", label: "Hardware" },
+    { id: "navigation", label: "Navigation" },
+    { id: "image", label: "Media & Photo" },
+    { id: "social", label: "Social" },
+  ] as const;
 
   // Phosphor Icon items
   const PHOSPHOR_ICONS: UnifiedIconItem[] = useMemo(() => {
@@ -58,6 +74,7 @@ export const IconPlayground: React.FC = () => {
         id: `material-${item.name}`,
         name: item.name,
         source: "material" as const,
+        category: item.category,
         tags: item.tags,
         materialName: item.name,
       })
@@ -72,27 +89,43 @@ export const IconPlayground: React.FC = () => {
   }, [activeSet, MATERIAL_ICONS, PHOSPHOR_ICONS]);
 
   const filteredIcons = useMemo(() => {
+    let pool = ALL_ICONS;
+
+    // Filter by category if not 'all'
+    if (selectedCategory !== "all") {
+      pool = pool.filter((item) => {
+        if (item.source === "material") {
+          return item.category === selectedCategory;
+        }
+        // Phosphor fallback tag match
+        return (
+          item.name.toLowerCase().includes(selectedCategory) ||
+          (item.tags && item.tags.includes(selectedCategory))
+        );
+      });
+    }
+
     const q = searchQuery.toLowerCase().trim();
     if (!q) {
-      if (activeSet === "material") return MATERIAL_ICONS.slice(0, 56);
-      if (activeSet === "phosphor") return PHOSPHOR_ICONS.slice(0, 56);
-      // Give a balanced initial view
-      return [...MATERIAL_ICONS.slice(0, 28), ...PHOSPHOR_ICONS.slice(0, 28)];
+      return pool.slice(0, 72);
     }
 
     const cleanQ = q.replace(/[-_\s]+/g, "");
 
-    return ALL_ICONS.filter((item) => {
-      const nameClean = item.name.toLowerCase().replace(/[-_\s]+/g, "");
-      if (nameClean.includes(cleanQ)) return true;
-      if (item.tags && item.tags.some((t) => t.toLowerCase().includes(q))) return true;
-      return false;
-    }).slice(0, 72);
-  }, [searchQuery, ALL_ICONS, activeSet, MATERIAL_ICONS, PHOSPHOR_ICONS]);
+    return pool
+      .filter((item) => {
+        const nameClean = item.name.toLowerCase().replace(/[-_\s]+/g, "");
+        if (nameClean.includes(cleanQ)) return true;
+        if (item.tags && item.tags.some((t) => t.toLowerCase().includes(q))) return true;
+        return false;
+      })
+      .slice(0, 72);
+  }, [searchQuery, selectedCategory, ALL_ICONS]);
 
   const handleCopy = (type: string, content: string) => {
     navigator.clipboard.writeText(content);
     setCopiedType(type);
+    showToast(`Copied ${selectedIcon.name} icon code to clipboard`);
     setTimeout(() => setCopiedType(null), 1600);
   };
 
@@ -340,6 +373,30 @@ export const IconPlayground: React.FC = () => {
                 <Icons.X size={14} />
               </button>
             )}
+          </div>
+
+          {/* Quick Category Chips */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-1">
+            <span className="text-[11px] font-mono text-[var(--sys-on-surface-tertiary)] mr-1">
+              Category:
+            </span>
+            {CATEGORIES.map((cat) => {
+              const active = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-xs font-medium border transition-all cursor-pointer",
+                    active
+                      ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] border-[var(--sys-primary)] font-semibold shadow-xs"
+                      : "bg-[var(--sys-surface-lowest)] text-[var(--sys-on-surface-secondary)] border-[var(--sys-outline-variant)] hover:border-[var(--sys-outline)] hover:text-[var(--sys-on-surface)]"
+                  )}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Icon Grid */}

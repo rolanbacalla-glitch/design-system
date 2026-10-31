@@ -16,6 +16,7 @@ import {
   ArrowsClockwise,
   Info,
 } from "phosphor-react";
+import { useToast } from "@/components/ui/toast-provider";
 
 interface TokenEngineSectionProps {
   seed: SeedConfig;
@@ -30,6 +31,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
 }) => {
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
   const [selectedTier, setSelectedTier] = useState<"all" | "reference" | "system" | "component">("all");
+  const { showToast } = useToast();
 
   const primaryScale = useMemo(
     () => computeTonalScale(seed.hue, seed.chroma),
@@ -51,6 +53,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
   const copyValue = (key: string, val: string) => {
     navigator.clipboard.writeText(val);
     setCopiedToken(key);
+    showToast(`Copied ${val} to clipboard`);
     setTimeout(() => setCopiedToken(null), 1600);
   };
 
