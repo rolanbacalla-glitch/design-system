@@ -31,42 +31,62 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("tokens");
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Scroll spy with IntersectionObserver
+  // Robust Scroll-Spy to track active section during scroll
   useEffect(() => {
-    const sectionIds = ["tokens", "surfaces", "typography", "components", "motion", "icons", "export"];
-    const observers: IntersectionObserver[] = [];
+    const sectionIds = [
+      "tokens",
+      "surfaces",
+      "typography",
+      "components",
+      "motion",
+      "icons",
+      "export",
+    ];
 
-    const observerCallback: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -60% 0px",
-      threshold: 0,
-    };
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        const obs = new IntersectionObserver(observerCallback, observerOptions);
-        obs.observe(el);
-        observers.push(obs);
+    const determineActiveSection = () => {
+      // 1. If at the bottom of the page, activate the last section
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      if (scrollPosition + windowHeight >= documentHeight - 100) {
+        setActiveSection("export");
+        setShowScrollTop(true);
+        return;
       }
-    });
 
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
+      setShowScrollTop(scrollPosition > 400);
+
+      // 2. Find which section heading/top is currently in view relative to top offset (navbar height ~120px)
+      const topOffset = 180;
+      let currentSection = sectionIds[0];
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.getBoundingClientRect().top;
+          // If the section top is above or near the offset threshold, consider it active
+          if (top <= topOffset) {
+            currentSection = id;
+          } else {
+            // Since sections are in DOM order, stop once a section starts below the offset
+            break;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Run on initial mount
+    determineActiveSection();
+
+    window.addEventListener("scroll", determineActiveSection, { passive: true });
+    window.addEventListener("resize", determineActiveSection, { passive: true });
 
     return () => {
-      observers.forEach((obs) => obs.disconnect());
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", determineActiveSection);
+      window.removeEventListener("resize", determineActiveSection);
     };
   }, []);
 
