@@ -1,0 +1,54 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "meta": {
+    "tier": "Tier 3 — Component-Specific Overrides",
+    "wcagTarget": "WCAG 2.2 AA (SC 2.4.11 Focus Appearance, SC 2.5.8 Target Size >= 24px)"
+  },
+  "component": {
+    "button": {
+      "bg-primary": { "$value": "{semantic.bg-action-primary}", "$type": "color", "$description": "Primary button resting background" },
+      "bg-primary-hover": { "$value": "{semantic.bg-action-primary-hover}", "$type": "color", "$description": "Primary button hover background" },
+      "text-primary": { "$value": "{semantic.text-on-action}", "$type": "color", "$description": "Primary button label ink" },
+      "border-focus": { "$value": "{semantic.border-focus-ring}", "$type": "color", "$description": "Button focus-visible outline color" },
+      "radius-rest": { "$value": "{radius.md}", "$type": "dimension", "$description": "12px resting corner radius" },
+      "radius-pressed": { "$value": "{radius.pill}", "$type": "dimension", "$description": "M3 Expressive shape morph radius on active press" },
+      "min-height": { "$value": "{spacing.10}", "$type": "dimension", "$description": "40px touch-friendly target height (exceeds WCAG 2.5.8 24px min)" },
+      "padding-x": { "$value": "{spacing.4}", "$type": "dimension", "$description": "16px horizontal internal padding" }
+    },
+    "form-field": {
+      "bg-default": { "$value": "{semantic.bg-surface-recessed}", "$type": "color", "$description": "Recessed input well background" },
+      "bg-hover": { "$value": "{semantic.bg-surface-hover}", "$type": "color", "$description": "Input hover state surface" },
+      "bg-error": { "$value": "{semantic.bg-feedback-error-subtle}", "$type": "color", "$description": "Invalid input background tint" },
+      "text-value": { "$value": "{semantic.text-primary}", "$type": "color", "$description": "Entered user value ink" },
+      "text-label": { "$value": "{semantic.text-secondary}", "$type": "color", "$description": "Floating and stacked label ink" },
+      "text-helper": { "$value": "{semantic.text-muted}", "$type": "color", "$description": "Helper caption ink" },
+      "text-error": { "$value": "{semantic.text-feedback-error}", "$type": "color", "$description": "Error validation message ink" },
+      "border-default": { "$value": "{semantic.border-default}", "$type": "color", "$description": "Resting input border" },
+      "border-focus": { "$value": "{semantic.border-focus-ring}", "$type": "color", "$description": "Focused input ring color" },
+      "border-error": { "$value": "{semantic.border-feedback-error}", "$type": "color", "$description": "Invalid input border color" },
+      "radius": { "$value": "{radius.md}", "$type": "dimension", "$description": "12px input container radius" },
+      "min-height": { "$value": "44px", "$type": "dimension", "$description": "44px accessible input height" },
+      "focus-ring-width": { "$value": "2px", "$type": "dimension", "$description": "WCAG 2.2 SC 2.4.11 2px solid focus outline" },
+      "focus-ring-offset": { "$value": "2px", "$type": "dimension", "$description": "2px spatial separation around focused control" }
+    },
+    "modal-dialog": {
+      "bg-surface": { "$value": "{semantic.bg-surface-elevated}", "$type": "color", "$description": "Dialog container background" },
+      "text-title": { "$value": "{semantic.text-primary}", "$type": "color", "$description": "Dialog title heading ink" },
+      "text-body": { "$value": "{semantic.text-secondary}", "$type": "color", "$description": "Dialog description copy ink" },
+      "border-surface": { "$value": "{semantic.border-default}", "$type": "color", "$description": "Dialog perimeter specular border" },
+      "border-focus": { "$value": "{semantic.border-focus-ring}", "$type": "color", "$description": "Focus ring for dialog close and action triggers" },
+      "radius": { "$value": "{radius.xl}", "$type": "dimension", "$description": "24px concentric outer dialog radius" },
+      "padding": { "$value": "{spacing.6}", "$type": "dimension", "$description": "24px internal modal padding" }
+    },
+    "data-table": {
+      "bg-container": { "$value": "{semantic.bg-surface-card}", "$type": "color", "$description": "Table wrapper tonal background" },
+      "bg-header": { "$value": "{semantic.bg-surface-elevated}", "$type": "color", "$description": "Sticky table header background" },
+      "bg-row-hover": { "$value": "{semantic.bg-surface-hover}", "$type": "color", "$description": "Interactive row hover highlight" },
+      "bg-row-selected": { "$value": "{semantic.bg-action-primary-subtle}", "$type": "color", "$description": "Selected row tonal fill" },
+      "text-header": { "$value": "{semantic.text-secondary}", "$type": "color", "$description": "Column header label ink" },
+      "text-cell": { "$value": "{semantic.text-primary}", "$type": "color", "$description": "Primary cell data ink" },
+      "border-row": { "$value": "{semantic.border-subtle}", "$type": "color", "$description": "1px horizontal row divider" },
+      "radius": { "$value": "{radius.lg}", "$type": "dimension", "$description": "16px outer table container radius" }
+    }
+  }
+}

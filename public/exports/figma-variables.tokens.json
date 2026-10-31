@@ -1,0 +1,1085 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "meta": {
+    "system": "Antigravity Perceptual & Spatial Design System",
+    "version": "2.4.0",
+    "exportedBy": "scripts/build-tokens.mjs",
+    "platforms": [
+      "Figma Variables",
+      "Tokens Studio",
+      "Next.js 16 + Tailwind v4",
+      "Google Stitch"
+    ]
+  },
+  "collections": {
+    "01-Primitives": {
+      "$schema": "https://tr.designtokens.org/format/",
+      "meta": {
+        "system": "Antigravity Perceptual & Spatial Design System",
+        "version": "2.4.0",
+        "tier": "Tier 1 — Global Primitives",
+        "colorSpace": "OKLCH + sRGB Hex"
+      },
+      "color": {
+        "primary": {
+          "0": {
+            "$value": "#000000",
+            "$type": "color",
+            "oklch": "oklch(0.00 0.000 258)",
+            "$description": "Absolute black reference"
+          },
+          "10": {
+            "$value": "#081638",
+            "$type": "color",
+            "oklch": "oklch(0.20 0.124 258)",
+            "$description": "Deep cobalt ink for high-contrast on-primary text in dark mode"
+          },
+          "20": {
+            "$value": "#102a63",
+            "$type": "color",
+            "oklch": "oklch(0.29 0.152 258)",
+            "$description": "Dark primary container surface"
+          },
+          "30": {
+            "$value": "#193f8f",
+            "$type": "color",
+            "oklch": "oklch(0.38 0.175 258)",
+            "$description": "Light mode primary hover state"
+          },
+          "40": {
+            "$value": "#2559c2",
+            "$type": "color",
+            "oklch": "oklch(0.49 0.190 258)",
+            "$description": "Light mode primary action fill (WCAG AA >= 6.1:1 vs white)"
+          },
+          "50": {
+            "$value": "#3b73e6",
+            "$type": "color",
+            "oklch": "oklch(0.59 0.190 258)",
+            "$description": "Mid-tone cobalt fulcrum"
+          },
+          "60": {
+            "$value": "#598ef3",
+            "$type": "color",
+            "oklch": "oklch(0.68 0.181 258)",
+            "$description": "Dark mode primary active press state"
+          },
+          "70": {
+            "$value": "#7cacf9",
+            "$type": "color",
+            "oklch": "oklch(0.77 0.152 258)",
+            "$description": "Dark mode primary action fill (WCAG AAA >= 8.4:1 vs dark canvas)"
+          },
+          "80": {
+            "$value": "#a3c6fc",
+            "$type": "color",
+            "oklch": "oklch(0.85 0.110 258)",
+            "$description": "Dark mode primary hover highlight"
+          },
+          "90": {
+            "$value": "#cfe0fe",
+            "$type": "color",
+            "oklch": "oklch(0.92 0.061 258)",
+            "$description": "Light mode subtle primary container"
+          },
+          "95": {
+            "$value": "#e8f0ff",
+            "$type": "color",
+            "oklch": "oklch(0.96 0.030 258)",
+            "$description": "Tinted alabaster highlight"
+          },
+          "99": {
+            "$value": "#fafcff",
+            "$type": "color",
+            "oklch": "oklch(0.99 0.010 258)",
+            "$description": "Specular white tint"
+          },
+          "100": {
+            "$value": "#ffffff",
+            "$type": "color",
+            "oklch": "oklch(1.00 0.000 258)",
+            "$description": "Pure white reference"
+          }
+        },
+        "secondary": {
+          "10": {
+            "$value": "#071f2e",
+            "$type": "color",
+            "oklch": "oklch(0.22 0.075 215)"
+          },
+          "20": {
+            "$value": "#0f354d",
+            "$type": "color",
+            "oklch": "oklch(0.31 0.098 215)"
+          },
+          "30": {
+            "$value": "#164d6e",
+            "$type": "color",
+            "oklch": "oklch(0.40 0.118 215)"
+          },
+          "40": {
+            "$value": "#1d6691",
+            "$type": "color",
+            "oklch": "oklch(0.49 0.135 215)"
+          },
+          "70": {
+            "$value": "#67bde8",
+            "$type": "color",
+            "oklch": "oklch(0.76 0.125 215)"
+          },
+          "80": {
+            "$value": "#96d4f3",
+            "$type": "color",
+            "oklch": "oklch(0.85 0.090 215)"
+          },
+          "90": {
+            "$value": "#cdebfb",
+            "$type": "color",
+            "oklch": "oklch(0.93 0.045 215)"
+          }
+        },
+        "tertiary": {
+          "10": {
+            "$value": "#062419",
+            "$type": "color",
+            "oklch": "oklch(0.22 0.080 162)"
+          },
+          "20": {
+            "$value": "#0c3d2b",
+            "$type": "color",
+            "oklch": "oklch(0.32 0.105 162)"
+          },
+          "40": {
+            "$value": "#156e4e",
+            "$type": "color",
+            "oklch": "oklch(0.48 0.135 162)"
+          },
+          "70": {
+            "$value": "#54cfa0",
+            "$type": "color",
+            "oklch": "oklch(0.77 0.145 162)"
+          },
+          "90": {
+            "$value": "#c5f4e0",
+            "$type": "color",
+            "oklch": "oklch(0.93 0.055 162)"
+          }
+        },
+        "neutral": {
+          "4": {
+            "$value": "#07090e",
+            "$type": "color",
+            "oklch": "oklch(0.110 0.012 258)",
+            "$description": "Z-0 Dark recessed well (Surface Lowest)"
+          },
+          "6": {
+            "$value": "#0b0e16",
+            "$type": "color",
+            "oklch": "oklch(0.135 0.012 258)",
+            "$description": "Z-0 Dark primary canvas"
+          },
+          "10": {
+            "$value": "#111520",
+            "$type": "color",
+            "oklch": "oklch(0.165 0.012 258)",
+            "$description": "Z-1 Dark base card (Surface Low) & Light primary ink"
+          },
+          "12": {
+            "$value": "#161b28",
+            "$type": "color",
+            "oklch": "oklch(0.190 0.012 258)",
+            "$description": "Z-1 Dark elevated container"
+          },
+          "17": {
+            "$value": "#1e2434",
+            "$type": "color",
+            "oklch": "oklch(0.225 0.012 258)",
+            "$description": "Z-1 Dark hover/input surface (Surface High)"
+          },
+          "22": {
+            "$value": "#272e40",
+            "$type": "color",
+            "oklch": "oklch(0.260 0.012 258)",
+            "$description": "Z-1 Dark active surface (Surface Highest)"
+          },
+          "30": {
+            "$value": "#394154",
+            "$type": "color",
+            "oklch": "oklch(0.360 0.015 258)",
+            "$description": "Light mode secondary text"
+          },
+          "40": {
+            "$value": "#525b70",
+            "$type": "color",
+            "oklch": "oklch(0.460 0.014 258)",
+            "$description": "Light mode muted text (WCAG AA >= 5.2:1 vs light canvas)"
+          },
+          "60": {
+            "$value": "#858fa6",
+            "$type": "color",
+            "oklch": "oklch(0.640 0.012 258)",
+            "$description": "Dark mode muted text (WCAG AA >= 5.1:1 vs dark canvas)"
+          },
+          "70": {
+            "$value": "#a4adC2",
+            "$type": "color",
+            "oklch": "oklch(0.750 0.012 258)",
+            "$description": "Dark mode secondary text (WCAG AAA >= 7.8:1)"
+          },
+          "90": {
+            "$value": "#dfe3ec",
+            "$type": "color",
+            "oklch": "oklch(0.920 0.010 258)",
+            "$description": "Z-1 Light Surface Highest"
+          },
+          "92": {
+            "$value": "#e6e9f2",
+            "$type": "color",
+            "oklch": "oklch(0.940 0.010 258)",
+            "$description": "Z-1 Light Surface High"
+          },
+          "94": {
+            "$value": "#edeff6",
+            "$type": "color",
+            "oklch": "oklch(0.958 0.008 258)",
+            "$description": "Z-1 Light Surface Container"
+          },
+          "96": {
+            "$value": "#f3f5fa",
+            "$type": "color",
+            "oklch": "oklch(0.972 0.006 258)",
+            "$description": "Z-1 Light Surface Low & Dark primary ink"
+          },
+          "98": {
+            "$value": "#f9fafd",
+            "$type": "color",
+            "oklch": "oklch(0.985 0.005 258)",
+            "$description": "Z-0 Light Canvas"
+          },
+          "100": {
+            "$value": "#ffffff",
+            "$type": "color",
+            "oklch": "oklch(0.996 0.002 258)",
+            "$description": "Z-0 Light Surface Lowest"
+          }
+        },
+        "feedback": {
+          "error": {
+            "20": {
+              "$value": "#4c0d19",
+              "$type": "color",
+              "oklch": "oklch(0.25 0.11 22)"
+            },
+            "30": {
+              "$value": "#9e1c34",
+              "$type": "color",
+              "oklch": "oklch(0.42 0.17 22)",
+              "$description": "Light mode error text (WCAG AA >= 6.4:1)"
+            },
+            "40": {
+              "$value": "#c92a46",
+              "$type": "color",
+              "oklch": "oklch(0.52 0.20 22)",
+              "$description": "Light mode error border"
+            },
+            "70": {
+              "$value": "#ff6b84",
+              "$type": "color",
+              "oklch": "oklch(0.72 0.18 22)",
+              "$description": "Dark mode error border"
+            },
+            "80": {
+              "$value": "#ff8fa1",
+              "$type": "color",
+              "oklch": "oklch(0.79 0.14 22)",
+              "$description": "Dark mode error text (WCAG AA >= 7.1:1)"
+            },
+            "95": {
+              "$value": "#fff0f2",
+              "$type": "color",
+              "oklch": "oklch(0.96 0.03 22)"
+            }
+          },
+          "success": {
+            "20": {
+              "$value": "#083b24",
+              "$type": "color",
+              "oklch": "oklch(0.26 0.09 154)"
+            },
+            "30": {
+              "$value": "#0f6840",
+              "$type": "color",
+              "oklch": "oklch(0.43 0.13 154)",
+              "$description": "Light mode success text (WCAG AA >= 6.2:1)"
+            },
+            "70": {
+              "$value": "#3dd68c",
+              "$type": "color",
+              "oklch": "oklch(0.76 0.16 154)"
+            },
+            "80": {
+              "$value": "#6ee7b7",
+              "$type": "color",
+              "oklch": "oklch(0.84 0.13 154)",
+              "$description": "Dark mode success text (WCAG AAA >= 9.2:1)"
+            },
+            "95": {
+              "$value": "#ecfdf5",
+              "$type": "color",
+              "oklch": "oklch(0.97 0.03 154)"
+            }
+          },
+          "warning": {
+            "20": {
+              "$value": "#452706",
+              "$type": "color",
+              "oklch": "oklch(0.26 0.08 70)"
+            },
+            "30": {
+              "$value": "#854d0e",
+              "$type": "color",
+              "oklch": "oklch(0.44 0.12 70)",
+              "$description": "Light mode warning text (WCAG AA >= 6.0:1)"
+            },
+            "70": {
+              "$value": "#f59e0b",
+              "$type": "color",
+              "oklch": "oklch(0.76 0.16 75)"
+            },
+            "80": {
+              "$value": "#fcd34d",
+              "$type": "color",
+              "oklch": "oklch(0.86 0.14 82)",
+              "$description": "Dark mode warning text (WCAG AAA >= 10.4:1)"
+            },
+            "95": {
+              "$value": "#fffbeb",
+              "$type": "color",
+              "oklch": "oklch(0.98 0.03 85)"
+            }
+          }
+        }
+      },
+      "spacing": {
+        "0": {
+          "$value": "0px",
+          "$type": "dimension"
+        },
+        "1": {
+          "$value": "4px",
+          "$type": "dimension"
+        },
+        "2": {
+          "$value": "8px",
+          "$type": "dimension"
+        },
+        "3": {
+          "$value": "12px",
+          "$type": "dimension"
+        },
+        "4": {
+          "$value": "16px",
+          "$type": "dimension"
+        },
+        "5": {
+          "$value": "20px",
+          "$type": "dimension"
+        },
+        "6": {
+          "$value": "24px",
+          "$type": "dimension"
+        },
+        "8": {
+          "$value": "32px",
+          "$type": "dimension"
+        },
+        "10": {
+          "$value": "40px",
+          "$type": "dimension"
+        },
+        "12": {
+          "$value": "48px",
+          "$type": "dimension"
+        },
+        "16": {
+          "$value": "64px",
+          "$type": "dimension"
+        },
+        "0.5": {
+          "$value": "2px",
+          "$type": "dimension"
+        },
+        "1.5": {
+          "$value": "6px",
+          "$type": "dimension"
+        }
+      },
+      "radius": {
+        "none": {
+          "$value": "0px",
+          "$type": "dimension"
+        },
+        "xs": {
+          "$value": "4px",
+          "$type": "dimension"
+        },
+        "sm": {
+          "$value": "8px",
+          "$type": "dimension"
+        },
+        "md": {
+          "$value": "12px",
+          "$type": "dimension"
+        },
+        "lg": {
+          "$value": "16px",
+          "$type": "dimension"
+        },
+        "xl": {
+          "$value": "24px",
+          "$type": "dimension"
+        },
+        "2xl": {
+          "$value": "32px",
+          "$type": "dimension"
+        },
+        "pill": {
+          "$value": "9999px",
+          "$type": "dimension"
+        }
+      },
+      "typography": {
+        "family": {
+          "sans": {
+            "$value": "var(--font-sans-loaded), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+            "$type": "fontFamily"
+          },
+          "serif": {
+            "$value": "var(--font-serif-loaded), 'Instrument Serif', Georgia, serif",
+            "$type": "fontFamily"
+          },
+          "mono": {
+            "$value": "var(--font-mono-loaded), 'JetBrains Mono', ui-monospace, monospace",
+            "$type": "fontFamily"
+          }
+        },
+        "size": {
+          "xs": {
+            "$value": "0.75rem",
+            "$type": "dimension",
+            "px": "12px"
+          },
+          "sm": {
+            "$value": "0.875rem",
+            "$type": "dimension",
+            "px": "14px"
+          },
+          "md": {
+            "$value": "0.9375rem",
+            "$type": "dimension",
+            "px": "15px"
+          },
+          "lg": {
+            "$value": "1.125rem",
+            "$type": "dimension",
+            "px": "18px"
+          },
+          "xl": {
+            "$value": "1.375rem",
+            "$type": "dimension",
+            "px": "22px"
+          },
+          "2xl": {
+            "$value": "1.75rem",
+            "$type": "dimension",
+            "px": "28px"
+          },
+          "3xl": {
+            "$value": "2.25rem",
+            "$type": "dimension",
+            "px": "36px"
+          },
+          "4xl": {
+            "$value": "2.75rem",
+            "$type": "dimension",
+            "px": "44px"
+          },
+          "5xl": {
+            "$value": "3.25rem",
+            "$type": "dimension",
+            "px": "52px"
+          }
+        }
+      },
+      "motion": {
+        "easing": {
+          "spatialSpring": {
+            "$value": "cubic-bezier(0.22, 1.28, 0.36, 1)",
+            "$type": "cubicBezier"
+          },
+          "effectsSmooth": {
+            "$value": "cubic-bezier(0.22, 1, 0.36, 1)",
+            "$type": "cubicBezier"
+          },
+          "outQuart": {
+            "$value": "cubic-bezier(0.165, 0.84, 0.44, 1)",
+            "$type": "cubicBezier"
+          }
+        },
+        "duration": {
+          "instant": {
+            "$value": "75ms",
+            "$type": "duration"
+          },
+          "fast": {
+            "$value": "150ms",
+            "$type": "duration"
+          },
+          "normal": {
+            "$value": "220ms",
+            "$type": "duration"
+          },
+          "slow": {
+            "$value": "380ms",
+            "$type": "duration"
+          }
+        }
+      }
+    },
+    "02-Semantic-Light": {
+      "bg-canvas": {
+        "$value": "{color.neutral.98}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-canvas",
+        "category": "surface",
+        "$description": "Z-Level 0 base environment canvas in Light mode"
+      },
+      "bg-surface-recessed": {
+        "$value": "{color.neutral.100}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-lowest",
+        "category": "surface",
+        "$description": "Z-Level 0 recessed well and input field background"
+      },
+      "bg-surface-card": {
+        "$value": "{color.neutral.96}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-low",
+        "category": "surface",
+        "$description": "Z-Level 1 default tonal card container"
+      },
+      "bg-surface-elevated": {
+        "$value": "{color.neutral.94}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-container",
+        "category": "surface",
+        "$description": "Z-Level 1 elevated modal/header container"
+      },
+      "bg-surface-hover": {
+        "$value": "{color.neutral.92}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-high",
+        "category": "surface",
+        "$description": "Z-Level 1 interactive hover surface"
+      },
+      "bg-surface-active": {
+        "$value": "{color.neutral.90}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-highest",
+        "category": "surface",
+        "$description": "Z-Level 1 active/selected surface and slider track"
+      },
+      "bg-action-primary": {
+        "$value": "{color.primary.40}",
+        "$type": "color",
+        "workbenchAlias": "--sys-primary",
+        "category": "action",
+        "$description": "Primary interactive action fill (WCAG AA >= 6.1:1 vs white)"
+      },
+      "bg-action-primary-hover": {
+        "$value": "{color.primary.30}",
+        "$type": "color",
+        "workbenchAlias": "--sys-primary-strong",
+        "category": "action",
+        "$description": "Primary interactive hover fill in Light mode"
+      },
+      "bg-action-primary-subtle": {
+        "$value": "{color.primary.90}",
+        "$type": "color",
+        "workbenchAlias": "--sys-primary-container",
+        "category": "action",
+        "$description": "Subtle tonal fill for selected pills and active badges"
+      },
+      "bg-action-secondary": {
+        "$value": "{color.secondary.40}",
+        "$type": "color",
+        "workbenchAlias": "--sys-secondary",
+        "category": "action",
+        "$description": "Secondary interactive accent fill"
+      },
+      "text-primary": {
+        "$value": "{color.neutral.10}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-surface",
+        "category": "text",
+        "$description": "Primary body and headline ink (WCAG AAA >= 16.4:1 vs light canvas)"
+      },
+      "text-secondary": {
+        "$value": "{color.neutral.30}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-surface-secondary",
+        "category": "text",
+        "$description": "Secondary supporting copy and field labels (WCAG AAA >= 9.3:1)"
+      },
+      "text-muted": {
+        "$value": "{color.neutral.40}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-surface-tertiary",
+        "category": "text",
+        "$description": "Helper metadata and technical captions (WCAG AA >= 5.9:1)"
+      },
+      "text-on-action": {
+        "$value": "{color.primary.100}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-primary",
+        "category": "text",
+        "$description": "High-contrast ink placed atop bg-action-primary"
+      },
+      "text-feedback-error": {
+        "$value": "{color.feedback.error.30}",
+        "$type": "color",
+        "workbenchAlias": "--sys-error",
+        "category": "feedback",
+        "$description": "Inline validation error text and icon ink (WCAG AA >= 6.8:1)"
+      },
+      "bg-feedback-error-subtle": {
+        "$value": "{color.feedback.error.95}",
+        "$type": "color",
+        "workbenchAlias": "--sys-error-container",
+        "category": "feedback",
+        "$description": "Subtle background fill for error banners and invalid inputs"
+      },
+      "border-feedback-error": {
+        "$value": "{color.feedback.error.40}",
+        "$type": "color",
+        "workbenchAlias": "--sys-error-border",
+        "category": "feedback",
+        "$description": "High-visibility border for invalid form fields (WCAG AA >= 4.5:1)"
+      },
+      "text-feedback-success": {
+        "$value": "{color.feedback.success.30}",
+        "$type": "color",
+        "workbenchAlias": "--sys-success",
+        "category": "feedback",
+        "$description": "Positive validation and optimal status ink (WCAG AA >= 6.3:1)"
+      },
+      "bg-feedback-success-subtle": {
+        "$value": "{color.feedback.success.95}",
+        "$type": "color",
+        "workbenchAlias": "--sys-success-container",
+        "category": "feedback",
+        "$description": "Subtle background fill for success badges"
+      },
+      "text-feedback-warning": {
+        "$value": "{color.feedback.warning.30}",
+        "$type": "color",
+        "workbenchAlias": "--sys-warning",
+        "category": "feedback",
+        "$description": "Cautionary status and overload ink (WCAG AA >= 6.1:1)"
+      },
+      "bg-feedback-warning-subtle": {
+        "$value": "{color.feedback.warning.95}",
+        "$type": "color",
+        "workbenchAlias": "--sys-warning-container",
+        "category": "feedback",
+        "$description": "Subtle background fill for warning callouts"
+      },
+      "border-default": {
+        "$value": "{color.neutral.40}",
+        "$type": "color",
+        "workbenchAlias": "--sys-outline-strong",
+        "category": "border",
+        "$description": "Standard structural control border (WCAG AA >= 3.1:1 UI contrast)"
+      },
+      "border-subtle": {
+        "$value": "{color.neutral.90}",
+        "$type": "color",
+        "workbenchAlias": "--sys-outline-subtle",
+        "category": "border",
+        "$description": "Decorative hairline divider for bento cells and table rows"
+      },
+      "border-focus-ring": {
+        "$value": "{color.primary.40}",
+        "$type": "color",
+        "workbenchAlias": "--sys-focus-ring",
+        "category": "border",
+        "$description": "WCAG 2.2 SC 2.4.11 focus-visible indicator ring (>= 6.1:1 contrast)"
+      }
+    },
+    "02-Semantic-Dark": {
+      "bg-canvas": {
+        "$value": "{color.neutral.6}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-canvas",
+        "category": "surface",
+        "$description": "Z-Level 0 base environment canvas in Dark mode"
+      },
+      "bg-surface-recessed": {
+        "$value": "{color.neutral.4}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-lowest",
+        "category": "surface",
+        "$description": "Z-Level 0 recessed well and input field background"
+      },
+      "bg-surface-card": {
+        "$value": "{color.neutral.10}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-low",
+        "category": "surface",
+        "$description": "Z-Level 1 default tonal card container"
+      },
+      "bg-surface-elevated": {
+        "$value": "{color.neutral.12}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-container",
+        "category": "surface",
+        "$description": "Z-Level 1 elevated modal/header container"
+      },
+      "bg-surface-hover": {
+        "$value": "{color.neutral.17}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-high",
+        "category": "surface",
+        "$description": "Z-Level 1 interactive hover surface"
+      },
+      "bg-surface-active": {
+        "$value": "{color.neutral.22}",
+        "$type": "color",
+        "workbenchAlias": "--sys-surface-highest",
+        "category": "surface",
+        "$description": "Z-Level 1 active/selected surface and slider track"
+      },
+      "bg-action-primary": {
+        "$value": "{color.primary.70}",
+        "$type": "color",
+        "workbenchAlias": "--sys-primary",
+        "category": "action",
+        "$description": "Primary interactive action fill in Dark mode (WCAG AAA >= 8.4:1)"
+      },
+      "bg-action-primary-hover": {
+        "$value": "{color.primary.80}",
+        "$type": "color",
+        "workbenchAlias": "--sys-primary-strong",
+        "category": "action",
+        "$description": "Primary interactive hover fill in Dark mode"
+      },
+      "bg-action-primary-subtle": {
+        "$value": "{color.primary.20}",
+        "$type": "color",
+        "workbenchAlias": "--sys-primary-container",
+        "category": "action",
+        "$description": "Subtle tonal fill for selected pills and active badges"
+      },
+      "bg-action-secondary": {
+        "$value": "{color.secondary.70}",
+        "$type": "color",
+        "workbenchAlias": "--sys-secondary",
+        "category": "action",
+        "$description": "Secondary interactive accent fill"
+      },
+      "text-primary": {
+        "$value": "{color.neutral.96}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-surface",
+        "category": "text",
+        "$description": "Primary body and headline ink (WCAG AAA >= 16.2:1 vs dark canvas)"
+      },
+      "text-secondary": {
+        "$value": "{color.neutral.70}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-surface-secondary",
+        "category": "text",
+        "$description": "Secondary supporting copy and field labels (WCAG AAA >= 8.1:1)"
+      },
+      "text-muted": {
+        "$value": "{color.neutral.60}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-surface-tertiary",
+        "category": "text",
+        "$description": "Helper metadata and technical captions (WCAG AA >= 5.4:1)"
+      },
+      "text-on-action": {
+        "$value": "{color.primary.10}",
+        "$type": "color",
+        "workbenchAlias": "--sys-on-primary",
+        "category": "text",
+        "$description": "High-contrast deep cobalt ink placed atop bg-action-primary"
+      },
+      "text-feedback-error": {
+        "$value": "{color.feedback.error.80}",
+        "$type": "color",
+        "workbenchAlias": "--sys-error",
+        "category": "feedback",
+        "$description": "Inline validation error text and icon ink (WCAG AAA >= 7.6:1)"
+      },
+      "bg-feedback-error-subtle": {
+        "$value": "{color.feedback.error.20}",
+        "$type": "color",
+        "workbenchAlias": "--sys-error-container",
+        "category": "feedback",
+        "$description": "Subtle background fill for error banners and invalid inputs"
+      },
+      "border-feedback-error": {
+        "$value": "{color.feedback.error.70}",
+        "$type": "color",
+        "workbenchAlias": "--sys-error-border",
+        "category": "feedback",
+        "$description": "High-visibility border for invalid form fields (WCAG AA >= 5.8:1)"
+      },
+      "text-feedback-success": {
+        "$value": "{color.feedback.success.80}",
+        "$type": "color",
+        "workbenchAlias": "--sys-success",
+        "category": "feedback",
+        "$description": "Positive validation and optimal status ink (WCAG AAA >= 11.2:1)"
+      },
+      "bg-feedback-success-subtle": {
+        "$value": "{color.feedback.success.20}",
+        "$type": "color",
+        "workbenchAlias": "--sys-success-container",
+        "category": "feedback",
+        "$description": "Subtle background fill for success badges"
+      },
+      "text-feedback-warning": {
+        "$value": "{color.feedback.warning.80}",
+        "$type": "color",
+        "workbenchAlias": "--sys-warning",
+        "category": "feedback",
+        "$description": "Cautionary status and overload ink (WCAG AAA >= 12.1:1)"
+      },
+      "bg-feedback-warning-subtle": {
+        "$value": "{color.feedback.warning.20}",
+        "$type": "color",
+        "workbenchAlias": "--sys-warning-container",
+        "category": "feedback",
+        "$description": "Subtle background fill for warning callouts"
+      },
+      "border-default": {
+        "$value": "{color.neutral.60}",
+        "$type": "color",
+        "workbenchAlias": "--sys-outline-strong",
+        "category": "border",
+        "$description": "Standard structural control border (WCAG AA >= 5.4:1 UI contrast)"
+      },
+      "border-subtle": {
+        "$value": "{color.neutral.22}",
+        "$type": "color",
+        "workbenchAlias": "--sys-outline-subtle",
+        "category": "border",
+        "$description": "Decorative hairline divider for bento cells and table rows"
+      },
+      "border-focus-ring": {
+        "$value": "{color.primary.70}",
+        "$type": "color",
+        "workbenchAlias": "--sys-focus-ring",
+        "category": "border",
+        "$description": "WCAG 2.2 SC 2.4.11 focus-visible indicator ring (>= 8.4:1 contrast)"
+      }
+    },
+    "03-Components": {
+      "button": {
+        "bg-primary": {
+          "$value": "{semantic.bg-action-primary}",
+          "$type": "color",
+          "$description": "Primary button resting background"
+        },
+        "bg-primary-hover": {
+          "$value": "{semantic.bg-action-primary-hover}",
+          "$type": "color",
+          "$description": "Primary button hover background"
+        },
+        "text-primary": {
+          "$value": "{semantic.text-on-action}",
+          "$type": "color",
+          "$description": "Primary button label ink"
+        },
+        "border-focus": {
+          "$value": "{semantic.border-focus-ring}",
+          "$type": "color",
+          "$description": "Button focus-visible outline color"
+        },
+        "radius-rest": {
+          "$value": "{radius.md}",
+          "$type": "dimension",
+          "$description": "12px resting corner radius"
+        },
+        "radius-pressed": {
+          "$value": "{radius.pill}",
+          "$type": "dimension",
+          "$description": "M3 Expressive shape morph radius on active press"
+        },
+        "min-height": {
+          "$value": "{spacing.10}",
+          "$type": "dimension",
+          "$description": "40px touch-friendly target height (exceeds WCAG 2.5.8 24px min)"
+        },
+        "padding-x": {
+          "$value": "{spacing.4}",
+          "$type": "dimension",
+          "$description": "16px horizontal internal padding"
+        }
+      },
+      "form-field": {
+        "bg-default": {
+          "$value": "{semantic.bg-surface-recessed}",
+          "$type": "color",
+          "$description": "Recessed input well background"
+        },
+        "bg-hover": {
+          "$value": "{semantic.bg-surface-hover}",
+          "$type": "color",
+          "$description": "Input hover state surface"
+        },
+        "bg-error": {
+          "$value": "{semantic.bg-feedback-error-subtle}",
+          "$type": "color",
+          "$description": "Invalid input background tint"
+        },
+        "text-value": {
+          "$value": "{semantic.text-primary}",
+          "$type": "color",
+          "$description": "Entered user value ink"
+        },
+        "text-label": {
+          "$value": "{semantic.text-secondary}",
+          "$type": "color",
+          "$description": "Floating and stacked label ink"
+        },
+        "text-helper": {
+          "$value": "{semantic.text-muted}",
+          "$type": "color",
+          "$description": "Helper caption ink"
+        },
+        "text-error": {
+          "$value": "{semantic.text-feedback-error}",
+          "$type": "color",
+          "$description": "Error validation message ink"
+        },
+        "border-default": {
+          "$value": "{semantic.border-default}",
+          "$type": "color",
+          "$description": "Resting input border"
+        },
+        "border-focus": {
+          "$value": "{semantic.border-focus-ring}",
+          "$type": "color",
+          "$description": "Focused input ring color"
+        },
+        "border-error": {
+          "$value": "{semantic.border-feedback-error}",
+          "$type": "color",
+          "$description": "Invalid input border color"
+        },
+        "radius": {
+          "$value": "{radius.md}",
+          "$type": "dimension",
+          "$description": "12px input container radius"
+        },
+        "min-height": {
+          "$value": "44px",
+          "$type": "dimension",
+          "$description": "44px accessible input height"
+        },
+        "focus-ring-width": {
+          "$value": "2px",
+          "$type": "dimension",
+          "$description": "WCAG 2.2 SC 2.4.11 2px solid focus outline"
+        },
+        "focus-ring-offset": {
+          "$value": "2px",
+          "$type": "dimension",
+          "$description": "2px spatial separation around focused control"
+        }
+      },
+      "modal-dialog": {
+        "bg-surface": {
+          "$value": "{semantic.bg-surface-elevated}",
+          "$type": "color",
+          "$description": "Dialog container background"
+        },
+        "text-title": {
+          "$value": "{semantic.text-primary}",
+          "$type": "color",
+          "$description": "Dialog title heading ink"
+        },
+        "text-body": {
+          "$value": "{semantic.text-secondary}",
+          "$type": "color",
+          "$description": "Dialog description copy ink"
+        },
+        "border-surface": {
+          "$value": "{semantic.border-default}",
+          "$type": "color",
+          "$description": "Dialog perimeter specular border"
+        },
+        "border-focus": {
+          "$value": "{semantic.border-focus-ring}",
+          "$type": "color",
+          "$description": "Focus ring for dialog close and action triggers"
+        },
+        "radius": {
+          "$value": "{radius.xl}",
+          "$type": "dimension",
+          "$description": "24px concentric outer dialog radius"
+        },
+        "padding": {
+          "$value": "{spacing.6}",
+          "$type": "dimension",
+          "$description": "24px internal modal padding"
+        }
+      },
+      "data-table": {
+        "bg-container": {
+          "$value": "{semantic.bg-surface-card}",
+          "$type": "color",
+          "$description": "Table wrapper tonal background"
+        },
+        "bg-header": {
+          "$value": "{semantic.bg-surface-elevated}",
+          "$type": "color",
+          "$description": "Sticky table header background"
+        },
+        "bg-row-hover": {
+          "$value": "{semantic.bg-surface-hover}",
+          "$type": "color",
+          "$description": "Interactive row hover highlight"
+        },
+        "bg-row-selected": {
+          "$value": "{semantic.bg-action-primary-subtle}",
+          "$type": "color",
+          "$description": "Selected row tonal fill"
+        },
+        "text-header": {
+          "$value": "{semantic.text-secondary}",
+          "$type": "color",
+          "$description": "Column header label ink"
+        },
+        "text-cell": {
+          "$value": "{semantic.text-primary}",
+          "$type": "color",
+          "$description": "Primary cell data ink"
+        },
+        "border-row": {
+          "$value": "{semantic.border-subtle}",
+          "$type": "color",
+          "$description": "1px horizontal row divider"
+        },
+        "radius": {
+          "$value": "{radius.lg}",
+          "$type": "dimension",
+          "$description": "16px outer table container radius"
+        }
+      }
+    }
+  }
+}

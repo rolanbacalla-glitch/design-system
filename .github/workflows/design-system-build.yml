@@ -1,0 +1,40 @@
+name: Design System Token Compiler & Type Verification
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, feature/**]
+
+jobs:
+  verify-design-system:
+    name: Build 3-Tier Tokens, Verify WCAG 2.2 & Compile Next.js 16
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Compile 3-Tier Design Tokens (CSS, TS, Figma DTCG, Stitch DESIGN.md, Cursor)
+        run: npm run build:tokens
+
+      - name: Run Automated WCAG 2.2 AA Contrast & Artifact Verification
+        run: npm run verify:wcag
+
+      - name: Run Strict TypeScript Compiler Check
+        run: npx tsc --noEmit
+
+      - name: Run ESLint Check
+        run: npm run lint
+
+      - name: Run Production Next.js 16 Build
+        run: npm run build

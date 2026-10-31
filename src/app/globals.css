@@ -1,0 +1,309 @@
+@import "tailwindcss";
+@import "../styles/tokens.generated.css";
+
+@custom-variant dark (&:where(.dark, [data-theme="dark"], .dark *));
+
+@theme {
+  --font-sans: var(--font-sans-loaded), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-serif-loaded), Georgia, serif;
+  --font-display: var(--font-serif-loaded), Georgia, serif;
+  --font-mono: var(--font-mono-loaded), ui-monospace, SFMono-Regular, monospace;
+
+  /* Map Tailwind semantic utilities to our 3-Tier System Tokens */
+  --color-canvas: var(--sys-surface-canvas);
+  --color-surface-base: var(--sys-surface-canvas);
+  --color-background: var(--sys-surface-canvas);
+  --color-foreground: var(--sys-on-surface);
+  --color-accent: var(--sys-tertiary);
+  --color-surface-lowest: var(--sys-surface-lowest);
+  --color-surface-low: var(--sys-surface-low);
+  --color-surface: var(--sys-surface-container);
+  --color-surface-high: var(--sys-surface-high);
+  --color-surface-highest: var(--sys-surface-highest);
+
+  --color-primary: var(--sys-primary);
+  --color-primary-container: var(--sys-primary-container);
+  --color-on-primary: var(--sys-on-primary);
+  --color-secondary: var(--sys-secondary);
+  --color-tertiary: var(--sys-tertiary);
+
+  --color-ink: var(--sys-on-surface);
+  --color-ink-secondary: var(--sys-on-surface-secondary);
+  --color-ink-tertiary: var(--sys-on-surface-tertiary);
+  --color-ink-quaternary: var(--sys-on-surface-quaternary);
+
+  --color-line: var(--sys-outline);
+  --color-line-subtle: var(--sys-outline-variant);
+}
+
+/* ============================================================================
+   TIER 1: REFERENCE TOKENS (Dynamic Seed Variables & 13-Step Tonal Math)
+   Users can live-modulate --seed-hue, --seed-chroma, --seed-secondary-hue, etc.
+   ============================================================================ */
+:root {
+  --seed-hue: 258;
+  --seed-chroma: 0.19;
+  --seed-secondary-hue: 215;
+  --seed-tertiary-hue: 162;
+  --seed-neutral-chroma: 0.012;
+  --seed-radius-scale: 1;
+
+  /* 13-Step Primary Reference Palette (M3 Tonal Scale via OKLCH) */
+  --ref-primary-0: oklch(0.00 0 var(--seed-hue));
+  --ref-primary-10: oklch(0.20 calc(var(--seed-chroma) * 0.65) var(--seed-hue));
+  --ref-primary-20: oklch(0.29 calc(var(--seed-chroma) * 0.80) var(--seed-hue));
+  --ref-primary-30: oklch(0.38 calc(var(--seed-chroma) * 0.92) var(--seed-hue));
+  --ref-primary-40: oklch(0.49 var(--seed-chroma) var(--seed-hue));
+  --ref-primary-50: oklch(0.59 var(--seed-chroma) var(--seed-hue));
+  --ref-primary-60: oklch(0.68 calc(var(--seed-chroma) * 0.95) var(--seed-hue));
+  --ref-primary-70: oklch(0.77 calc(var(--seed-chroma) * 0.80) var(--seed-hue));
+  --ref-primary-80: oklch(0.85 calc(var(--seed-chroma) * 0.58) var(--seed-hue));
+  --ref-primary-90: oklch(0.92 calc(var(--seed-chroma) * 0.32) var(--seed-hue));
+  --ref-primary-95: oklch(0.96 calc(var(--seed-chroma) * 0.16) var(--seed-hue));
+  --ref-primary-99: oklch(0.99 calc(var(--seed-chroma) * 0.05) var(--seed-hue));
+  --ref-primary-100: oklch(1.00 0 var(--seed-hue));
+
+  /* Neutral Reference Scale */
+  --ref-neutral-4: oklch(0.11 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-6: oklch(0.135 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-10: oklch(0.165 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-12: oklch(0.19 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-17: oklch(0.225 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-22: oklch(0.26 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-90: oklch(0.92 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-92: oklch(0.94 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-94: oklch(0.958 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-96: oklch(0.972 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-98: oklch(0.985 var(--seed-neutral-chroma) var(--seed-hue));
+  --ref-neutral-100: oklch(0.996 calc(var(--seed-neutral-chroma) * 0.4) var(--seed-hue));
+
+  /* Semantic Status Reference */
+  --ref-success: oklch(0.68 0.17 152);
+  --ref-warning: oklch(0.76 0.16 75);
+  --ref-danger: oklch(0.64 0.21 25);
+
+  /* Geometric Radii Tokens */
+  --sys-radius-xs: calc(4px * var(--seed-radius-scale));
+  --sys-radius-sm: calc(8px * var(--seed-radius-scale));
+  --sys-radius-md: calc(12px * var(--seed-radius-scale));
+  --sys-radius-lg: calc(16px * var(--seed-radius-scale));
+  --sys-radius-xl: calc(24px * var(--seed-radius-scale));
+  --sys-radius-pill: 9999px;
+
+  /* Physics & Motion Curves (Emil Kowalski / M3 Spatial vs Effects) */
+  --ease-spatial-spring: cubic-bezier(0.22, 1.28, 0.36, 1);
+  --ease-effects-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* ============================================================================
+   TIER 2: SYSTEM SEMANTIC TOKENS — OBSIDIAN DARK (Default)
+   ============================================================================ */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* 5-Step Tonal Surface Hierarchy (Z-Level 0 & Z-Level 1) */
+  --sys-surface-canvas: var(--ref-neutral-6);
+  --sys-surface-lowest: var(--ref-neutral-4);
+  --sys-surface-low: var(--ref-neutral-10);
+  --sys-surface-container: var(--ref-neutral-12);
+  --sys-surface-high: var(--ref-neutral-17);
+  --sys-surface-highest: var(--ref-neutral-22);
+
+  /* Key Accent Roles */
+  --sys-primary: var(--ref-primary-70);
+  --sys-primary-strong: var(--ref-primary-60);
+  --sys-primary-container: oklch(0.26 calc(var(--seed-chroma) * 0.7) var(--seed-hue));
+  --sys-on-primary: var(--ref-primary-10);
+  --sys-on-primary-container: var(--ref-primary-90);
+
+  --sys-secondary: oklch(0.74 0.14 var(--seed-secondary-hue));
+  --sys-secondary-container: oklch(0.25 0.08 var(--seed-secondary-hue));
+  --sys-tertiary: oklch(0.76 0.15 var(--seed-tertiary-hue));
+  --sys-tertiary-container: oklch(0.25 0.08 var(--seed-tertiary-hue));
+
+  /* Apple HIG 4-Level Vibrancy Text Hierarchy */
+  --sys-on-surface: oklch(0.96 0.006 var(--seed-hue));
+  --sys-on-surface-secondary: oklch(0.74 0.012 var(--seed-hue));
+  --sys-on-surface-tertiary: oklch(0.55 0.012 var(--seed-hue));
+  --sys-on-surface-quaternary: oklch(0.38 0.010 var(--seed-hue));
+
+  /* Structural Hairlines & Specular Edges */
+  --sys-outline: oklch(1 0 0 / 0.14);
+  --sys-outline-variant: oklch(1 0 0 / 0.075);
+  --sys-specular-top: oklch(1 0 0 / 0.12);
+
+  /* Z-Level 2: True Liquid Glass Tokens (Floating Control Layer Only) */
+  --glass-regular-bg: oklch(0.17 0.015 var(--seed-hue) / 0.68);
+  --glass-clear-bg: oklch(0.14 0.015 var(--seed-hue) / 0.36);
+  --glass-specular-border: oklch(1 0 0 / 0.18);
+  --glass-shadow: 0 20px 50px -12px oklch(0 0 0 / 0.65), 0 0 0 1px oklch(1 0 0 / 0.12) inset;
+}
+
+/* ============================================================================
+   TIER 2: SYSTEM SEMANTIC TOKENS — ALABASTER LIGHT
+   ============================================================================ */
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* 5-Step Tonal Surface Hierarchy (Light Polarity) */
+  --sys-surface-canvas: var(--ref-neutral-98);
+  --sys-surface-lowest: var(--ref-neutral-100);
+  --sys-surface-low: var(--ref-neutral-96);
+  --sys-surface-container: var(--ref-neutral-94);
+  --sys-surface-high: var(--ref-neutral-92);
+  --sys-surface-highest: var(--ref-neutral-90);
+
+  /* Key Accent Roles */
+  --sys-primary: var(--ref-primary-40);
+  --sys-primary-strong: var(--ref-primary-50);
+  --sys-primary-container: var(--ref-primary-90);
+  --sys-on-primary: var(--ref-primary-100);
+  --sys-on-primary-container: var(--ref-primary-10);
+
+  --sys-secondary: oklch(0.46 0.15 var(--seed-secondary-hue));
+  --sys-secondary-container: oklch(0.91 0.05 var(--seed-secondary-hue));
+  --sys-tertiary: oklch(0.45 0.14 var(--seed-tertiary-hue));
+  --sys-tertiary-container: oklch(0.92 0.05 var(--seed-tertiary-hue));
+
+  /* Apple HIG 4-Level Vibrancy Text Hierarchy */
+  --sys-on-surface: oklch(0.15 0.012 var(--seed-hue));
+  --sys-on-surface-secondary: oklch(0.38 0.015 var(--seed-hue));
+  --sys-on-surface-tertiary: oklch(0.54 0.012 var(--seed-hue));
+  --sys-on-surface-quaternary: oklch(0.70 0.010 var(--seed-hue));
+
+  /* Structural Hairlines & Specular Edges */
+  --sys-outline: oklch(0.15 0.02 var(--seed-hue) / 0.16);
+  --sys-outline-variant: oklch(0.15 0.02 var(--seed-hue) / 0.085);
+  --sys-specular-top: oklch(1 0 0 / 0.85);
+
+  /* Z-Level 2: True Liquid Glass Tokens (Light Polarity) */
+  --glass-regular-bg: oklch(0.98 0.005 var(--seed-hue) / 0.72);
+  --glass-clear-bg: oklch(0.99 0.005 var(--seed-hue) / 0.42);
+  --glass-specular-border: oklch(0.15 0.02 var(--seed-hue) / 0.12);
+  --glass-shadow: 0 20px 45px -15px oklch(0.15 0.02 var(--seed-hue) / 0.14), 0 1px 0 0 oklch(1 0 0 / 0.9) inset;
+}
+
+/* ============================================================================
+   TIER 3: COMPONENT & MATERIAL UTILITIES
+   ============================================================================ */
+
+/* Z-Level 1: Content Surface Card (NO backdrop blur — crisp tonal elevation) */
+.tonal-card {
+  background-color: var(--sys-surface-low);
+  border: 1px solid var(--sys-outline-variant);
+  border-radius: var(--sys-radius-lg);
+  box-shadow: 0 1px 0 0 var(--sys-specular-top) inset;
+  transition: background-color 180ms var(--ease-effects-smooth),
+              border-color 180ms var(--ease-effects-smooth),
+              transform 200ms var(--ease-spatial-spring);
+}
+
+.tonal-card-elevated {
+  background-color: var(--sys-surface-container);
+  border: 1px solid var(--sys-outline);
+  border-radius: var(--sys-radius-lg);
+  box-shadow: 0 1px 0 0 var(--sys-specular-top) inset;
+}
+
+/* Z-Level 2: Apple HIG Liquid Glass (Floating Chrome & Transient Controls ONLY) */
+.liquid-glass-regular {
+  background: var(--glass-regular-bg);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid var(--glass-specular-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.liquid-glass-clear {
+  background: var(--glass-clear-bg);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid var(--glass-specular-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Swiss Architectural Grid Background & Crosshairs */
+.swiss-grid-bg {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, var(--sys-outline-variant) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--sys-outline-variant) 1px, transparent 1px);
+}
+
+/* Precision Tactile Range Input */
+.precision-slider {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--sys-surface-highest);
+  outline: none;
+  cursor: pointer;
+}
+
+.precision-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: var(--sys-on-surface);
+  border: 2px solid var(--sys-primary);
+  box-shadow: 0 2px 8px oklch(0 0 0 / 0.35);
+  transition: transform 160ms var(--ease-spatial-spring), background-color 150ms ease;
+}
+
+.precision-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.16);
+}
+
+.precision-slider::-webkit-slider-thumb:active {
+  transform: scale(0.94);
+  background: var(--sys-primary);
+}
+
+/* Tabular Numbers Mandate (Rauno Freiberg) */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Legacy GlassCard & IconPlayground Compatibility Utilities */
+@utility glass-mist {
+  background: var(--glass-clear-bg);
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid var(--glass-specular-border);
+}
+
+@utility glass-frost {
+  background: var(--sys-surface-low);
+  border: 1px solid var(--sys-outline-variant);
+  box-shadow: 0 1px 0 0 var(--sys-specular-top) inset;
+}
+
+@utility glass-quartz {
+  background: var(--sys-surface-container);
+  border: 1px solid var(--sys-outline);
+  box-shadow: 0 1px 0 0 var(--sys-specular-top) inset;
+}
+
+@utility workshop-slider {
+  appearance: none;
+  background: var(--sys-surface-highest);
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+}
+
+html {
+  scroll-padding-top: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

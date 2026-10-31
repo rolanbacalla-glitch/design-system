@@ -1,0 +1,178 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "meta": {
+    "mode": "light",
+    "name": "Alabaster Light",
+    "tier": "Tier 2 — Alias / Semantic Tokens"
+  },
+  "semantic": {
+    "bg-canvas": {
+      "$value": "{color.neutral.98}",
+      "$type": "color",
+      "workbenchAlias": "--sys-surface-canvas",
+      "category": "surface",
+      "$description": "Z-Level 0 base environment canvas in Light mode"
+    },
+    "bg-surface-recessed": {
+      "$value": "{color.neutral.100}",
+      "$type": "color",
+      "workbenchAlias": "--sys-surface-lowest",
+      "category": "surface",
+      "$description": "Z-Level 0 recessed well and input field background"
+    },
+    "bg-surface-card": {
+      "$value": "{color.neutral.96}",
+      "$type": "color",
+      "workbenchAlias": "--sys-surface-low",
+      "category": "surface",
+      "$description": "Z-Level 1 default tonal card container"
+    },
+    "bg-surface-elevated": {
+      "$value": "{color.neutral.94}",
+      "$type": "color",
+      "workbenchAlias": "--sys-surface-container",
+      "category": "surface",
+      "$description": "Z-Level 1 elevated modal/header container"
+    },
+    "bg-surface-hover": {
+      "$value": "{color.neutral.92}",
+      "$type": "color",
+      "workbenchAlias": "--sys-surface-high",
+      "category": "surface",
+      "$description": "Z-Level 1 interactive hover surface"
+    },
+    "bg-surface-active": {
+      "$value": "{color.neutral.90}",
+      "$type": "color",
+      "workbenchAlias": "--sys-surface-highest",
+      "category": "surface",
+      "$description": "Z-Level 1 active/selected surface and slider track"
+    },
+    "bg-action-primary": {
+      "$value": "{color.primary.40}",
+      "$type": "color",
+      "workbenchAlias": "--sys-primary",
+      "category": "action",
+      "$description": "Primary interactive action fill (WCAG AA >= 6.1:1 vs white)"
+    },
+    "bg-action-primary-hover": {
+      "$value": "{color.primary.30}",
+      "$type": "color",
+      "workbenchAlias": "--sys-primary-strong",
+      "category": "action",
+      "$description": "Primary interactive hover fill in Light mode"
+    },
+    "bg-action-primary-subtle": {
+      "$value": "{color.primary.90}",
+      "$type": "color",
+      "workbenchAlias": "--sys-primary-container",
+      "category": "action",
+      "$description": "Subtle tonal fill for selected pills and active badges"
+    },
+    "bg-action-secondary": {
+      "$value": "{color.secondary.40}",
+      "$type": "color",
+      "workbenchAlias": "--sys-secondary",
+      "category": "action",
+      "$description": "Secondary interactive accent fill"
+    },
+    "text-primary": {
+      "$value": "{color.neutral.10}",
+      "$type": "color",
+      "workbenchAlias": "--sys-on-surface",
+      "category": "text",
+      "$description": "Primary body and headline ink (WCAG AAA >= 16.4:1 vs light canvas)"
+    },
+    "text-secondary": {
+      "$value": "{color.neutral.30}",
+      "$type": "color",
+      "workbenchAlias": "--sys-on-surface-secondary",
+      "category": "text",
+      "$description": "Secondary supporting copy and field labels (WCAG AAA >= 9.3:1)"
+    },
+    "text-muted": {
+      "$value": "{color.neutral.40}",
+      "$type": "color",
+      "workbenchAlias": "--sys-on-surface-tertiary",
+      "category": "text",
+      "$description": "Helper metadata and technical captions (WCAG AA >= 5.9:1)"
+    },
+    "text-on-action": {
+      "$value": "{color.primary.100}",
+      "$type": "color",
+      "workbenchAlias": "--sys-on-primary",
+      "category": "text",
+      "$description": "High-contrast ink placed atop bg-action-primary"
+    },
+    "text-feedback-error": {
+      "$value": "{color.feedback.error.30}",
+      "$type": "color",
+      "workbenchAlias": "--sys-error",
+      "category": "feedback",
+      "$description": "Inline validation error text and icon ink (WCAG AA >= 6.8:1)"
+    },
+    "bg-feedback-error-subtle": {
+      "$value": "{color.feedback.error.95}",
+      "$type": "color",
+      "workbenchAlias": "--sys-error-container",
+      "category": "feedback",
+      "$description": "Subtle background fill for error banners and invalid inputs"
+    },
+    "border-feedback-error": {
+      "$value": "{color.feedback.error.40}",
+      "$type": "color",
+      "workbenchAlias": "--sys-error-border",
+      "category": "feedback",
+      "$description": "High-visibility border for invalid form fields (WCAG AA >= 4.5:1)"
+    },
+    "text-feedback-success": {
+      "$value": "{color.feedback.success.30}",
+      "$type": "color",
+      "workbenchAlias": "--sys-success",
+      "category": "feedback",
+      "$description": "Positive validation and optimal status ink (WCAG AA >= 6.3:1)"
+    },
+    "bg-feedback-success-subtle": {
+      "$value": "{color.feedback.success.95}",
+      "$type": "color",
+      "workbenchAlias": "--sys-success-container",
+      "category": "feedback",
+      "$description": "Subtle background fill for success badges"
+    },
+    "text-feedback-warning": {
+      "$value": "{color.feedback.warning.30}",
+      "$type": "color",
+      "workbenchAlias": "--sys-warning",
+      "category": "feedback",
+      "$description": "Cautionary status and overload ink (WCAG AA >= 6.1:1)"
+    },
+    "bg-feedback-warning-subtle": {
+      "$value": "{color.feedback.warning.95}",
+      "$type": "color",
+      "workbenchAlias": "--sys-warning-container",
+      "category": "feedback",
+      "$description": "Subtle background fill for warning callouts"
+    },
+    "border-default": {
+      "$value": "{color.neutral.40}",
+      "$type": "color",
+      "workbenchAlias": "--sys-outline-strong",
+      "category": "border",
+      "$description": "Standard structural control border (WCAG AA >= 3.1:1 UI contrast)"
+    },
+    "border-subtle": {
+      "$value": "{color.neutral.90}",
+      "$type": "color",
+      "workbenchAlias": "--sys-outline-subtle",
+      "category": "border",
+      "$description": "Decorative hairline divider for bento cells and table rows"
+    },
+    "border-focus-ring": {
+      "$value": "{color.primary.40}",
+      "$type": "color",
+      "workbenchAlias": "--sys-focus-ring",
+      "category": "border",
+      "$description": "WCAG 2.2 SC 2.4.11 focus-visible indicator ring (>= 6.1:1 contrast)"
+    }
+  }
+}

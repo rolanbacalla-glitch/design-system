@@ -1,0 +1,26 @@
+---
+description: Antigravity Design System (v2.4) — Token, Accessibility & Z-Axis Architecture Guardrails
+globs: ["src/**/*.ts", "src/**/*.tsx", "src/**/*.css", "tokens/**/*.json"]
+alwaysApply: true
+---
+
+# Antigravity Design System Rules (Cursor & Google Antigravity)
+
+1. **Framework & Routing**:
+   - Next.js 16.2+ App Router (`src/app`). Dynamic route `params` and `searchParams` are `Promise` objects and MUST be `await`ed.
+   - Tailwind CSS v4 (`@import "tailwindcss";`, `@theme`). Do NOT create a legacy `tailwind.config.ts`.
+
+2. **3-Tier Token Mandate (Zero Raw Hex Values)**:
+   - Never hardcode hex/RGB colors in components. Bind strictly to Tier-2 Semantic Tokens (`var(--bg-action-primary)`, `var(--sys-primary)`, `var(--text-primary)`, `var(--text-feedback-error)`, `var(--border-focus-ring)`) or Tier-3 Component Tokens (`var(--comp-form-field-*)`).
+   - Run `npm run build:tokens` whenever editing `/tokens/*.json`.
+
+3. **Z-Axis Spatial Discipline**:
+   - **Z-Level 0 (Canvas)**: `var(--sys-surface-canvas)` / `var(--bg-canvas)`.
+   - **Z-Level 1 (Content Cards)**: Use `.tonal-card` or `.tonal-card-elevated`. NEVER apply `backdrop-filter: blur()` on Z-Level 1 content grids or data tables.
+   - **Z-Level 2 (Floating Chrome)**: Use `.liquid-glass-regular` or `.liquid-glass-clear` strictly on sticky navbars, command bars, modals, and transient popovers.
+
+4. **WCAG 2.2 AA Accessibility Engineering**:
+   - All text must achieve >= 4.5:1 contrast. Never use opacity utilities below `/60` for readable text; use `var(--text-secondary)` or `var(--text-muted)`.
+   - Interactive controls must have a minimum `24x24px` hit target (`40px` height standard) per WCAG 2.2 SC 2.5.8.
+   - Focus-visible rings must use `2px solid var(--border-focus-ring)` with `2px` offset per SC 2.4.11.
+   - Use focus trapping ONLY inside modal overlays (`role="dialog" aria-modal="true"`); never trap keyboard focus inside form inputs or data tables.
