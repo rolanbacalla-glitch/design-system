@@ -7,6 +7,119 @@ import * as Icons from "phosphor-react";
 type IconWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 type PhosphorIconComponent = React.ComponentType<Icons.IconProps>;
 
+const MATERIAL_DESIGN_ALIASES: Record<string, string[]> = {
+  volume: ["speaker", "sound", "audio", "mute"],
+  volume_up: ["speakerhigh", "speakersimplehigh"],
+  volume_down: ["speakerlow", "speakersimplelow"],
+  volume_off: ["speakernone", "speakersimplenone"],
+  volume_mute: ["speakerslash", "speakersimpleslash"],
+  sound: ["speaker", "volume", "audio"],
+  audio: ["speaker", "volume", "sound", "music", "fileaudio", "headphones"],
+  music: ["musicnotes", "musicnotesimple", "playlist"],
+  delete: ["trash"],
+  remove: ["trash", "x", "minus", "xcircle"],
+  add: ["plus", "pluscircle"],
+  create: ["plus", "pencil"],
+  edit: ["pencil", "pensimple", "paintbrush"],
+  settings: ["gear", "sliders", "wrench"],
+  options: ["gear", "sliders", "dotsthree"],
+  tune: ["sliders", "slidershorizontal"],
+  search: ["magnifyingglass", "filesearch"],
+  find: ["magnifyingglass"],
+  home: ["house"],
+  user: ["user", "person", "users"],
+  account: ["user", "person", "usercircle"],
+  profile: ["user", "usercircle"],
+  mail: ["envelope"],
+  email: ["envelope"],
+  message: ["chat", "chats", "chatteardrop"],
+  chat: ["chat", "chats", "chatcircle"],
+  notification: ["bell"],
+  notifications: ["bell"],
+  alert: ["warning", "warningcircle", "bell"],
+  warning: ["warning", "warningcircle"],
+  help: ["question"],
+  info: ["info", "infocircle"],
+  logout: ["signout"],
+  login: ["signin"],
+  lock: ["lock", "locksimple", "lockkey"],
+  unlock: ["lockopen", "lockkeyopen"],
+  favorite: ["heart", "star"],
+  favourite: ["heart", "star"],
+  star: ["star"],
+  like: ["thumbsup", "heart"],
+  dislike: ["thumbsdown"],
+  cart: ["shoppingcart", "shoppingbag"],
+  shop: ["shoppingbag", "storefront"],
+  refresh: ["arrowclockwise", "arrowsclockwise"],
+  sync: ["arrowsclockwise", "arrowclockwise"],
+  reload: ["arrowclockwise"],
+  share: ["sharenetwork", "share"],
+  upload: ["uploadsimple", "upload"],
+  download: ["downloadsimple", "download"],
+  more: ["dotsthree", "dots"],
+  menu: ["list"],
+  hamburger: ["list"],
+  close: ["x", "xcircle"],
+  cancel: ["x", "xcircle"],
+  clear: ["x", "xcircle"],
+  exit: ["x", "signout"],
+  done: ["check", "checkcircle"],
+  check: ["check", "checkcircle", "sealcheck"],
+  success: ["checkcircle", "sealcheck"],
+  error: ["xcircle", "warningcircle"],
+  visibility: ["eye"],
+  hide: ["eyeslash"],
+  eye: ["eye", "eyeslash"],
+  location: ["mappin", "navigationarrow"],
+  place: ["mappin"],
+  pin: ["mappin", "pushpin"],
+  map: ["maptrifold", "mappin"],
+  dark: ["moon", "moonstars"],
+  light: ["sun"],
+  night: ["moon"],
+  day: ["sun"],
+  time: ["clock", "timer", "hourglass"],
+  date: ["calendar", "calendarblank"],
+  calendar: ["calendar", "calendarblank"],
+  security: ["shield", "shieldcheck"],
+  verified: ["sealcheck", "shieldcheck", "checkcircle"],
+  attach: ["paperclip"],
+  attachment: ["paperclip"],
+  link: ["link", "linksimple", "linkbreak"],
+  code: ["code", "terminal", "filecode"],
+  terminal: ["terminal", "code"],
+  developer: ["code", "terminal"],
+  document: ["file", "textcolumns", "article"],
+  doc: ["file", "textcolumns", "article"],
+  copy: ["copy", "copysimple"],
+  paste: ["clipboard", "clippaper"],
+  cut: ["scissors"],
+  image: ["image", "pictureinpicture"],
+  photo: ["camera", "image"],
+  picture: ["image"],
+  camera: ["camera"],
+  video: ["video", "videocamera", "play"],
+  movie: ["filmstrip", "video", "videocamera"],
+  play: ["play", "playcircle"],
+  pause: ["pause", "pausecircle"],
+  stop: ["stop", "stopcircle"],
+  call: ["phone", "phonecall"],
+  phone: ["phone", "deviceMobile"],
+  mobile: ["devicemobile"],
+  tablet: ["devicetablet"],
+  desktop: ["desktop", "monitor"],
+  laptop: ["laptop"],
+  bluetooth: ["bluetooth"],
+  wifi: ["wifi", "wifihigh"],
+  battery: ["batteryfull", "batterycharging"],
+  folder: ["folder", "foldernotch"],
+  cloud: ["cloud", "cloudarrowup", "cloudarrowdown"],
+  filter: ["funnel", "faders"],
+  sort: ["arrowsdownup", "sortascending", "sortdescending"],
+  send: ["paperplane", "paperplanetilt"],
+};
+
 export const IconPlayground: React.FC = () => {
   const [selectedIconName, setSelectedIconName] = useState("Cube");
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,10 +142,16 @@ export const IconPlayground: React.FC = () => {
   }, []);
 
   const filteredIcons = useMemo(() => {
-    if (!searchQuery) return ALL_ICONS.slice(0, 48);
-    return ALL_ICONS.filter((icon) =>
-      icon.name.toLowerCase().includes(searchQuery.toLowerCase())
-    ).slice(0, 48);
+    if (!searchQuery.trim()) return ALL_ICONS.slice(0, 48);
+    const q = searchQuery.toLowerCase().trim().replace(/[-_\s]+/g, "");
+    const aliasTerms = MATERIAL_DESIGN_ALIASES[q] || [];
+    
+    // Check direct name match or semantic Material Design alias matches
+    return ALL_ICONS.filter((icon) => {
+      const lower = icon.name.toLowerCase();
+      if (lower.includes(q)) return true;
+      return aliasTerms.some((term) => lower.includes(term));
+    }).slice(0, 48);
   }, [searchQuery, ALL_ICONS]);
 
   const SelectedIcon = useMemo(() => {
