@@ -16,6 +16,7 @@ import {
   Sparkle,
   Code,
   ArrowRight,
+  List,
   X,
 } from "phosphor-react";
 
@@ -47,7 +48,18 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
   onSelectPreset,
 }) => {
   const [commandOpen, setCommandOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 24);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -62,8 +74,9 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
       ) {
         e.preventDefault();
         onToggleTheme();
-      } else if (e.key === "Escape" && commandOpen) {
+      } else if (e.key === "Escape") {
         setCommandOpen(false);
+        setMobileMenuOpen(false);
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -83,98 +96,155 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
 
   return (
     <>
-      {/* Z-Level 2: Floating Liquid Glass Header Chrome */}
-      <header className="fixed top-4 inset-x-0 z-50 px-4 sm:px-6 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-3">
-          {/* Brand + Architectural Badge */}
-          <div className="liquid-glass-regular pointer-events-auto rounded-full px-4 py-2 flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-[var(--sys-primary)] flex items-center justify-center text-[var(--sys-on-primary)] font-mono text-xs font-bold shadow-sm">
-              A
+      {/* Z-Level 2: Unified Floating Liquid Glass Top Navbar (Travel-Kin Pattern) */}
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
+        <nav
+          aria-label="Main navigation"
+          className={cn(
+            "max-w-[1400px] mx-auto pointer-events-auto rounded-2xl liquid-glass-regular transition-[background,box-shadow,backdrop-filter,padding,border-color] duration-300",
+            isScrolled
+              ? "px-4 sm:px-6 py-2.5 shadow-2xl border-[var(--sys-outline)]"
+              : "px-4 sm:px-6 py-3.5 shadow-xl"
+          )}
+        >
+          <div className="flex items-center justify-between gap-3">
+            {/* Brand + Architectural Badge */}
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              aria-label="Antigravity Design System — scroll to top"
+              className="flex items-center gap-3 text-left group cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--border-focus-ring)] rounded-lg"
+            >
+              <div className="w-7 h-7 rounded-full bg-[var(--sys-primary)] flex items-center justify-center text-[var(--sys-on-primary)] font-mono text-xs font-bold shadow-sm group-hover:scale-105 transition-transform">
+                A
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-sm tracking-tight text-[var(--sys-on-surface)]">
+                  ANTIGRAVITY
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--sys-surface-high)]/70 text-[var(--sys-on-surface-secondary)] border border-[var(--sys-outline-variant)]">
+                  v2.4 SPEC
+                </span>
+              </div>
+            </button>
+
+            {/* Center Navigation Links inside the Unified Glass Bar */}
+            <div className="hidden lg:flex items-center gap-1">
+              {WORKBENCH_SECTIONS.map((sec) => {
+                const isActive = activeSection === sec.id;
+                return (
+                  <button
+                    key={sec.id}
+                    type="button"
+                    onClick={() => onSelectSection(sec.id)}
+                    className={cn(
+                      "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 flex items-center gap-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--border-focus-ring)]",
+                      isActive
+                        ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] font-semibold shadow-sm"
+                        : "text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] hover:bg-[var(--sys-surface-high)]/50"
+                    )}
+                  >
+                    <span className="font-mono text-[10px] opacity-65 tabular-nums">{sec.index}</span>
+                    <span>{sec.label}</span>
+                  </button>
+                );
+              })}
             </div>
+
+            {/* Right Utility Controls: Seed Indicator + Command Palette + Polarity Switch + Mobile Toggle */}
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-xs tracking-tight text-[var(--sys-on-surface)]">
-                ANTIGRAVITY
-              </span>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] border border-[var(--sys-outline-variant)]">
-                v2.4 SPEC
-              </span>
+              {/* Active Seed Indicator */}
+              <button
+                type="button"
+                onClick={() => onSelectSection("tokens")}
+                title="Configure OKLCH Seed Tokens"
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-[var(--sys-surface-high)]/50 hover:bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] border border-[var(--sys-outline-variant)] transition-colors cursor-pointer"
+              >
+                <span
+                  className="w-2.5 h-2.5 rounded-full border border-white/30"
+                  style={{ backgroundColor: "var(--sys-primary)" }}
+                />
+                <span className="font-mono text-[11px] tabular-nums">{seed.hue}°</span>
+              </button>
+
+              {/* Command K Trigger */}
+              <button
+                type="button"
+                onClick={() => setCommandOpen(true)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-[var(--sys-surface-high)]/60 hover:bg-[var(--sys-surface-highest)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] border border-[var(--sys-outline-variant)] transition-colors cursor-pointer"
+                aria-label="Open Command Menu"
+              >
+                <MagnifyingGlass size={13} weight="bold" />
+                <span className="hidden md:inline text-[11px]">Jump...</span>
+                <kbd className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--sys-surface-lowest)]/60 text-[var(--sys-on-surface-tertiary)]">
+                  ⌘K
+                </kbd>
+              </button>
+
+              {/* Obsidian Dark / Alabaster Light Switcher */}
+              <button
+                type="button"
+                onClick={onToggleTheme}
+                aria-label={`Switch to ${theme === "dark" ? "Alabaster Light" : "Obsidian Dark"} mode`}
+                title="Toggle Theme Polarity (Shortcut: T)"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[var(--sys-primary-container)] text-[var(--sys-on-primary-container)] border border-[var(--sys-outline-variant)] shadow-sm hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Moon size={14} weight="fill" />
+                    <span className="hidden sm:inline text-[11px]">Obsidian</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun size={14} weight="fill" />
+                    <span className="hidden sm:inline text-[11px]">Alabaster</span>
+                  </>
+                )}
+              </button>
+
+              {/* Mobile Navigation Drawer Toggle */}
+              <button
+                type="button"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                onClick={() => setMobileMenuOpen((prev) => !prev)}
+                className="lg:hidden p-2 rounded-xl text-[var(--sys-on-surface)] hover:bg-[var(--sys-surface-high)]/60 border border-[var(--sys-outline-variant)] transition-colors cursor-pointer"
+              >
+                {mobileMenuOpen ? <X size={18} /> : <List size={18} />}
+              </button>
             </div>
           </div>
 
-          {/* Center Navigation Pill — True Liquid Glass Control Layer */}
-          <nav
-            aria-label="Design System Sections"
-            className="liquid-glass-regular pointer-events-auto hidden xl:flex items-center gap-1 p-1.5 rounded-full"
-          >
-            {WORKBENCH_SECTIONS.map((sec) => {
-              const isActive = activeSection === sec.id;
-              return (
-                <button
-                  key={sec.id}
-                  onClick={() => onSelectSection(sec.id)}
-                  className={cn(
-                    "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-150 flex items-center gap-1.5 cursor-pointer",
-                    isActive
-                      ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] font-semibold shadow-sm"
-                      : "text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] hover:bg-[var(--sys-surface-high)]/50"
-                  )}
-                >
-                  <span className="font-mono text-[10px] opacity-65 tabular-nums">{sec.index}</span>
-                  <span>{sec.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-
-          {/* Right Utility Controls: Command Palette + Theme Polarity Switch */}
-          <div className="liquid-glass-regular pointer-events-auto rounded-full p-1.5 flex items-center gap-1.5">
-            {/* Active Seed Indicator */}
-            <button
-              onClick={() => onSelectSection("tokens")}
-              title="Configure OKLCH Seed Tokens"
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] hover:bg-[var(--sys-surface-high)]/60 transition-colors cursor-pointer"
-            >
-              <span
-                className="w-2.5 h-2.5 rounded-full border border-white/30"
-                style={{ backgroundColor: "var(--sys-primary)" }}
-              />
-              <span className="font-mono text-[11px] tabular-nums">{seed.hue}°</span>
-            </button>
-
-            {/* Command K Trigger */}
-            <button
-              onClick={() => setCommandOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-[var(--sys-surface-high)]/70 hover:bg-[var(--sys-surface-highest)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] border border-[var(--sys-outline-variant)] transition-colors cursor-pointer"
-              aria-label="Open Command Menu"
-            >
-              <MagnifyingGlass size={13} weight="bold" />
-              <span className="hidden md:inline text-[11px]">Jump...</span>
-              <kbd className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--sys-surface-lowest)]/60 text-[var(--sys-on-surface-tertiary)]">
-                ⌘K
-              </kbd>
-            </button>
-
-            {/* Obsidian Dark / Alabaster Light Switcher */}
-            <button
-              onClick={onToggleTheme}
-              aria-label={`Switch to ${theme === "dark" ? "Alabaster Light" : "Obsidian Dark"} mode`}
-              title="Toggle Theme Polarity (Shortcut: T)"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--sys-primary-container)] text-[var(--sys-on-primary-container)] hover:opacity-90 active:scale-95 transition-all cursor-pointer"
-            >
-              {theme === "dark" ? (
-                <>
-                  <Moon size={14} weight="fill" />
-                  <span className="hidden sm:inline text-[11px]">Obsidian</span>
-                </>
-              ) : (
-                <>
-                  <Sun size={14} weight="fill" />
-                  <span className="hidden sm:inline text-[11px]">Alabaster</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
+          {/* Mobile Expandable Glass Menu */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden mt-3 pt-3 border-t border-[var(--sys-outline-variant)] grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+              {WORKBENCH_SECTIONS.map((sec) => {
+                const isActive = activeSection === sec.id;
+                const Icon = sec.icon;
+                return (
+                  <button
+                    key={sec.id}
+                    type="button"
+                    onClick={() => {
+                      onSelectSection(sec.id);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={cn(
+                      "px-3 py-2 rounded-xl text-xs font-medium flex items-center gap-2 text-left transition-all cursor-pointer",
+                      isActive
+                        ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] font-semibold shadow-sm"
+                        : "text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] hover:bg-[var(--sys-surface-high)]/50"
+                    )}
+                  >
+                    <Icon size={14} />
+                    <span className="font-mono text-[10px] opacity-70 tabular-nums">{sec.index}</span>
+                    <span className="truncate">{sec.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </nav>
       </header>
 
       {/* Z-Level 2: Command Palette Modal */}

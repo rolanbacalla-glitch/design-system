@@ -158,9 +158,9 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
 
   return (
     <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] pb-24">
-      {/* Z-Level 2: Sticky Liquid Glass Top Portal Chrome */}
-      <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] liquid-glass-regular">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      {/* Z-Level 2: Unified Floating Liquid Glass Top Portal Chrome (Travel-Kin Pattern) */}
+      <header className="sticky top-0 z-50 px-4 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
+        <div className="max-w-[1400px] mx-auto pointer-events-auto rounded-2xl liquid-glass-regular px-4 sm:px-6 py-3 shadow-xl flex items-center justify-between gap-4">
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs">
             <Link
