@@ -57,20 +57,20 @@ export const IconPlayground: React.FC = () => {
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[var(--sys-outline-variant)]">
         <div className="space-y-2">
           <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[var(--sys-primary)]">
-            <span>06 // OPTICAL ICONOGRAPHY STUDIO</span>
+            <span>06 // ICONS & SYMBOLS</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
-            <span>SF SYMBOLS / PHOSPHOR WEIGHT MATCHING</span>
+            <span>6 STROKE WEIGHTS</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
-            Optical Keyline Grid &{" "}
+            Icon Library &{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
-              6-Weight Vector Matrix
+              Live Customizer
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Following Apple SF Symbols and Google Material Symbols guidelines, icons are optically
-            aligned inside a <code className="font-mono">256×256</code> keyline bounding box and
-            matched to adjacent typography weights (`thin` through `duotone`).
+            Search over 1,200 icons, preview 6 stroke weights (<code className="font-mono">thin</code>{" "}
+            to <code className="font-mono">duotone</code>), check alignment guides, and copy
+            ready-to-use React code.
           </p>
         </div>
       </div>
@@ -82,13 +82,13 @@ export const IconPlayground: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-mono uppercase text-[var(--sys-primary)]">
-                  Optical Keyline Viewport
+                  Icon Preview
                 </span>
                 <button
                   onClick={() => setShowKeylines(!showKeylines)}
                   className="font-mono text-[11px] px-2 py-0.5 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] cursor-pointer"
                 >
-                  Keylines: {showKeylines ? "ON" : "OFF"}
+                  Guides: {showKeylines ? "ON" : "OFF"}
                 </button>
               </div>
 
@@ -122,7 +122,7 @@ export const IconPlayground: React.FC = () => {
             {/* Weight Matrix */}
             <div className="space-y-2">
               <div className="text-xs font-medium text-[var(--sys-on-surface-secondary)]">
-                Stroke Weight Synchronization
+                Stroke Weight
               </div>
               <div className="grid grid-cols-3 gap-1.5">
                 {(["thin", "light", "regular", "bold", "fill", "duotone"] as const).map((w) => (
@@ -145,7 +145,7 @@ export const IconPlayground: React.FC = () => {
             {/* Optical Size Slider */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span className="text-[var(--sys-on-surface-secondary)]">Optical Target Size</span>
+                <span className="text-[var(--sys-on-surface-secondary)]">Icon Size</span>
                 <span className="font-mono font-bold text-[var(--sys-primary)] tabular-nums">
                   {size}px
                 </span>
@@ -182,10 +182,10 @@ export const IconPlayground: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sys-outline-variant)] pb-4">
               <div>
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)]">
-                  Glyph Browser ({ALL_ICONS.length} Vector Symbols)
+                  Browse Icons ({ALL_ICONS.length} Available)
                 </h3>
                 <p className="text-xs text-[var(--sys-on-surface-tertiary)]">
-                  Click any symbol to inspect on the optical keyline grid.
+                  Click any icon to preview its stroke weights and copy the code.
                 </p>
               </div>
 
@@ -198,7 +198,7 @@ export const IconPlayground: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search symbols (e.g. Cpu, Sparkle)..."
+                  placeholder="Search icons (e.g. Sparkle, Heart)..."
                   className="w-full pl-8 pr-8 py-2 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] focus:border-[var(--sys-primary)] text-xs text-[var(--sys-on-surface)] outline-none"
                 />
                 {searchQuery && (

@@ -36,30 +36,30 @@ export const ComponentsSection: React.FC = () => {
   const telemetryRows = [
     {
       token: "--sys-primary",
-      layer: "Z-1 / Accent",
+      layer: "Primary Brand Fill",
       contrast: "8.4:1 (AAA)",
-      latency: "0.42 ms",
-      status: "Optimal",
+      latency: "Fast",
+      status: "Readable",
     },
     {
       token: "--sys-surface-low",
-      layer: "Z-1 / Tonal Card",
+      layer: "Standard Content Card",
       contrast: "14.2:1 (AAA)",
-      latency: "0.18 ms",
-      status: "Optimal",
+      latency: "Instant",
+      status: "Readable",
     },
     {
       token: ".liquid-glass-regular",
-      layer: "Z-2 / Floating Chrome",
+      layer: "Floating Glass Navbar",
       contrast: "7.1:1 (AAA)",
-      latency: "1.05 ms",
-      status: "Lensing",
+      latency: "Blurred",
+      status: "Readable",
     },
     {
       token: "--sys-outline-variant",
-      layer: "Z-1 / Hairline",
-      contrast: "1.6:1 (Decorative)",
-      latency: "0.09 ms",
+      layer: "Subtle Card Border",
+      contrast: "1.6:1 (Divider)",
+      latency: "Instant",
       status: "Synced",
     },
   ];
@@ -69,41 +69,40 @@ export const ComponentsSection: React.FC = () => {
       {/* Section Header */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[var(--sys-outline-variant)]">
         <div className="space-y-2">
-          <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[var(--sys-primary)]">
-            <span>04 // COMPONENT PRIMITIVES</span>
+          <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-widest text-[var(--sys-primary)]">
+            <span>UI Components</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
-            <span>INTERACTIVE SPECIMEN MATRIX</span>
+            <span>Ready-to-Use Building Blocks</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
-            Production Primitives &{" "}
+            Interactive{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
-              Tactile Micro-Interactions
+              Building Blocks
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Every primitive binds strictly to Tier-2 System Tokens (`--sys-*`). Content components
-            rest on tonal surfaces (`Z-Level 1`), while transient thumbs and floating action pills
-            adopt optical Liquid Glass (`Z-Level 2`) on engagement.
+            Every button, input, toggle, and table automatically adapts to your chosen brand color
+            and light/dark mode while maintaining full keyboard navigation and screen reader support.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-[var(--sys-on-surface-tertiary)]">
+        <div className="flex items-center gap-2 text-xs font-medium text-[var(--sys-on-surface-tertiary)]">
           <Cube size={16} className="text-[var(--sys-primary)]" />
-          <span>6 Interactive Categories • Keyboard Accessible</span>
+          <span>6 Interactive Categories • Keyboard Friendly</span>
         </div>
       </div>
 
       {/* Specimen Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* 04.1: Buttons & M3 Shape Morphing */}
+        {/* 04.1: Buttons & Interactive Shape Bounce */}
         <div className="lg:col-span-6 tonal-card p-6 flex flex-col justify-between space-y-6">
           <div className="flex items-center justify-between border-b border-[var(--sys-outline-variant)] pb-3.5">
             <div>
-              <span className="font-mono text-[10px] uppercase text-[var(--sys-primary)]">
-                04.1 // ACTIONS & SHAPE MORPHING
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--sys-primary)]">
+                Buttons & Actions
               </span>
               <h3 className="text-base font-bold text-[var(--sys-on-surface)]">
-                Button Hierarchy & M3 Expressive Morph
+                Button Styles & Tactile Press Feedback
               </h3>
             </div>
             <button
@@ -113,10 +112,10 @@ export const ComponentsSection: React.FC = () => {
                   `<button className="px-4 py-2 rounded-[var(--sys-radius-md)] active:rounded-full bg-[var(--sys-primary)] text-[var(--sys-on-primary)] font-semibold transition-all">Action</button>`
                 )
               }
-              className="text-xs font-mono text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-primary)] flex items-center gap-1 cursor-pointer"
+              className="text-xs font-medium text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-primary)] flex items-center gap-1 cursor-pointer"
             >
               {copiedCode === "btn" ? <Check size={13} className="text-emerald-400" /> : <Copy size={13} />}
-              <span>Copy JSX</span>
+              <span>Copy Code</span>
             </button>
           </div>
 
@@ -124,23 +123,23 @@ export const ComponentsSection: React.FC = () => {
             {/* Primary Filled */}
             <button className="px-4 py-2.5 rounded-[var(--sys-radius-md)] active:rounded-[28px] bg-[var(--sys-primary)] text-[var(--sys-on-primary)] text-xs font-semibold shadow-sm hover:opacity-92 active:scale-[0.97] transition-all duration-150 cursor-pointer flex items-center gap-2">
               <Lightning size={14} weight="fill" />
-              Primary Action
+              Primary Button
             </button>
 
-            {/* Tonal Container (M3 Signature) */}
+            {/* Tonal Container */}
             <button className="px-4 py-2.5 rounded-[var(--sys-radius-md)] active:rounded-[28px] bg-[var(--sys-primary-container)] text-[var(--sys-on-primary-container)] text-xs font-semibold hover:brightness-105 active:scale-[0.97] transition-all duration-150 cursor-pointer">
-              Tonal Secondary
+              Secondary Soft
             </button>
 
             {/* Surface Hairline Outline */}
             <button className="px-4 py-2.5 rounded-[var(--sys-radius-md)] bg-[var(--sys-surface-high)] text-[var(--sys-on-surface)] border border-[var(--sys-outline)] text-xs font-medium hover:bg-[var(--sys-surface-highest)] active:scale-[0.97] transition-all duration-150 cursor-pointer">
-              Surface Outline
+              Outlined Button
             </button>
 
-            {/* Apple HIG glassProminent Button */}
+            {/* Frosted Glass Button */}
             <button className="liquid-glass-regular px-4 py-2.5 rounded-full text-xs font-semibold text-[var(--sys-on-surface)] hover:border-[var(--sys-primary)] active:scale-[0.97] transition-all duration-150 cursor-pointer flex items-center gap-1.5">
               <Sparkle size={14} weight="fill" className="text-[var(--sys-primary)]" />
-              .glassProminent
+              Frosted Glass
             </button>
           </div>
 
@@ -148,12 +147,11 @@ export const ComponentsSection: React.FC = () => {
           <div className="p-4 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] flex items-center justify-between gap-4">
             <div className="space-y-0.5">
               <div className="text-xs font-semibold text-[var(--sys-on-surface)]">
-                M3 Expressive Corner Morphing Specimen
+                Playful Corner Bounce
               </div>
               <div className="text-[11px] text-[var(--sys-on-surface-tertiary)]">
-                Click the tile to morph between <code className="font-mono">12px</code> resting rect
-                and <code className="font-mono">999px</code> active pill using{" "}
-                <code className="font-mono">--ease-spatial-spring</code>.
+                Click the button to watch its corners smoothly animate from a rounded rectangle into
+                a pill shape.
               </div>
             </div>
             <button
@@ -163,26 +161,26 @@ export const ComponentsSection: React.FC = () => {
                 transition: "all 280ms var(--ease-spatial-spring)",
               }}
               className={cn(
-                "px-5 py-2.5 text-xs font-mono font-bold shrink-0 cursor-pointer",
+                "px-5 py-2.5 text-xs font-semibold shrink-0 cursor-pointer",
                 morphActive
                   ? "bg-[var(--sys-tertiary)] text-slate-950 scale-105"
                   : "bg-[var(--sys-surface-high)] text-[var(--sys-on-surface)] border border-[var(--sys-outline)]"
               )}
             >
-              {morphActive ? "MORPHED :: PILL" : "CLICK TO MORPH"}
+              {morphActive ? "Pill Shape ✓" : "Try Shape Bounce"}
             </button>
           </div>
         </div>
 
-        {/* 04.2: Tactile Controls, Segmented Bar & Transient Liquid Glass Slider */}
+        {/* 04.2: Tactile Controls, Segmented Bar & Slider */}
         <div className="lg:col-span-6 tonal-card p-6 flex flex-col justify-between space-y-6">
           <div className="flex items-center justify-between border-b border-[var(--sys-outline-variant)] pb-3.5">
             <div>
-              <span className="font-mono text-[10px] uppercase text-[var(--sys-primary)]">
-                04.2 // TRANSIENT INTERACTIVITY
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--sys-primary)]">
+                Selection Controls
               </span>
               <h3 className="text-base font-bold text-[var(--sys-on-surface)]">
-                Segmented Controls, Spring Switches & Precision Scrubber
+                Segmented Tabs, Sliders & Toggle Switches
               </h3>
             </div>
             <Sliders size={16} className="text-[var(--sys-primary)]" />
@@ -192,9 +190,9 @@ export const ComponentsSection: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
               <span className="text-[var(--sys-on-surface-secondary)] font-medium">
-                Segmented Environment Selector
+                Environment Switcher
               </span>
-              <span className="font-mono text-[11px] text-[var(--sys-primary)] uppercase">
+              <span className="font-mono text-[11px] text-[var(--sys-primary)] capitalize">
                 {activeSegment}
               </span>
             </div>
@@ -220,7 +218,7 @@ export const ComponentsSection: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
               <span className="text-[var(--sys-on-surface-secondary)] font-medium">
-                Optical Refraction Scrubber (Tabular Readout)
+                Smooth Value Slider
               </span>
               <span className="font-mono font-bold text-[var(--sys-primary)] tabular-nums">
                 {sliderValue}%
@@ -233,7 +231,7 @@ export const ComponentsSection: React.FC = () => {
               value={sliderValue}
               onChange={(e) => setSliderValue(Number(e.target.value))}
               className="precision-slider"
-              aria-label="Optical Refraction Scrubber"
+              aria-label="Smooth Value Slider"
             />
             <div className="flex justify-between px-1">
               {Array.from({ length: 11 }).map((_, i) => (
@@ -255,10 +253,10 @@ export const ComponentsSection: React.FC = () => {
             <div className="p-3 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] flex items-center justify-between">
               <div>
                 <div className="text-xs font-semibold text-[var(--sys-on-surface)]">
-                  Dynamic Tone Sync
+                  Auto-Adjust Contrast
                 </div>
-                <div className="text-[10px] font-mono text-[var(--sys-on-surface-tertiary)]">
-                  HCT Gamut Guard
+                <div className="text-[11px] text-[var(--sys-on-surface-tertiary)]">
+                  Keeps text readable
                 </div>
               </div>
               <button
@@ -267,7 +265,7 @@ export const ComponentsSection: React.FC = () => {
                   "w-11 h-6 rounded-full p-0.5 transition-colors cursor-pointer",
                   toggleA ? "bg-[var(--sys-primary)]" : "bg-[var(--sys-surface-highest)]"
                 )}
-                aria-label="Toggle Dynamic Tone Sync"
+                aria-label="Toggle Auto-Adjust Contrast"
               >
                 <div
                   className={cn(
@@ -283,8 +281,8 @@ export const ComponentsSection: React.FC = () => {
                 <div className="text-xs font-semibold text-[var(--sys-on-surface)]">
                   Reduce Transparency
                 </div>
-                <div className="text-[10px] font-mono text-[var(--sys-on-surface-tertiary)]">
-                  HIG Accessibility
+                <div className="text-[11px] text-[var(--sys-on-surface-tertiary)]">
+                  Accessibility preference
                 </div>
               </div>
               <button
@@ -309,19 +307,19 @@ export const ComponentsSection: React.FC = () => {
         {/* 04.3: Inputs, Search & Semantic Callout Banners */}
         <div className="lg:col-span-5 tonal-card p-6 space-y-5">
           <div className="border-b border-[var(--sys-outline-variant)] pb-3.5">
-            <span className="font-mono text-[10px] uppercase text-[var(--sys-primary)]">
-              04.3 // DATA ENTRY & SEMANTIC FEEDBACK
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--sys-primary)]">
+              Inputs & Alerts
             </span>
             <h3 className="text-base font-bold text-[var(--sys-on-surface)]">
-              Tokenized Inputs & Status Callouts
+              Search Fields & Helpful Status Messages
             </h3>
           </div>
 
           {/* Input Field with Focus Ring */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-[var(--sys-on-surface-secondary)] flex justify-between">
-              <span>OKLCH Color Expression</span>
-              <span className="font-mono text-[10px] text-emerald-400">✓ Valid Gamut</span>
+              <span>Theme Color Value</span>
+              <span className="text-[11px] font-medium text-emerald-400">✓ Valid Color</span>
             </label>
             <div className="relative flex items-center">
               <MagnifyingGlass
@@ -346,10 +344,10 @@ export const ComponentsSection: React.FC = () => {
               <ShieldCheck size={18} weight="fill" className="text-emerald-400 shrink-0 mt-0.5" />
               <div className="text-xs space-y-0.5">
                 <div className="font-semibold text-[var(--sys-on-surface)]">
-                  WCAG 2.2 AAA Contrast Verified
+                  High-Contrast Readability Verified
                 </div>
                 <p className="text-[var(--sys-on-surface-secondary)] text-[11px]">
-                  All primary and secondary vibrancy labels exceed 7.0:1 against tonal containers.
+                  All headings and body text exceed WCAG AAA readability standards in both themes.
                 </p>
               </div>
             </div>
@@ -358,11 +356,10 @@ export const ComponentsSection: React.FC = () => {
               <Warning size={18} weight="fill" className="text-amber-400 shrink-0 mt-0.5" />
               <div className="text-xs space-y-0.5">
                 <div className="font-semibold text-[var(--sys-on-surface)]">
-                  Z-Axis Elevation Guardrail
+                  Keep Data Tables Blur-Free
                 </div>
                 <p className="text-[var(--sys-on-surface-secondary)] text-[11px]">
-                  Avoid placing <code className="font-mono">.liquid-glass-regular</code> inside
-                  scrolling table rows.
+                  Use solid card backgrounds for long tables so scrolling stays smooth and legible.
                 </p>
               </div>
             </div>
@@ -371,41 +368,41 @@ export const ComponentsSection: React.FC = () => {
               <Info size={18} weight="fill" className="text-[var(--sys-primary)] shrink-0 mt-0.5" />
               <div className="text-xs space-y-0.5">
                 <div className="font-semibold text-[var(--sys-on-surface)]">
-                  Concentric Radius Inheritance
+                  Balanced Nested Corners
                 </div>
                 <p className="text-[var(--sys-on-surface-secondary)] text-[11px]">
-                  Nested inner elements automatically compute <code className="font-mono">R_in = R_out - P</code>.
+                  Inner buttons and cards automatically use slightly tighter corners than their outer container.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 04.4: High-Density Swiss Data Table (Linear / Geist Benchmark) */}
+        {/* 04.4: Clean Data Table */}
         <div className="lg:col-span-7 tonal-card p-6 flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between border-b border-[var(--sys-outline-variant)] pb-3.5">
             <div>
-              <span className="font-mono text-[10px] uppercase text-[var(--sys-primary)]">
-                04.4 // HIGH-DENSITY INFORMATION DESIGN
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--sys-primary)]">
+                Data Display
               </span>
               <h3 className="text-base font-bold text-[var(--sys-on-surface)]">
-                Swiss Hairline Token Audit Table
+                Component Contrast & Readability Summary
               </h3>
             </div>
-            <span className="font-mono text-[11px] px-2.5 py-1 rounded-full bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] border border-[var(--sys-outline-variant)]">
-              Zero Blur • High Legibility
+            <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] border border-[var(--sys-outline-variant)]">
+              Easy to Scan
             </span>
           </div>
 
           <div className="overflow-x-auto rounded-xl border border-[var(--sys-outline-variant)] bg-[var(--sys-surface-lowest)]">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-[var(--sys-outline-variant)] bg-[var(--sys-surface-low)] font-mono text-[10px] uppercase text-[var(--sys-on-surface-tertiary)]">
-                  <th className="py-3 px-4">Token / Primitive</th>
-                  <th className="py-3 px-4">Spatial Plane</th>
+                <tr className="border-b border-[var(--sys-outline-variant)] bg-[var(--sys-surface-low)] text-[11px] font-semibold text-[var(--sys-on-surface-tertiary)]">
+                  <th className="py-3 px-4">Token</th>
+                  <th className="py-3 px-4">Where It’s Used</th>
                   <th className="py-3 px-4">Contrast Ratio</th>
-                  <th className="py-3 px-4">Paint Cost</th>
-                  <th className="py-3 px-4 text-right">State</th>
+                  <th className="py-3 px-4">Rendering</th>
+                  <th className="py-3 px-4 text-right">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--sys-outline-variant)]">
@@ -421,11 +418,11 @@ export const ComponentsSection: React.FC = () => {
                     <td className="py-3 px-4 font-mono tabular-nums text-[var(--sys-on-surface)]">
                       {r.contrast}
                     </td>
-                    <td className="py-3 px-4 font-mono tabular-nums text-[var(--sys-on-surface-tertiary)]">
+                    <td className="py-3 px-4 text-[var(--sys-on-surface-tertiary)]">
                       {r.latency}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                         {r.status}
                       </span>
@@ -438,13 +435,11 @@ export const ComponentsSection: React.FC = () => {
 
           <div className="flex items-center justify-between text-xs text-[var(--sys-on-surface-tertiary)] pt-1">
             <span>
-              Follows Linear & Vercel Geist density rules: <code className="font-mono">1px</code>{" "}
-              structural borders, <code className="font-mono">tabular-nums</code>, and zero
-              decorative chart junk.
+              Clean 1px dividers and aligned numbers make dense data tables effortless to scan.
             </span>
             <a
               href="#export"
-              className="font-mono text-xs text-[var(--sys-primary)] hover:underline flex items-center gap-1 shrink-0"
+              className="font-semibold text-xs text-[var(--sys-primary)] hover:underline flex items-center gap-1 shrink-0"
             >
               Export Tokens <ArrowUpRight size={13} />
             </a>
@@ -452,19 +447,19 @@ export const ComponentsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* 04.5: Deep-Link Interactive Component Portals (/components/[componentName]) */}
+      {/* 04.5: Deep-Link Interactive Component Guides (/components/[componentName]) */}
       <div className="tonal-card p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sys-outline-variant)] pb-4">
           <div>
-            <span className="font-mono text-[10px] uppercase text-[var(--sys-primary)]">
-              04.5 // DEDICATED COMPONENT DOCUMENTATION PORTALS
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--sys-primary)]">
+              Detailed Component Guides
             </span>
             <h3 className="text-base font-bold text-[var(--sys-on-surface)]">
-              Inspect Full State Matrices, WAI-ARIA Specs & Tier-2 Token Lineage
+              Explore Interactive States, Keyboard Shortcuts & Code Examples
             </h3>
           </div>
-          <span className="text-xs font-mono text-[var(--sys-on-surface-tertiary)]">
-            Route: /components/[componentName]
+          <span className="text-xs text-[var(--sys-on-surface-tertiary)]">
+            Click any card to open its live playground
           </span>
         </div>
 
@@ -473,26 +468,26 @@ export const ComponentsSection: React.FC = () => {
             {
               slug: "form-field",
               title: "Form Field Input",
-              badge: "WCAG 3.3.1 / 2.4.11",
-              desc: "Floating/stacked label, aria-live validation, and 6-state interactive simulator.",
+              badge: "Accessible Forms",
+              desc: "Interactive text field with helpful error messages, focus rings, and 6 state previews.",
             },
             {
               slug: "modal-dialog",
               title: "Modal Dialog",
-              badge: "FocusScope Trap",
-              desc: "WAI-ARIA modal overlay with Tab cycle containment and Escape focus restoration.",
+              badge: "Keyboard Friendly",
+              desc: "Popup dialog that keeps keyboard focus inside and closes cleanly with the Escape key.",
             },
             {
               slug: "data-table",
-              title: "Telemetry Data Table",
-              badge: "aria-sort + tabular-nums",
-              desc: "Sortable, filterable token audit grid with selectable rows and zero focus traps.",
+              title: "Data Table",
+              badge: "Sortable & Filterable",
+              desc: "Interactive table with instant search filtering, column sorting, and row selection.",
             },
             {
               slug: "button",
-              title: "M3 Morphing Button",
-              badge: "SC 2.5.8 >= 40px",
-              desc: "Expressive 12px -> 9999px active pill morph with spring physics.",
+              title: "Interactive Button",
+              badge: "Touch-Ready (40px+)",
+              desc: "Primary, secondary, and frosted glass buttons with smooth press animations.",
             },
           ].map((item) => (
             <Link
@@ -502,7 +497,7 @@ export const ComponentsSection: React.FC = () => {
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[var(--sys-primary-container)] text-[var(--sys-on-primary-container)] font-semibold">
+                  <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[var(--sys-primary-container)] text-[var(--sys-on-primary-container)]">
                     {item.badge}
                   </span>
                   <ArrowUpRight
@@ -517,8 +512,8 @@ export const ComponentsSection: React.FC = () => {
                   {item.desc}
                 </p>
               </div>
-              <div className="text-[11px] font-mono text-[var(--sys-primary)]">
-                /components/{item.slug} →
+              <div className="text-xs font-semibold text-[var(--sys-primary)]">
+                Open {item.title} Guide →
               </div>
             </Link>
           ))}

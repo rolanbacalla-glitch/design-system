@@ -25,47 +25,47 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
   const tonalSurfaces = [
     {
       token: "--sys-surface-lowest",
-      name: "Surface Lowest",
-      z: "Z-0 / Recessed Well",
+      name: "Recessed Surface",
+      z: "Level 0 • Recessed Well",
       lDark: "L = 0.110",
       lLight: "L = 0.996",
-      usage: "Code wells, recessed canvas tracks, inset data containers",
+      usage: "Code blocks, inset wells, and recessed background tracks",
       bg: "var(--sys-surface-lowest)",
     },
     {
       token: "--sys-surface-low",
-      name: "Surface Low",
-      z: "Z-1 / Base Card",
+      name: "Standard Card",
+      z: "Level 1 • Base Card",
       lDark: "L = 0.165",
       lLight: "L = 0.972",
-      usage: "Primary structural bento cells, documentation panels, sidebars",
+      usage: "Main content cards, feature panels, and sidebars",
       bg: "var(--sys-surface-low)",
     },
     {
       token: "--sys-surface-container",
-      name: "Surface Container",
-      z: "Z-1 / Elevated Card",
+      name: "Elevated Card",
+      z: "Level 1 • Elevated Card",
       lDark: "L = 0.190",
       lLight: "L = 0.958",
-      usage: "Nested cards, interactive tiles, table headers",
+      usage: "Nested cards, interactive tiles, and table headers",
       bg: "var(--sys-surface-container)",
     },
     {
       token: "--sys-surface-high",
-      name: "Surface High",
-      z: "Z-1 / Hover & Active",
+      name: "Interactive Surface",
+      z: "Level 1 • Hover & Input",
       lDark: "L = 0.225",
       lLight: "L = 0.940",
-      usage: "Hover states, input fields, secondary button fills",
+      usage: "Hover states, search inputs, and secondary buttons",
       bg: "var(--sys-surface-high)",
     },
     {
       token: "--sys-surface-highest",
-      name: "Surface Highest",
-      z: "Z-1 / Peak Tonal",
+      name: "Highlighted Surface",
+      z: "Level 1 • Active State",
       lDark: "L = 0.260",
       lLight: "L = 0.920",
-      usage: "Selected chips, slider tracks, non-glass tooltips",
+      usage: "Selected tags, slider tracks, and active badges",
       bg: "var(--sys-surface-highest)",
     },
   ];
@@ -75,25 +75,24 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[var(--sys-outline-variant)]">
         <div className="space-y-2">
-          <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[var(--sys-primary)]">
-            <span>02 // SPATIAL DEPTH & MATERIALS</span>
+          <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-widest text-[var(--sys-primary)]">
+            <span>Depth & Materials</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
-            <span>APPLE HIG LIQUID GLASS + M3 TONAL ELEVATION</span>
+            <span>Layered Surface Guide</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
-            Z-Axis Discipline:{" "}
+            Clean Content Cards vs.{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
-              Tonal Surfaces vs. Liquid Glass
+              Frosted Glass Overlays
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Apple’s Human Interface Guidelines establish a strict rule:{" "}
+            To keep interfaces fast and easy to read,{" "}
             <strong className="text-[var(--sys-on-surface)] font-semibold">
-              never use Liquid Glass in the content layer, and never stack glass on glass.
-            </strong>{" "}
-            Content hierarchy (Z-Level 1) is communicated via Material 3’s 5-step tonal surface
-            luminance, while optical Liquid Glass is reserved exclusively for floating control chrome
-            (Z-Level 2).
+              everyday content sits on solid, distraction-free cards
+            </strong>
+            , while translucent frosted glass is saved exclusively for floating navigation bars,
+            modals, and quick toolbars.
           </p>
         </div>
 
@@ -110,26 +109,26 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
           {antiPatternMode ? (
             <>
               <WarningCircle size={16} weight="fill" className="text-amber-400" />
-              <span>Showing HIG Anti-Pattern: Glass-on-Glass</span>
+              <span>Showing Common Mistake: Glass on Glass</span>
             </>
           ) : (
             <>
               <CheckCircle size={16} weight="fill" className="text-emerald-400" />
-              <span>Compare vs. Glass-on-Glass Violation</span>
+              <span>Preview Common Mistake: Glass on Glass</span>
             </>
           )}
         </button>
       </div>
 
-      {/* Part 1: Z-Level 1 — M3 5-Step Tonal Surface Hierarchy */}
+      {/* Part 1: 5-Step Solid Content Surfaces */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-mono uppercase tracking-wider text-[var(--sys-on-surface-secondary)] flex items-center gap-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--sys-on-surface-secondary)] flex items-center gap-2">
             <Stack size={16} className="text-[var(--sys-primary)]" />
-            Z-Level 1 Content Layer — 5-Step Tonal Surface Containers (Zero Backdrop Blur)
+            5-Step Solid Card Surfaces (For Page Content & Data)
           </h3>
-          <span className="text-xs font-mono text-[var(--sys-on-surface-tertiary)]">
-            1px Top Specular Hairline + Stepped OKLCH Lightness
+          <span className="text-xs text-[var(--sys-on-surface-tertiary)]">
+            Subtle brightness steps create depth without heavy drop shadows
           </span>
         </div>
 
@@ -166,20 +165,18 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
         </div>
       </div>
 
-      {/* Part 2: Z-Level 2 — Apple HIG Optical Liquid Glass Lab */}
+      {/* Part 2: Interactive Frosted Glass Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Interactive Lensing Viewport */}
         <div className="lg:col-span-8 tonal-card p-6 flex flex-col justify-between space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)] flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-[var(--sys-on-surface)] flex items-center gap-2">
                 <Sparkle size={16} weight="fill" className="text-[var(--sys-primary)]" />
-                Z-Level 2 Floating Control Stage — Optical Liquid Glass
+                Interactive Frosted Glass Preview
               </h3>
               <p className="text-xs text-[var(--sys-on-surface-tertiary)] mt-0.5">
-                Test <code className="font-mono">Glass.regular</code> vs.{" "}
-                <code className="font-mono">Glass.clear</code> (with HIG 35% dimming option) over
-                underlying content.
+                Compare standard Frosted Glass vs. Clear Glass over different page backgrounds.
               </p>
             </div>
 
@@ -187,9 +184,9 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             <div className="flex items-center gap-1 p-1 rounded-lg bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] text-xs">
               {(
                 [
-                  { id: "chromatic", label: "Chromatic Media" },
-                  { id: "editorial", label: "Dense Text" },
-                  { id: "grid", label: "Swiss Blueprint" },
+                  { id: "chromatic", label: "Colorful Media" },
+                  { id: "editorial", label: "Article Text" },
+                  { id: "grid", label: "Grid Layout" },
                 ] as const
               ).map((bg) => (
                 <button
@@ -225,16 +222,16 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
               >
                 <div className="p-8 grid grid-cols-3 gap-4 opacity-85">
                   <div className="p-4 rounded-xl bg-black/25 backdrop-blur-none border border-white/15 text-white">
-                    <div className="font-mono text-[10px] uppercase opacity-70">Base Content</div>
+                    <div className="font-mono text-[10px] uppercase opacity-70">Now Playing</div>
                     <div className="text-lg font-bold mt-1">Spatial Audio Stream</div>
                   </div>
                   <div className="p-4 rounded-xl bg-black/25 border border-white/15 text-white">
-                    <div className="font-mono text-[10px] uppercase opacity-70">Luminance</div>
+                    <div className="font-mono text-[10px] uppercase opacity-70">Brightness</div>
                     <div className="text-lg font-bold mt-1 tabular-nums">1,240 nits HDR</div>
                   </div>
                   <div className="p-4 rounded-xl bg-black/25 border border-white/15 text-white">
-                    <div className="font-mono text-[10px] uppercase opacity-70">Frame Pacing</div>
-                    <div className="text-lg font-bold mt-1 tabular-nums">120 Hz ProMotion</div>
+                    <div className="font-mono text-[10px] uppercase opacity-70">Refresh Rate</div>
+                    <div className="text-lg font-bold mt-1 tabular-nums">120 Hz Smooth</div>
                   </div>
                 </div>
               </div>
@@ -243,21 +240,20 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             {stageBackdrop === "editorial" && (
               <div className="absolute inset-0 bg-[var(--sys-surface-lowest)] p-8 overflow-hidden space-y-4">
                 <div className="font-serif italic text-3xl text-[var(--sys-on-surface)]">
-                  “Materials help visually separate foreground controls from underlying content.”
+                  “Translucent surfaces separate floating controls from the content underneath.”
                 </div>
                 <p className="text-sm text-[var(--sys-on-surface-secondary)] leading-relaxed">
-                  Liquid Glass forms a distinct functional layer for controls and navigation elements
-                  — like tab bars, command palettes, and floating toolbars — that floats above the
-                  content layer. When underlying text scrolls beneath a regular Liquid Glass bar,
-                  luminosity adaptation and saturation lensing preserve foreground contrast.
+                  Frosted glass creates a dedicated layer for navigation bars, search menus, and
+                  floating toolbars. When page text scrolls behind a frosted glass bar, background
+                  blur softens the text behind it so your navigation stays crisp and easy to read.
                 </p>
                 <div className="grid grid-cols-3 gap-3 pt-2">
                   {[1, 2, 3].map((n) => (
                     <div
                       key={n}
-                      className="p-3 rounded-lg bg-[var(--sys-surface-low)] border border-[var(--sys-outline-variant)] text-xs font-mono text-[var(--sys-on-surface-secondary)]"
+                      className="p-3 rounded-lg bg-[var(--sys-surface-low)] border border-[var(--sys-outline-variant)] text-xs font-medium text-[var(--sys-on-surface-secondary)]"
                     >
-                      Content Block 0{n} {"//"} Tonal Surface
+                      Article Card 0{n} • Solid Surface
                     </div>
                   ))}
                 </div>
@@ -267,25 +263,25 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             {stageBackdrop === "grid" && (
               <div className="absolute inset-0 swiss-grid-bg bg-[var(--sys-surface-lowest)] flex items-center justify-between px-12">
                 <div className="w-40 h-40 rounded-full border-2 border-dashed border-[var(--sys-primary)]/50 flex items-center justify-center font-mono text-xs text-[var(--sys-primary)]">
-                  Z-0 GRID ORIGIN
+                  LAYOUT GRID
                 </div>
                 <div className="w-56 h-32 rounded-xl bg-[var(--sys-primary-container)] border border-[var(--sys-primary)] p-4 flex flex-col justify-between">
                   <span className="font-mono text-[10px] text-[var(--sys-on-primary-container)]">
-                    HIGH-CHROMA OBJECT
+                    COLOR ACCENT CARD
                   </span>
                   <span className="font-bold text-sm text-[var(--sys-on-primary-container)]">
-                    Refraction Test Target
+                    Blur Preview Card
                   </span>
                 </div>
               </div>
             )}
 
-            {/* Optional HIG 35% Dimming Layer for Clear Glass over bright media */}
+            {/* Optional 35% Dimming Layer for Clear Glass over bright media */}
             {dimmingLayer && (
               <div className="absolute inset-0 bg-black/35 transition-opacity pointer-events-none" />
             )}
 
-            {/* Floating Z-Level 2 Liquid Glass Control Component */}
+            {/* Floating Liquid Glass Control Component */}
             <div
               style={{
                 backdropFilter: `blur(${blurRadius}px) saturate(${saturation}%)`,
@@ -303,15 +299,15 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
                   </div>
                   <div>
                     <div className="text-sm font-bold text-[var(--sys-on-surface)]">
-                      Floating Control Layer ({glassVariant === "regular" ? "Glass.regular" : "Glass.clear"})
+                      Floating Control Bar ({glassVariant === "regular" ? "Frosted Glass" : "Clear Glass"})
                     </div>
                     <div className="text-xs text-[var(--sys-on-surface-secondary)]">
-                      Z-Level 2 • {blurRadius}px Blur • {saturation}% Saturation Lensing
+                      {blurRadius}px Blur • {saturation}% Color Richness
                     </div>
                   </div>
                 </div>
-                <span className="font-mono text-[10px] px-2.5 py-1 rounded-full bg-[var(--sys-surface-high)]/80 text-[var(--sys-on-surface)] border border-[var(--sys-outline)]">
-                  HIG COMPLIANT
+                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[var(--sys-surface-high)]/80 text-[var(--sys-on-surface)] border border-[var(--sys-outline)]">
+                  Floating Layer
                 </span>
               </div>
 
@@ -339,14 +335,13 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
                 {/* Anti-Pattern Demonstration inside the Glass Container */}
                 {antiPatternMode && (
                   <div className="mt-3 p-3 rounded-xl bg-white/15 backdrop-blur-xl border border-amber-400/50 text-xs space-y-1">
-                    <div className="font-mono text-[10px] font-bold uppercase text-amber-300 flex items-center gap-1.5">
+                    <div className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
                       <WarningCircle size={13} weight="fill" />
-                      HIG Violation: Glass Stacked on Glass
+                      Avoid: Stacking Glass Inside Glass
                     </div>
                     <p className="text-[11px] text-[var(--sys-on-surface-secondary)]">
-                      Stacking a second blurred glass card inside a glass container doubles GPU
-                      sampling cost and washes out foreground contrast. Use solid tonal fills or
-                      vibrancy labels inside glass instead.
+                      Placing a second blurred glass card inside an already blurred toolbar makes text
+                      muddy and slows down scrolling. Use solid fills for inner buttons and cards instead.
                     </p>
                   </div>
                 )}
@@ -354,32 +349,32 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             </div>
           </div>
 
-          {/* Apple HIG 4-Level Vibrancy Hierarchy Strip */}
+          {/* 4-Level Text Hierarchy Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
             {[
               {
-                role: "1. Vibrant Primary",
+                role: "1. Primary Text",
                 token: "--sys-on-surface",
                 color: "var(--sys-on-surface)",
-                desc: "Titles, primary glyphs (≥ 7:1)",
+                desc: "Headings & main body text",
               },
               {
-                role: "2. Vibrant Secondary",
+                role: "2. Secondary Text",
                 token: "--sys-on-surface-secondary",
                 color: "var(--sys-on-surface-secondary)",
-                desc: "Subtitles, metadata (≥ 4.5:1)",
+                desc: "Subtitles & supporting copy",
               },
               {
-                role: "3. Vibrant Tertiary",
+                role: "3. Muted Text",
                 token: "--sys-on-surface-tertiary",
                 color: "var(--sys-on-surface-tertiary)",
-                desc: "Captions, kbd hints",
+                desc: "Captions & keyboard hints",
               },
               {
-                role: "4. Quaternary",
+                role: "4. Subtle Text",
                 token: "--sys-on-surface-quaternary",
                 color: "var(--sys-on-surface-quaternary)",
-                desc: "Disabled & subtle hairlines",
+                desc: "Disabled labels & dividers",
               },
             ].map((v) => (
               <div
@@ -400,34 +395,39 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
           </div>
         </div>
 
-        {/* Right Controls: Optical Parameters & HIG Rules */}
+        {/* Right Controls: Adjust Glass Effect & Surface Guide */}
         <div className="lg:col-span-4 tonal-card p-6 flex flex-col justify-between space-y-6">
           <div className="space-y-5">
             <div className="flex items-center gap-2 border-b border-[var(--sys-outline-variant)] pb-4">
               <SlidersHorizontal size={18} className="text-[var(--sys-primary)]" />
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)]">
-                Optical Shader Parameters
+              <h3 className="text-sm font-semibold text-[var(--sys-on-surface)]">
+                Adjust Glass Effect
               </h3>
             </div>
 
             {/* Variant Switcher */}
             <div className="space-y-2">
               <label className="text-xs font-medium text-[var(--sys-on-surface-secondary)]">
-                Apple HIG Liquid Glass Variant
+                Glass Style
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {(["regular", "clear"] as const).map((v) => (
+                {(
+                  [
+                    { id: "regular", label: "Frosted Glass" },
+                    { id: "clear", label: "Clear Glass" },
+                  ] as const
+                ).map((v) => (
                   <button
-                    key={v}
-                    onClick={() => setGlassVariant(v)}
+                    key={v.id}
+                    onClick={() => setGlassVariant(v.id)}
                     className={cn(
-                      "py-2 px-3 rounded-xl text-xs font-mono uppercase border transition-all cursor-pointer",
-                      glassVariant === v
+                      "py-2 px-3 rounded-xl text-xs font-medium border transition-all cursor-pointer",
+                      glassVariant === v.id
                         ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] border-[var(--sys-primary)] font-semibold"
                         : "bg-[var(--sys-surface-lowest)] text-[var(--sys-on-surface-secondary)] border-[var(--sys-outline-variant)]"
                     )}
                   >
-                    Glass.{v}
+                    {v.label}
                   </button>
                 ))}
               </div>
@@ -436,7 +436,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             {/* Blur Radius */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span className="text-[var(--sys-on-surface-secondary)]">Gaussian Blur Radius</span>
+                <span className="text-[var(--sys-on-surface-secondary)]">Blur Strength</span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
                   {blurRadius}px
                 </span>
@@ -454,7 +454,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             {/* Saturation Lensing */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span className="text-[var(--sys-on-surface-secondary)]">Chromatic Lensing (Saturate)</span>
+                <span className="text-[var(--sys-on-surface-secondary)]">Color Richness</span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
                   {saturation}%
                 </span>
@@ -474,11 +474,10 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             <div className="p-3.5 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] flex items-center justify-between">
               <div className="pr-3">
                 <div className="text-xs font-semibold text-[var(--sys-on-surface)]">
-                  35% Luminance Dimming Layer
+                  Dim Bright Backgrounds
                 </div>
                 <div className="text-[11px] text-[var(--sys-on-surface-tertiary)]">
-                  Recommended by Apple HIG when using <code className="font-mono">Glass.clear</code>{" "}
-                  over bright backgrounds.
+                  Adds a soft 35% tint behind Clear Glass so white text stays readable over bright photos.
                 </div>
               </div>
               <button
@@ -487,7 +486,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
                   "w-11 h-6 rounded-full transition-colors p-0.5 shrink-0 cursor-pointer",
                   dimmingLayer ? "bg-[var(--sys-primary)]" : "bg-[var(--sys-surface-highest)]"
                 )}
-                aria-label="Toggle 35% Dimming Layer"
+                aria-label="Toggle Dim Bright Backgrounds"
               >
                 <div
                   className={cn(
@@ -501,21 +500,21 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
 
           {/* Decision Matrix */}
           <div className="p-4 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] space-y-2.5">
-            <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--sys-primary)] flex items-center gap-1.5">
-              <Eye size={14} /> Material Selection Matrix
+            <div className="text-xs font-semibold text-[var(--sys-primary)] flex items-center gap-1.5">
+              <Eye size={14} /> When to Use Each Surface
             </div>
             <ul className="text-xs text-[var(--sys-on-surface-secondary)] space-y-1.5 leading-relaxed">
               <li>
-                • <strong className="text-[var(--sys-on-surface)]">Data Cards & Tables:</strong>{" "}
-                Use <code className="font-mono text-[11px]">--sys-surface-low</code> (No blur).
+                • <strong className="text-[var(--sys-on-surface)]">Cards & Data Tables:</strong>{" "}
+                Use solid card surfaces (no blur) for maximum reading comfort.
               </li>
               <li>
-                • <strong className="text-[var(--sys-on-surface)]">Nav Bars & Command Docks:</strong>{" "}
-                Use <code className="font-mono text-[11px]">.liquid-glass-regular</code>.
+                • <strong className="text-[var(--sys-on-surface)]">Top Navbars & Modals:</strong>{" "}
+                Use Frosted Glass (<code className="font-mono text-[11px]">.liquid-glass-regular</code>).
               </li>
               <li>
-                • <strong className="text-[var(--sys-on-surface)]">Media Overlays:</strong> Use{" "}
-                <code className="font-mono text-[11px]">.liquid-glass-clear</code> + 35% dim.
+                • <strong className="text-[var(--sys-on-surface)]">Photo & Video Overlays:</strong>{" "}
+                Use Clear Glass with background dimming enabled.
               </li>
             </ul>
           </div>

@@ -159,8 +159,14 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
   return (
     <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] pb-24">
       {/* Z-Level 2: Unified Floating Liquid Glass Top Portal Chrome (Travel-Kin Pattern) */}
-      <header className="sticky top-0 z-50 px-4 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto pointer-events-auto rounded-2xl liquid-glass-regular px-4 sm:px-6 py-3 shadow-xl flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-50 px-4 sm:px-6 pt-3 sm:pt-4">
+        <div
+          style={{
+            backdropFilter: "blur(40px) saturate(190%)",
+            WebkitBackdropFilter: "blur(40px) saturate(190%)",
+          }}
+          className="max-w-[1400px] mx-auto rounded-2xl liquid-glass-regular backdrop-blur-2xl px-4 sm:px-6 py-3 shadow-xl flex items-center justify-between gap-4"
+        >
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs">
             <Link
@@ -168,7 +174,7 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)] focus-visible:outline-2 focus-visible:outline-[var(--border-focus-ring)] transition-colors"
             >
               <ArrowLeft size={14} />
-              <span>Workbench</span>
+              <span>Back to Design System</span>
             </Link>
             <span className="text-[var(--text-muted)]" aria-hidden="true">
               /
@@ -179,9 +185,9 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
             </span>
             <span
               aria-current="page"
-              className="font-mono font-semibold text-[var(--bg-action-primary)] px-2 py-0.5 rounded bg-[var(--bg-action-primary-subtle)]"
+              className="font-semibold text-[var(--bg-action-primary)] px-2 py-0.5 rounded bg-[var(--bg-action-primary-subtle)]"
             >
-              {spec.slug}
+              {spec.name}
             </span>
           </nav>
 
@@ -206,7 +212,7 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   )}
                 >
-                  {item.slug}
+                  {item.name}
                 </Link>
               );
             })}
@@ -218,17 +224,17 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
               type="button"
               onClick={toggleTheme}
               aria-label={`Switch to ${theme === "dark" ? "Light" : "Dark"} mode`}
-              className="min-h-[38px] px-3.5 py-1.5 rounded-full text-xs font-mono font-medium flex items-center gap-2 bg-[var(--bg-surface-elevated)] hover:bg-[var(--bg-surface-hover)] text-[var(--text-primary)] border border-[var(--border-default)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--border-focus-ring)] cursor-pointer transition-all"
+              className="min-h-[38px] px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-2 bg-[var(--bg-surface-elevated)] hover:bg-[var(--bg-surface-hover)] text-[var(--text-primary)] border border-[var(--border-default)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--border-focus-ring)] cursor-pointer transition-all"
             >
               {theme === "dark" ? (
                 <>
                   <Moon size={15} weight="fill" className="text-[var(--bg-action-primary)]" />
-                  <span>Obsidian Dark</span>
+                  <span>Dark Mode</span>
                 </>
               ) : (
                 <>
                   <Sun size={15} weight="fill" className="text-[var(--bg-action-primary)]" />
-                  <span>Alabaster Light</span>
+                  <span>Light Mode</span>
                 </>
               )}
             </button>

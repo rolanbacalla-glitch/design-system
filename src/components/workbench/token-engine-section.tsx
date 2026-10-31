@@ -125,29 +125,25 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
       {/* Section Header */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[var(--sys-outline-variant)]">
         <div className="space-y-2">
-          <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[var(--sys-primary)]">
-            <span>01 // FOUNDATIONS</span>
+          <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-widest text-[var(--sys-primary)]">
+            <span>Colors & Themes</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
-            <span>MATERIAL 3 HCT / OKLCH ENGINE</span>
+            <span>Auto-Balanced Contrast</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
-            Perceptual Color &{" "}
+            Adaptive Color Palettes{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
-              Three-Tier Token Architecture
+              That Stay Readable
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Unlike RGB or HSL—where equal lightness values yield wildly uneven human brightness
-            perception—this engine computes 13-step tonal palettes in perceptual{" "}
-            <code className="font-mono text-xs px-1.5 py-0.5 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface)]">
-              oklch(L C H)
-            </code>{" "}
-            space. Any two tokens sharing Lightness <code className="font-mono text-xs">L</code>{" "}
-            guarantee identical WCAG contrast across every hue.
+            Pick any brand color and the system automatically generates a full 13-step light and
+            dark palette with consistent human brightness—so text and buttons stay effortless to
+            read across every theme.
           </p>
         </div>
 
-        {/* Curated Architectural Presets */}
+        {/* Curated Theme Presets */}
         <div className="flex flex-wrap items-center gap-1.5">
           {SEED_PRESETS.map((preset) => {
             const active = seed.name === preset.name && seed.hue === preset.hue;
@@ -173,21 +169,21 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
         </div>
       </div>
 
-      {/* Main Grid: Seed Modulator + 3-Tier Pipeline */}
+      {/* Main Grid: Theme Customizer + How Colors Connect */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left: Live OKLCH Seed Synthesizer */}
+        {/* Left: Customize Your Brand Theme */}
         <div className="lg:col-span-5 tonal-card p-6 space-y-6">
           <div className="flex items-center justify-between border-b border-[var(--sys-outline-variant)] pb-4">
             <div className="flex items-center gap-2.5">
               <Sliders size={18} className="text-[var(--sys-primary)]" />
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)]">
-                Live OKLCH Seed Modulator
+              <h3 className="text-sm font-semibold text-[var(--sys-on-surface)]">
+                Customize Your Brand Theme
               </h3>
             </div>
             <button
               onClick={() => onChangeSeed(SEED_PRESETS[0])}
-              className="text-xs font-mono text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-primary)] flex items-center gap-1 cursor-pointer"
-              title="Reset to Cobalt Obsidian"
+              className="text-xs font-medium text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-primary)] flex items-center gap-1 cursor-pointer"
+              title="Reset to default theme"
             >
               <ArrowsClockwise size={13} />
               Reset
@@ -199,7 +195,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                  Primary Seed Hue <code className="font-mono text-[11px] opacity-70">(--seed-hue)</code>
+                  Primary Brand Color
                 </span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
                   {seed.hue}°
@@ -211,16 +207,16 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                 max={360}
                 value={seed.hue}
                 onChange={(e) =>
-                  onChangeSeed({ ...seed, name: "Custom Seed", hue: Number(e.target.value) })
+                  onChangeSeed({ ...seed, name: "Custom Theme", hue: Number(e.target.value) })
                 }
                 className="precision-slider"
-                aria-label="Primary Seed Hue"
+                aria-label="Primary Brand Color"
               />
-              <div className="flex justify-between text-[10px] font-mono text-[var(--sys-on-surface-quaternary)] tabular-nums">
-                <span>0° Red</span>
-                <span>120° Green</span>
-                <span>240° Blue</span>
-                <span>360°</span>
+              <div className="flex justify-between text-[10px] text-[var(--sys-on-surface-quaternary)] tabular-nums">
+                <span>Red</span>
+                <span>Green</span>
+                <span>Blue</span>
+                <span>Violet</span>
               </div>
             </div>
 
@@ -228,10 +224,10 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                  Peak Chroma <code className="font-mono text-[11px] opacity-70">(--seed-chroma)</code>
+                  Color Vibrancy
                 </span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
-                  {seed.chroma.toFixed(2)}
+                  {Math.round((seed.chroma / 0.28) * 100)}%
                 </span>
               </div>
               <input
@@ -241,15 +237,15 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                 step={0.01}
                 value={seed.chroma}
                 onChange={(e) =>
-                  onChangeSeed({ ...seed, name: "Custom Seed", chroma: Number(e.target.value) })
+                  onChangeSeed({ ...seed, name: "Custom Theme", chroma: Number(e.target.value) })
                 }
                 className="precision-slider"
-                aria-label="Primary Chroma"
+                aria-label="Color Vibrancy"
               />
-              <div className="flex justify-between text-[10px] font-mono text-[var(--sys-on-surface-quaternary)]">
-                <span>0.01 Achromatic</span>
-                <span>0.15 Balanced</span>
-                <span>0.28 P3 Vivid</span>
+              <div className="flex justify-between text-[10px] text-[var(--sys-on-surface-quaternary)]">
+                <span>Muted</span>
+                <span>Balanced</span>
+                <span>Vibrant</span>
               </div>
             </div>
 
@@ -258,7 +254,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                    Secondary Hue
+                    Secondary Accent
                   </span>
                   <span className="font-mono text-[var(--sys-secondary)] tabular-nums">
                     {seed.secondaryHue}°
@@ -272,19 +268,19 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                   onChange={(e) =>
                     onChangeSeed({
                       ...seed,
-                      name: "Custom Seed",
+                      name: "Custom Theme",
                       secondaryHue: Number(e.target.value),
                     })
                   }
                   className="precision-slider"
-                  aria-label="Secondary Hue"
+                  aria-label="Secondary Accent"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                    Tertiary Hue
+                    Highlight Accent
                   </span>
                   <span className="font-mono text-[var(--sys-tertiary)] tabular-nums">
                     {seed.tertiaryHue}°
@@ -298,12 +294,12 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                   onChange={(e) =>
                     onChangeSeed({
                       ...seed,
-                      name: "Custom Seed",
+                      name: "Custom Theme",
                       tertiaryHue: Number(e.target.value),
                     })
                   }
                   className="precision-slider"
-                  aria-label="Tertiary Hue"
+                  aria-label="Highlight Accent"
                 />
               </div>
             </div>
@@ -313,7 +309,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                    Neutral Tint
+                    Surface Tint
                   </span>
                   <span className="font-mono text-[var(--sys-on-surface)] tabular-nums">
                     {seed.neutralChroma.toFixed(3)}
@@ -328,19 +324,19 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                   onChange={(e) =>
                     onChangeSeed({
                       ...seed,
-                      name: "Custom Seed",
+                      name: "Custom Theme",
                       neutralChroma: Number(e.target.value),
                     })
                   }
                   className="precision-slider"
-                  aria-label="Neutral Surface Chroma"
+                  aria-label="Surface Tint"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                    Radius Scale
+                    Corner Roundness
                   </span>
                   <span className="font-mono text-[var(--sys-on-surface)] tabular-nums">
                     {seed.radiusScale.toFixed(2)}x
@@ -355,12 +351,12 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                   onChange={(e) =>
                     onChangeSeed({
                       ...seed,
-                      name: "Custom Seed",
+                      name: "Custom Theme",
                       radiusScale: Number(e.target.value),
                     })
                   }
                   className="precision-slider"
-                  aria-label="Global Corner Radius Scale"
+                  aria-label="Corner Roundness"
                 />
               </div>
             </div>
@@ -369,7 +365,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
           {/* Live Computed Root Formula Readout */}
           <div className="p-3.5 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] font-mono text-[11px] space-y-1">
             <div className="text-[var(--sys-on-surface-tertiary)]">
-              {`/* Active System Primary (${theme.toUpperCase()}) */`}
+              {`/* Active Brand Color (${theme === "dark" ? "Dark Mode" : "Light Mode"}) */`}
             </div>
             <div className="text-[var(--sys-on-surface)] flex items-center justify-between">
               <span>
@@ -380,36 +376,43 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                 </span>
               </span>
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)]">
-                AAA Ready
+                AAA Readable
               </span>
             </div>
           </div>
         </div>
 
-        {/* Right: 3-Tier Token Pipeline Visualizer */}
+        {/* Right: How Colors Connect to Components */}
         <div className="lg:col-span-7 tonal-card p-6 flex flex-col justify-between space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sys-outline-variant)] pb-4">
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)]">
-                Three-Tier Semantic Resolution Pipeline
+              <h3 className="text-sm font-semibold text-[var(--sys-on-surface)]">
+                How Colors Connect to Components
               </h3>
               <p className="text-xs text-[var(--sys-on-surface-tertiary)] mt-0.5">
-                Reference values never leak directly into components—they resolve through theme-aware System roles.
+                Base shades flow into theme roles (`Dark` / `Light`) and then into individual UI components.
               </p>
             </div>
-            <div className="flex items-center gap-1 p-1 rounded-lg bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] text-[11px] font-mono">
-              {(["all", "reference", "system", "component"] as const).map((t) => (
+            <div className="flex items-center gap-1 p-1 rounded-lg bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] text-[11px] font-medium">
+              {(
+                [
+                  { id: "all", label: "All" },
+                  { id: "reference", label: "Base Shade" },
+                  { id: "system", label: "Theme Role" },
+                  { id: "component", label: "Component" },
+                ] as const
+              ).map((t) => (
                 <button
-                  key={t}
-                  onClick={() => setSelectedTier(t)}
+                  key={t.id}
+                  onClick={() => setSelectedTier(t.id)}
                   className={cn(
-                    "px-2 py-1 rounded capitalize transition-colors cursor-pointer",
-                    selectedTier === t
+                    "px-2.5 py-1 rounded transition-colors cursor-pointer",
+                    selectedTier === t.id
                       ? "bg-[var(--sys-primary)] text-[var(--sys-on-primary)] font-semibold"
                       : "text-[var(--sys-on-surface-tertiary)] hover:text-[var(--sys-on-surface)]"
                   )}
                 >
-                  {t}
+                  {t.label}
                 </button>
               ))}
             </div>
@@ -434,8 +437,8 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                     style={{ backgroundColor: row.tier1Val }}
                   />
                   <div className="min-w-0">
-                    <div className="text-[10px] font-mono uppercase text-[var(--sys-on-surface-tertiary)]">
-                      1. Reference
+                    <div className="text-[10px] font-medium text-[var(--sys-on-surface-tertiary)]">
+                      1. Base Shade
                     </div>
                     <div className="font-mono text-xs font-medium text-[var(--sys-on-surface)] truncate">
                       {row.tier1}
@@ -454,8 +457,8 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                     selectedTier !== "all" && selectedTier !== "system" && "opacity-35"
                   )}
                 >
-                  <div className="text-[10px] font-mono uppercase text-[var(--sys-primary)]">
-                    2. System ({theme})
+                  <div className="text-[10px] font-medium text-[var(--sys-primary)]">
+                    2. Theme Role ({theme === "dark" ? "Dark" : "Light"})
                   </div>
                   <button
                     onClick={() => copyValue(row.tier2, `var(${row.tier2})`)}
@@ -481,8 +484,8 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                     selectedTier !== "all" && selectedTier !== "component" && "opacity-35"
                   )}
                 >
-                  <div className="text-[10px] font-mono uppercase text-[var(--sys-on-surface-tertiary)]">
-                    3. Component Slot
+                  <div className="text-[10px] font-medium text-[var(--sys-on-surface-tertiary)]">
+                    3. Component Use
                   </div>
                   <div className="font-mono text-xs text-[var(--sys-on-surface-secondary)] truncate">
                     {row.tier3}
@@ -495,9 +498,9 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
           <div className="flex items-center justify-between text-xs text-[var(--sys-on-surface-tertiary)] pt-2 border-t border-[var(--sys-outline-variant)]">
             <span className="flex items-center gap-1.5">
               <Info size={14} className="text-[var(--sys-primary)]" />
-              Click any token or tonal cell below to copy its CSS variable or OKLCH value.
+              Click any token or color swatch below to copy its value.
             </span>
-            <span className="font-mono text-[11px] tabular-nums">13 Stops × 4 Key Palettes = 52 Reference Tokens</span>
+            <span className="text-[11px] tabular-nums">52 Auto-Generated Shades</span>
           </div>
         </div>
       </div>
@@ -506,12 +509,12 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
       <div className="tonal-card p-6 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--sys-on-surface)] flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-[var(--sys-on-surface)] flex items-center gap-2">
               <Swatches size={18} className="text-[var(--sys-primary)]" />
-              13-Step Perceptual Tonal Scale (Material 3 HCT / OKLCH)
+              Full Color Shades (Click Any Swatch to Copy)
             </h3>
             <p className="text-xs text-[var(--sys-on-surface-tertiary)] mt-0.5">
-              Notice how Tone 40 across all rows has identical perceived brightness (`L=0.49`), guaranteeing predictable contrast pairing.
+              Every column shares the same perceived brightness, making it easy to swap colors without breaking text readability.
             </p>
           </div>
           {copiedToken && (

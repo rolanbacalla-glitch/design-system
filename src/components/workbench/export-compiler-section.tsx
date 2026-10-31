@@ -102,20 +102,20 @@ alwaysApply: true
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[var(--sys-outline-variant)]">
         <div className="space-y-2">
           <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[var(--sys-primary)]">
-            <span>07 // MULTI-PLATFORM COMPILER</span>
+            <span>07 // EXPORT & HANDOFF</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
             <span>FIGMA + STITCH + ANTIGRAVITY + CURSOR</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
-            Live Cross-Platform{" "}
+            Export Your Theme for{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
-              Token & Spec Exporter
+              Code, Figma & AI
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Every adjustment to the OKLCH seed parameters or <code className="font-mono">/tokens/*.json</code>{" "}
-            compiles simultaneously into Tailwind CSS v4 variables, W3C DTCG Figma Variables, Google
-            Stitch <code className="font-mono">DESIGN.md</code>, and AI coding guardrails.
+            Every color and corner adjustment you make above updates these files live. Copy or
+            download ready-to-use files for Tailwind CSS v4, Figma Variables, Google Stitch{" "}
+            <code className="font-mono">DESIGN.md</code>, and AI coding assistants.
           </p>
         </div>
 
@@ -126,7 +126,7 @@ alwaysApply: true
             className="min-h-[40px] px-4 py-2 rounded-[var(--sys-radius-md)] bg-[var(--sys-surface-high)] hover:bg-[var(--sys-surface-highest)] text-[var(--sys-on-surface)] border border-[var(--sys-outline)] text-xs font-mono font-semibold inline-flex items-center gap-2"
           >
             <DownloadSimple size={15} />
-            <span>Download Full DTCG JSON</span>
+            <span>Download Figma Tokens</span>
           </a>
         </div>
       </div>
