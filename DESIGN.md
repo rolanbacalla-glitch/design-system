@@ -2,9 +2,9 @@
 **Project ID:** projects/antigravity-design-system
 
 ## 1. Visual Theme & Atmosphere
-The Antigravity Design System synthesizes **Material 3 Expressive** perceptual OKLCH tonal mathematics with **Apple HIG Liquid Glass** Z-axis spatial discipline and **Swiss Design Engineering** grids. Content surfaces rest on crisp, zero-blur tonal containers (`Z-Level 1`), while floating navigation chrome and transient command overlays utilize optical Liquid Glass refraction (`Z-Level 2`).
+The Antigravity Design System synthesises **Material 3 Expressive** perceptual OKLCH tonal mathematics with **Apple HIG Liquid Glass** Z-axis spatial discipline and **Swiss Design Engineering** grids. Content surfaces rest on crisp, zero-blur tonal containers (`Z-Level 1`), while floating navigation chrome and transient command overlays utilise optical Liquid Glass refraction (`Z-Level 2`).
 
-## 2. Color Palette & Roles (3-Tier OKLCH + Hex Dual-Polarity)
+## 2. Colour Palette & Roles (3-Tier OKLCH + Hex Dual-Polarity)
 All semantic roles guarantee **WCAG 2.2 AA/AAA** contrast across both **Obsidian Dark** and **Alabaster Light** modes.
 
 ```yaml

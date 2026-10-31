@@ -30,12 +30,12 @@ export interface WorkbenchNavProps {
 }
 
 export const WORKBENCH_SECTIONS = [
-  { id: "tokens", index: "01", label: "Colors", title: "Adaptive Color Palettes & Themes", icon: Swatches },
+  { id: "tokens", index: "01", label: "Colours", title: "Adaptive Colour Palettes & Themes", icon: Swatches },
   { id: "surfaces", index: "02", label: "Surfaces", title: "Clean Cards & Frosted Glass", icon: Stack },
   { id: "typography", index: "03", label: "Typography", title: "Readable Type & Live Numbers", icon: TextT },
   { id: "components", index: "04", label: "Components", title: "Interactive UI Building Blocks", icon: Cube },
   { id: "motion", index: "05", label: "Motion", title: "Smooth Animation & Rounded Corners", icon: Waves },
-  { id: "icons", index: "06", label: "Icons", title: "Icon Library & Customizer", icon: Sparkle },
+  { id: "icons", index: "06", label: "Icons", title: "Icon Library & Customiser", icon: Sparkle },
   { id: "export", index: "07", label: "Export", title: "Export for Code, Figma & AI", icon: Code },
 ] as const;
 
@@ -161,11 +161,11 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
 
           {/* Right Utility Controls: Theme Color + Search + Light/Dark Switch + Mobile Toggle */}
           <div className="flex items-center gap-2">
-            {/* Active Theme Color Indicator */}
+            {/* Active Theme Colour Indicator */}
             <button
               type="button"
               onClick={() => onSelectSection("tokens")}
-              title="Customize Theme Color"
+              title="Customise Theme Colour"
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-[var(--sys-surface-high)]/60 hover:bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] border border-[var(--sys-outline-variant)] transition-colors cursor-pointer"
             >
               <span
@@ -275,7 +275,7 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
                 autoFocus
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search sections, switch color themes, or toggle dark mode..."
+                placeholder="Search sections, switch colour themes, or toggle dark mode..."
                 className="flex-1 bg-transparent text-sm text-[var(--sys-on-surface)] placeholder:text-[var(--sys-on-surface-tertiary)] outline-none"
               />
               <button
@@ -328,7 +328,7 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
               {/* Presets */}
               <div>
                 <div className="px-2.5 pb-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--sys-on-surface-tertiary)]">
-                  Color Theme Presets
+                  Colour Theme Presets
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                   {filteredPresets.map((preset) => (

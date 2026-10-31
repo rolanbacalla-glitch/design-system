@@ -16,14 +16,14 @@ export const MotionGeometrySection: React.FC = () => {
       token: "--ease-spatial-spring",
       bezier: "cubic-bezier(0.22, 1.28, 0.36, 1)",
       duration: "220ms",
-      role: "Used for button presses, shape changes, and popup dialogs that feel responsive and alive.",
+      role: "Used for button presses, shape changes, and pop-up dialogues that feel responsive and alive.",
     },
     {
       name: "Smooth Fade",
       token: "--ease-effects-smooth",
       bezier: "cubic-bezier(0.22, 1, 0.36, 1)",
       duration: "180ms",
-      role: "Used for color shifts, hover highlights, and fade-ins without harsh flashes.",
+      role: "Used for colour shifts, hover highlights, and fade-ins without harsh flashes.",
     },
     {
       name: "Gentle Slide",

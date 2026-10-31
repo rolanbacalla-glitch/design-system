@@ -89,7 +89,7 @@ export default function Home() {
             </h1>
 
             <p className="text-base sm:text-lg text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-              Customize your brand colors, preview accessible UI components in dark and light mode,
+              Customise your brand colours, preview accessible UI components in dark and light mode,
               and export ready-to-use tokens for{" "}
               <strong className="text-[var(--sys-on-surface)]">Figma</strong>,{" "}
               <strong className="text-[var(--sys-on-surface)]">Next.js + Tailwind CSS</strong>,{" "}
@@ -121,7 +121,7 @@ export default function Home() {
                 href="/components/modal-dialog"
                 className="min-h-[44px] px-4 py-3 rounded-[var(--sys-radius-md)] bg-[var(--sys-surface-low)] hover:bg-[var(--sys-surface-high)] text-[var(--sys-on-surface-secondary)] hover:text-[var(--sys-on-surface)] border border-[var(--sys-outline-variant)] text-xs font-medium inline-flex items-center gap-1.5 transition-all"
               >
-                <span>Modal Dialog</span>
+                <span>Modal Dialogue</span>
                 <ArrowUpRight size={13} />
               </Link>
 

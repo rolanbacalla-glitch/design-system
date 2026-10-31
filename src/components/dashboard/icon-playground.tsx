@@ -64,7 +64,7 @@ export const IconPlayground: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
             Icon Library &{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
-              Live Customizer
+              Live Customiser
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">

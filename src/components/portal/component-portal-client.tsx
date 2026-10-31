@@ -475,7 +475,7 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
                         id={`${formInputId}-helper`}
                         className="text-xs text-[var(--comp-form-field-text-helper)]"
                       >
-                        Format: <code className="font-mono">oklch(L C H)</code> perceptual color
+                        Format: <code className="font-mono">oklch(L C H)</code> perceptual colour
                         coordinate. Tab moves focus cleanly without trapping.
                       </p>
 
@@ -577,7 +577,7 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
                               id={modalDescId}
                               className="text-xs text-[var(--comp-modal-dialog-text-body)] leading-relaxed"
                             >
-                              Press <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-surface-recessed)] border border-[var(--border-subtle)] font-mono">Tab</kbd> to verify keyboard focus stays trapped inside this dialog, or press <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-surface-recessed)] border border-[var(--border-subtle)] font-mono">Esc</kbd> to dismiss and restore focus.
+                              Press <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-surface-recessed)] border border-[var(--border-subtle)] font-mono">Tab</kbd> to verify keyboard focus stays trapped inside this dialogue, or press <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-surface-recessed)] border border-[var(--border-subtle)] font-mono">Esc</kbd> to dismiss and restore focus.
                             </p>
                           </div>
                           <button

@@ -252,7 +252,7 @@ export const TypographySection: React.FC = () => {
                   style={{ fontVariantNumeric: "proportional-nums" }}
                   className="text-2xl font-bold text-[var(--sys-on-surface)]"
                 >
-                  ${liveTicker.toFixed(2)}
+                  £{liveTicker.toFixed(2)}
                 </span>
                 <span className="text-xs text-[var(--sys-on-surface-tertiary)]">
                   ← Notice label jitter
@@ -270,7 +270,7 @@ export const TypographySection: React.FC = () => {
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-bold text-[var(--sys-on-surface)] tabular-nums">
-                  ${liveTicker.toFixed(2)}
+                  £{liveTicker.toFixed(2)}
                 </span>
                 <span className="text-xs text-[var(--sys-on-surface-tertiary)]">
                   ← Rock-solid alignment

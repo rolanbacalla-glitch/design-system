@@ -184,7 +184,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             <div className="flex items-center gap-1 p-1 rounded-lg bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] text-xs">
               {(
                 [
-                  { id: "chromatic", label: "Colorful Media" },
+                  { id: "chromatic", label: "Colourful Media" },
                   { id: "editorial", label: "Article Text" },
                   { id: "grid", label: "Grid Layout" },
                 ] as const
@@ -267,7 +267,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
                 </div>
                 <div className="w-56 h-32 rounded-xl bg-[var(--sys-primary-container)] border border-[var(--sys-primary)] p-4 flex flex-col justify-between">
                   <span className="font-mono text-[10px] text-[var(--sys-on-primary-container)]">
-                    COLOR ACCENT CARD
+                    COLOUR ACCENT CARD
                   </span>
                   <span className="font-bold text-sm text-[var(--sys-on-primary-container)]">
                     Blur Preview Card
@@ -302,7 +302,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
                       Floating Control Bar ({glassVariant === "regular" ? "Frosted Glass" : "Clear Glass"})
                     </div>
                     <div className="text-xs text-[var(--sys-on-surface-secondary)]">
-                      {blurRadius}px Blur • {saturation}% Color Richness
+                      {blurRadius}px Blur • {saturation}% Colour Richness
                     </div>
                   </div>
                 </div>
@@ -454,7 +454,7 @@ export const SurfacesGlassSection: React.FC<{ theme: "dark" | "light" }> = ({ th
             {/* Saturation Lensing */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span className="text-[var(--sys-on-surface-secondary)]">Color Richness</span>
+                <span className="text-[var(--sys-on-surface-secondary)]">Colour Richness</span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
                   {saturation}%
                 </span>

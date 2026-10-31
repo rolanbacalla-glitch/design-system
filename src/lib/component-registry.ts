@@ -148,7 +148,7 @@ export const COMPONENT_REGISTRY: Record<ComponentSlug, ComponentSpec> = {
         criterion: "WCAG 2.2 SC 3.3.1 & 3.3.3 Error Identification",
         wcagRef: "3.3.1 (A) / 3.3.3 (AA)",
         requirement:
-          "Error state combines border color, background tint, WarningCircle icon, and explicit corrective text linked via aria-describedby.",
+          "Error state combines border colour, background tint, WarningCircle icon, and explicit corrective text linked via aria-describedby.",
       },
     ],
     codeSnippet: `"use client";
@@ -222,11 +222,11 @@ FormField.displayName = "FormField";`,
 
   "modal-dialog": {
     slug: "modal-dialog",
-    name: "Focus-Trapped Modal Dialog",
+    name: "Focus-Trapped Modal Dialogue",
     bucket: "05 // Overlays & Containment",
     zLayer: "Z-Level 2 (Floating Liquid Glass / Modal Overlay)",
     tagline:
-      "WAI-ARIA compliant modal dialog implementing Radix FocusScope keyboard trapping, Escape dismissal, and return-focus restoration.",
+      "WAI-ARIA compliant modal dialogue implementing Radix FocusScope keyboard trapping, Escape dismissal, and return-focus restoration.",
     summary:
       "Designed for high-consequence confirmations, token asset exports, and schema editors. Implements strict focus containment while active and restores focus to the invoking trigger upon unmount.",
     whenToUse: [
@@ -245,7 +245,7 @@ FormField.displayName = "FormField";`,
         tokenBinding: "--bg-canvas / 68% + backdrop-filter: blur(8px)",
       },
       {
-        slot: "02. Dialog Surface (FocusScope)",
+        slot: "02. Dialogue Surface (FocusScope)",
         element: "div[role='dialog'][aria-modal='true']",
         geometry: "Max-Width: 520px • Radius: 24px (--radius-xl) • Padding: 24px (--spacing-6)",
         tokenBinding: "--comp-modal-dialog-bg-surface -> var(--bg-surface-elevated)",
@@ -297,7 +297,7 @@ FormField.displayName = "FormField";`,
       {
         key: "Escape",
         behavior:
-          "Immediately closes the modal dialog and restores focus to the trigger button that opened it.",
+          "Immediately closes the modal dialogue and restores focus to the trigger button that opened it.",
       },
     ],
     accessibilityRules: [
@@ -305,7 +305,7 @@ FormField.displayName = "FormField";`,
         criterion: "WAI-ARIA 1.2 Modal Focus Containment",
         wcagRef: "2.1.1 (A) / 2.4.3 (A)",
         requirement:
-          "Focus moves into the dialog on open, traps Tab/Shift+Tab inside the FocusScope boundary, and returns focus to the trigger on close.",
+          "Focus moves into the dialogue on open, traps Tab/Shift+Tab inside the FocusScope boundary, and returns focus to the trigger on close.",
       },
       {
         criterion: "WCAG 2.2 SC 2.4.11 Focus Appearance",

@@ -288,9 +288,9 @@ const designMdContent = `# Design System: Antigravity Perceptual & Spatial Workb
 **Project ID:** projects/antigravity-design-system
 
 ## 1. Visual Theme & Atmosphere
-The Antigravity Design System synthesizes **Material 3 Expressive** perceptual OKLCH tonal mathematics with **Apple HIG Liquid Glass** Z-axis spatial discipline and **Swiss Design Engineering** grids. Content surfaces rest on crisp, zero-blur tonal containers (\`Z-Level 1\`), while floating navigation chrome and transient command overlays utilize optical Liquid Glass refraction (\`Z-Level 2\`).
+The Antigravity Design System synthesises **Material 3 Expressive** perceptual OKLCH tonal mathematics with **Apple HIG Liquid Glass** Z-axis spatial discipline and **Swiss Design Engineering** grids. Content surfaces rest on crisp, zero-blur tonal containers (\`Z-Level 1\`), while floating navigation chrome and transient command overlays utilise optical Liquid Glass refraction (\`Z-Level 2\`).
 
-## 2. Color Palette & Roles (3-Tier OKLCH + Hex Dual-Polarity)
+## 2. Colour Palette & Roles (3-Tier OKLCH + Hex Dual-Polarity)
 All semantic roles guarantee **WCAG 2.2 AA/AAA** contrast across both **Obsidian Dark** and **Alabaster Light** modes.
 
 \`\`\`yaml
@@ -420,6 +420,9 @@ alwaysApply: true
    - Interactive controls must have a minimum \`24x24px\` hit target (\`40px\` height standard) per WCAG 2.2 SC 2.5.8.
    - Focus-visible rings must use \`2px solid var(--border-focus-ring)\` with \`2px\` offset per SC 2.4.11.
    - Use focus trapping ONLY inside modal overlays (\`role="dialog" aria-modal="true"\`); never trap keyboard focus inside form inputs or data tables.
+
+5. **British English (\`en-GB\`) Copy Standard**:
+   - Always use British English spelling across all UI copy, labels, headings, and documentation (e.g., *colour*, *customise*, *customiser*, *synchronise*, *optimise*, *analyse*, *behaviour*, *centre*, *dialogue*, *grey*).
 `;
 
 const cursorOutPath = path.join(ROOT, ".cursor/rules/design-system.mdc");

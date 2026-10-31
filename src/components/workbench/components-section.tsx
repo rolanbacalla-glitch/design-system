@@ -81,7 +81,7 @@ export const ComponentsSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Every button, input, toggle, and table automatically adapts to your chosen brand color
+            Every button, input, toggle, and table automatically adapts to your chosen brand colour
             and light/dark mode while maintaining full keyboard navigation and screen reader support.
           </p>
         </div>
@@ -318,8 +318,8 @@ export const ComponentsSection: React.FC = () => {
           {/* Input Field with Focus Ring */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-[var(--sys-on-surface-secondary)] flex justify-between">
-              <span>Theme Color Value</span>
-              <span className="text-[11px] font-medium text-emerald-400">✓ Valid Color</span>
+              <span>Theme Colour Value</span>
+              <span className="text-[11px] font-medium text-emerald-400">✓ Valid Colour</span>
             </label>
             <div className="relative flex items-center">
               <MagnifyingGlass
@@ -473,9 +473,9 @@ export const ComponentsSection: React.FC = () => {
             },
             {
               slug: "modal-dialog",
-              title: "Modal Dialog",
+              title: "Modal Dialogue",
               badge: "Keyboard Friendly",
-              desc: "Popup dialog that keeps keyboard focus inside and closes cleanly with the Escape key.",
+              desc: "Pop-up dialogue that keeps keyboard focus inside and closes cleanly with the Escape key.",
             },
             {
               slug: "data-table",

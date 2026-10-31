@@ -906,7 +906,7 @@
         "border-focus": {
           "$value": "{semantic.border-focus-ring}",
           "$type": "color",
-          "$description": "Button focus-visible outline color"
+          "$description": "Button focus-visible outline colour"
         },
         "radius-rest": {
           "$value": "{radius.md}",
@@ -973,12 +973,12 @@
         "border-focus": {
           "$value": "{semantic.border-focus-ring}",
           "$type": "color",
-          "$description": "Focused input ring color"
+          "$description": "Focused input ring colour"
         },
         "border-error": {
           "$value": "{semantic.border-feedback-error}",
           "$type": "color",
-          "$description": "Invalid input border color"
+          "$description": "Invalid input border colour"
         },
         "radius": {
           "$value": "{radius.md}",

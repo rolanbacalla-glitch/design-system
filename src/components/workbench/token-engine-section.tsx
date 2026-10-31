@@ -126,18 +126,18 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[var(--sys-outline-variant)]">
         <div className="space-y-2">
           <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-widest text-[var(--sys-primary)]">
-            <span>Colors & Themes</span>
+            <span>Colours & Themes</span>
             <span className="text-[var(--sys-on-surface-quaternary)]">•</span>
             <span>Auto-Balanced Contrast</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--sys-on-surface)]">
-            Adaptive Color Palettes{" "}
+            Adaptive Colour Palettes{" "}
             <span className="font-serif italic font-normal text-[var(--sys-primary)]">
               That Stay Readable
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Pick any brand color and the system automatically generates a full 13-step light and
+            Pick any brand colour and the system automatically generates a full 13-step light and
             dark palette with consistent human brightness—so text and buttons stay effortless to
             read across every theme.
           </p>
@@ -169,15 +169,15 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
         </div>
       </div>
 
-      {/* Main Grid: Theme Customizer + How Colors Connect */}
+      {/* Main Grid: Theme Customiser + How Colours Connect */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left: Customize Your Brand Theme */}
+        {/* Left: Customise Your Brand Theme */}
         <div className="lg:col-span-5 tonal-card p-6 space-y-6">
           <div className="flex items-center justify-between border-b border-[var(--sys-outline-variant)] pb-4">
             <div className="flex items-center gap-2.5">
               <Sliders size={18} className="text-[var(--sys-primary)]" />
               <h3 className="text-sm font-semibold text-[var(--sys-on-surface)]">
-                Customize Your Brand Theme
+                Customise Your Brand Theme
               </h3>
             </div>
             <button
@@ -195,7 +195,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                  Primary Brand Color
+                  Primary Brand Colour
                 </span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
                   {seed.hue}°
@@ -210,7 +210,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                   onChangeSeed({ ...seed, name: "Custom Theme", hue: Number(e.target.value) })
                 }
                 className="precision-slider"
-                aria-label="Primary Brand Color"
+                aria-label="Primary Brand Colour"
               />
               <div className="flex justify-between text-[10px] text-[var(--sys-on-surface-quaternary)] tabular-nums">
                 <span>Red</span>
@@ -224,7 +224,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="font-medium text-[var(--sys-on-surface-secondary)]">
-                  Color Vibrancy
+                  Colour Vibrancy
                 </span>
                 <span className="font-mono font-semibold text-[var(--sys-primary)] tabular-nums">
                   {Math.round((seed.chroma / 0.28) * 100)}%
@@ -240,7 +240,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
                   onChangeSeed({ ...seed, name: "Custom Theme", chroma: Number(e.target.value) })
                 }
                 className="precision-slider"
-                aria-label="Color Vibrancy"
+                aria-label="Colour Vibrancy"
               />
               <div className="flex justify-between text-[10px] text-[var(--sys-on-surface-quaternary)]">
                 <span>Muted</span>
@@ -365,7 +365,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
           {/* Live Computed Root Formula Readout */}
           <div className="p-3.5 rounded-xl bg-[var(--sys-surface-lowest)] border border-[var(--sys-outline-variant)] font-mono text-[11px] space-y-1">
             <div className="text-[var(--sys-on-surface-tertiary)]">
-              {`/* Active Brand Color (${theme === "dark" ? "Dark Mode" : "Light Mode"}) */`}
+              {`/* Active Brand Colour (${theme === "dark" ? "Dark Mode" : "Light Mode"}) */`}
             </div>
             <div className="text-[var(--sys-on-surface)] flex items-center justify-between">
               <span>
@@ -382,12 +382,12 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
           </div>
         </div>
 
-        {/* Right: How Colors Connect to Components */}
+        {/* Right: How Colours Connect to Components */}
         <div className="lg:col-span-7 tonal-card p-6 flex flex-col justify-between space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sys-outline-variant)] pb-4">
             <div>
               <h3 className="text-sm font-semibold text-[var(--sys-on-surface)]">
-                How Colors Connect to Components
+                How Colours Connect to Components
               </h3>
               <p className="text-xs text-[var(--sys-on-surface-tertiary)] mt-0.5">
                 Base shades flow into theme roles (`Dark` / `Light`) and then into individual UI components.
@@ -498,7 +498,7 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
           <div className="flex items-center justify-between text-xs text-[var(--sys-on-surface-tertiary)] pt-2 border-t border-[var(--sys-outline-variant)]">
             <span className="flex items-center gap-1.5">
               <Info size={14} className="text-[var(--sys-primary)]" />
-              Click any token or color swatch below to copy its value.
+              Click any token or colour swatch below to copy its value.
             </span>
             <span className="text-[11px] tabular-nums">52 Auto-Generated Shades</span>
           </div>
@@ -511,10 +511,10 @@ export const TokenEngineSection: React.FC<TokenEngineSectionProps> = ({
           <div>
             <h3 className="text-sm font-semibold text-[var(--sys-on-surface)] flex items-center gap-2">
               <Swatches size={18} className="text-[var(--sys-primary)]" />
-              Full Color Shades (Click Any Swatch to Copy)
+              Full Colour Shades (Click Any Swatch to Copy)
             </h3>
             <p className="text-xs text-[var(--sys-on-surface-tertiary)] mt-0.5">
-              Every column shares the same perceived brightness, making it easy to swap colors without breaking text readability.
+              Every column shares the same perceived brightness, making it easy to swap colours without breaking text readability.
             </p>
           </div>
           {copiedToken && (

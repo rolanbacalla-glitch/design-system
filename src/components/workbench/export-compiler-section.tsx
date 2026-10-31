@@ -113,7 +113,7 @@ alwaysApply: true
             </span>
           </h2>
           <p className="text-sm text-[var(--sys-on-surface-secondary)] max-w-3xl leading-relaxed">
-            Every color and corner adjustment you make above updates these files live. Copy or
+            Every colour and corner adjustment you make above updates these files live. Copy or
             download ready-to-use files for Tailwind CSS v4, Figma Variables, Google Stitch{" "}
             <code className="font-mono">DESIGN.md</code>, and AI coding assistants.
           </p>

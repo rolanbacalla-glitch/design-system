@@ -23,4 +23,8 @@ When generating or modifying UI inside this workspace (Google Antigravity, Claud
    - Text contrast must be `>= 4.5:1` (`>= 3.0:1` for UI borders and focus rings).
    - Interactive hit targets must be `>= 24x24px` (`40px` touch standard per SC 2.5.8).
    - Focus-visible rings must use `2px solid var(--border-focus-ring)` with `2px` offset (SC 2.4.11).
-   - Keyboard focus trapping is permitted ONLY inside modal dialogs (`role="dialog" aria-modal="true"`).
+   - Keyboard focus trapping is permitted ONLY inside modal dialogues (`role="dialog" aria-modal="true"`).
+
+4. **British English (`en-GB`) Copy Standard**:
+   - All user-facing UI headings, descriptions, labels, and documentation must use British English spelling (e.g., *colour*, *customise*, *customiser*, *synchronise*, *optimise*, *analyse*, *behaviour*, *centre*, *dialogue*, *grey*).
+   - Keep CSS/HTML/JS/W3C DTCG technical syntax identifiers unchanged (`color`, `items-center`, `role="dialog"`).

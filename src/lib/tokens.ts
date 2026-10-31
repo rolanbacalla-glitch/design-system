@@ -220,9 +220,9 @@ export function generateDesignMdExport(seed: SeedConfig): string {
   return `# Design System Specification: ${seed.name}
 
 ## 1. Architectural Foundations
-Synthesizes **Google Material 3 Expressive** perceptual OKLCH tonal mathematics with **Apple HIG Liquid Glass** Z-axis spatial discipline and **Swiss Design Engineering** grids.
+Synthesises **Google Material 3 Expressive** perceptual OKLCH tonal mathematics with **Apple HIG Liquid Glass** Z-axis spatial discipline and **Swiss Design Engineering** grids.
 
-## 2. Seed & Perceptual Color Tokens
+## 2. Seed & Perceptual Colour Tokens
 \`\`\`yaml
 seed:
   hue: ${seed.hue}
