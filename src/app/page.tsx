@@ -24,7 +24,7 @@ import {
 } from "phosphor-react";
 
 export default function Home() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [seed, setSeed] = useState<SeedConfig>(SEED_PRESETS[0]);
   const [activeSection, setActiveSection] = useState<string>("tokens");
 

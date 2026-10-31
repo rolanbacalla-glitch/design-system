@@ -53,7 +53,7 @@ export const ComponentPortalClient: React.FC<ComponentPortalClientProps> = ({
   const semanticTokens = getComponentSemanticTokens(spec.slug);
   const tier3Tokens = getComponentTier3Tokens(spec.slug);
 
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [simulatedState, setSimulatedState] = useState<InteractiveStateMode>("default");
   const [viewMode, setViewMode] = useState<"preview" | "code">("preview");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);

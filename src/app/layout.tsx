@@ -16,8 +16,8 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      data-theme="dark"
-      className="dark h-full antialiased"
+      data-theme="light"
+      className="h-full antialiased"
       suppressHydrationWarning
     >
       <head>
