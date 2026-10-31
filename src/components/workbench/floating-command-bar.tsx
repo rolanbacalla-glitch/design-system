@@ -49,17 +49,7 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
 }) => {
   const [commandOpen, setCommandOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -109,12 +99,7 @@ export const FloatingCommandBar: React.FC<WorkbenchNavProps> = ({
           backdropFilter: "blur(40px) saturate(190%)",
           WebkitBackdropFilter: "blur(40px) saturate(190%)",
         }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 mx-4 sm:mx-6 mt-3 sm:mt-4 rounded-2xl liquid-glass-regular backdrop-blur-2xl transition-[padding,box-shadow,border-color] duration-300",
-          isScrolled
-            ? "px-4 sm:px-6 py-2.5 shadow-2xl border-[var(--sys-outline)]"
-            : "px-4 sm:px-6 py-3.5 shadow-xl"
-        )}
+        className="fixed top-0 left-0 right-0 z-50 mx-4 sm:mx-6 mt-3 sm:mt-4 rounded-2xl liquid-glass-regular backdrop-blur-2xl px-4 sm:px-6 py-3 shadow-xl"
       >
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-3">
           {/* Brand + Version Badge */}
